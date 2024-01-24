@@ -1,3 +1,9 @@
+import { fontPretendard } from '@/styles/fonts';
+
 export default function Home() {
-	return <div className='m-5 text-xl'>안녕</div>;
+	return (
+		<main className={fontPretendard.className}>
+			<p className='font-bold text-orange'>안녕</p>
+		</main>
+	);
 }
