@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 function ModalProgressInput() {
 	const [open, setOpen] = useState(false);
@@ -148,17 +148,33 @@ function ModalManagerInput() {
 }
 
 function ModalCommentInput() {
+	const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+	const handleTextareaChange = () => {
+		const textarea = textareaRef.current;
+		if (textarea) {
+			textarea.style.height = 'auto';
+			textarea.style.height = `${textarea.scrollHeight}px`;
+		}
+	};
+
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
 			<label htmlFor='comment' className='text-lg font-medium'>
 				댓글
 			</label>
-			<textarea
-				name='comment'
-				id='comment'
-				placeholder='댓글 작성하기'
-				className='flex w-[450px] h-[110px] min-h-[110px] p-4 items-start gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus:outline-none focus:ring-[1px] focus:ring-violet2 resize-y'
-			/>
+			<div className='flex flex-col w-[450px] min-h-[110px] p-4 items-start gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2  relative'>
+				<textarea
+					ref={textareaRef}
+					name='comment'
+					id='comment'
+					placeholder='댓글 작성하기'
+					onChange={handleTextareaChange}
+					className='w-full h-full border-none outline-none resize-none'
+				/>
+				{/* 차후 button 컴포넌트 삽입 예정(크기만 맞춘 임시 버튼) */}
+				<button className='flex w-[83px] h-8 py-[9px] px-[31px] justify-center items-center gap-2.5 shrink-0 absolute bottom-3 right-3 border-solid border-[1px] border-gray3' />
+			</div>
 		</div>
 	);
 }
