@@ -11,9 +11,9 @@ function ModalProgressInput() {
 		setOpen(true);
 	};
 
-	const handleBlur = () => {
-		setOpen(false);
-	};
+	// const handleBlur = () => {
+	// 	setOpen(false);
+	// };
 
 	const handleProgress = (progressOption: string) => {
 		setProgress(progressOption);
@@ -29,7 +29,7 @@ function ModalProgressInput() {
 				<button
 					className='w-[217px] h-12 rounded-md border-solid border-[1px] border-gray3 bg-white relative focus:outline-none focus:ring-[1px] focus:ring-violet2 focus:z-20'
 					onFocus={handleFocus}
-					onBlur={handleBlur}
+					// onBlur={handleBlur} <- 이거 넣으면 li 클릭하는 것보다 onBlur가 먼저 동작해서 handleProgress가 동작 안 함... ㅠㅠ
 				>
 					<p>{progress}</p>
 					<Image
@@ -48,12 +48,16 @@ function ModalProgressInput() {
 									className='flex flex-row gap-1.5 px-2 py-[13px] w-full'
 									onClick={() => handleProgress(progressOption)}
 								>
-									<Image
-										src='/icons/check.svg'
-										width={22}
-										height={22}
-										alt={`${progressOption} Checked`}
-									/>
+									{progress === progressOption ? (
+										<Image
+											src='/icons/check.svg'
+											width={22}
+											height={22}
+											alt={`${progressOption} Checked`}
+										/>
+									) : (
+										<div className='w-[22px]' />
+									)}
 									<p>{progressOption}</p>
 								</button>
 							</li>
