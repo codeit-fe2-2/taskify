@@ -148,7 +148,19 @@ function ModalManagerInput() {
 }
 
 function ModalCommentInput() {
-	return <div></div>;
+	return (
+		<div className='inline-flex flex-col items-start gap-2.5'>
+			<label htmlFor='comment' className='text-lg font-medium'>
+				댓글
+			</label>
+			<textarea
+				name='comment'
+				id='comment'
+				placeholder='댓글 작성하기'
+				className='flex w-[450px] h-[110px] min-h-[110px] p-4 items-start gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus:outline-none focus:ring-[1px] focus:ring-violet2 resize-y'
+			/>
+		</div>
+	);
 }
 
 function ModalTitleInput() {
@@ -162,7 +174,7 @@ function ModalTitleInput() {
 				name='title'
 				id='title'
 				placeholder='제목을 입력해주세요'
-				className='flex w-[450px] h-12 py-[14px] px-4 items-center gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md'
+				className='flex w-[450px] h-12 py-[14px] px-4 items-center gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus:outline-none focus:ring-[1px] focus:ring-violet2'
 			/>
 		</div>
 	);
@@ -173,18 +185,48 @@ function ModalDeadlineInput() {
 }
 
 function ModalTagInput() {
+	const [tags, setTags] = useState<string[]>([]); // chip 생기면 대체할 예정
+	const [tagInput, setTagInput] = useState<string>('');
+
+	const handleTagInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setTagInput(event.target.value);
+	};
+
+	const handleAddTag = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === 'Enter') {
+			if (tagInput.trim() !== '' && !tags.includes(tagInput.trim())) {
+				setTags([...tags, tagInput.trim()]);
+			}
+		}
+	};
+
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
 			<label htmlFor='tag' className='text-lg font-medium'>
 				태그
 			</label>
-			<input
-				type='text'
-				name='tag'
-				id='tag'
-				placeholder='입력 후 Enter'
-				className='flex w-[450px] h-12 py-[14px] px-4 items-center gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md'
-			/>
+			<div className='w-[450px] px-2 flex flex-row items-center gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2 overflow-x-auto scroll-smooth snap-x'>
+				{
+					// chip 생기면 대체할 예정
+					tags.map((tag, index) => (
+						<p
+							key={index}
+							className='inline-flex items-center h-12 px-1 snap-start shrink-0'
+						>
+							{tag}
+						</p>
+					))
+				}
+				<input
+					type='text'
+					name='tag'
+					id='tag'
+					placeholder='입력 후 Enter'
+					onChange={handleTagInputChange}
+					onKeyDown={handleAddTag}
+					className='w-full h-12 py-[14px] border-none outline-none min-w-24 snap-end shrink-0'
+				/>
+			</div>
 		</div>
 	);
 }
