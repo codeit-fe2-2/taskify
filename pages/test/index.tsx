@@ -1,3 +1,5 @@
+import ModalInput from "@/src/components/ui/ModalInput";
+
 export default function Page() {
-	return <div className='font-bold text-orange'>테스트 페이지!</div>;
+	return <ModalInput/>;
 }
