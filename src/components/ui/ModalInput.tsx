@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useRef } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 
 function ModalProgressInput() {
 	const [open, setOpen] = useState(false);
@@ -27,7 +27,7 @@ function ModalProgressInput() {
 			</label>
 			<div>
 				<button
-					className='w-[217px] h-12 rounded-md border-solid border-[1px] border-gray3 bg-white relative focus:outline-none focus:ring-[1px] focus:ring-violet2 focus:z-20'
+					className='relative h-12 w-[217px] rounded-md border-[1px] border-solid border-gray3 bg-white focus:z-20 focus:outline-none focus:ring-[1px] focus:ring-violet2'
 					onFocus={handleFocus}
 					// onBlur={handleBlur} <- 이거 넣으면 li 클릭하는 것보다 onBlur가 먼저 동작해서 handleProgress가 동작 안 함... ㅠㅠ
 				>
@@ -41,11 +41,11 @@ function ModalProgressInput() {
 					/>
 				</button>
 				{open && (
-					<ul className='flex flex-col mt-0.5 w-[217px] rounded-md border-[1px] border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)] absolute z-10'>
+					<ul className='absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border-[1px] border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]'>
 						{progressOptions.map((progressOption, index) => (
 							<li key={index}>
 								<button
-									className='flex flex-row gap-1.5 px-2 py-[13px] w-full'
+									className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
 									onClick={() => handleProgress(progressOption)}
 								>
 									{progress === progressOption ? (
@@ -118,7 +118,7 @@ function ModalManagerInput() {
 					value={managerInput}
 					onChange={handleManagerInputChange}
 					onKeyDown={handleAddManager}
-					className='flex items-center h-12 gap-[10px] p-4 bg-white border-[1px] border-solid rounded-md w-[217px] border-gray3 text-base font-normal focus:outline-none focus:ring-[1px] focus:ring-violet2'
+					className='flex h-12 w-[217px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white p-4 text-base font-normal focus:outline-none focus:ring-[1px] focus:ring-violet2'
 				/>
 				<button className='absolute right-4 top-3' onClick={handleOpen}>
 					<Image
@@ -129,11 +129,11 @@ function ModalManagerInput() {
 					/>
 				</button>
 				{open && (
-					<ul className='flex flex-col mt-0.5 w-[217px] rounded-md border-[1px] border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)] z-10 absolute'>
+					<ul className='absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border-[1px] border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]'>
 						{managerOptions.map((managerOption, index) => (
 							<li key={index}>
 								<button
-									className='flex flex-row gap-1.5 px-2 py-[13px] w-full'
+									className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
 									onClick={() => handleManager(managerOption)}
 								>
 									<p>{managerOption}</p>
@@ -163,17 +163,17 @@ function ModalCommentInput() {
 			<label htmlFor='comment' className='text-lg font-medium'>
 				댓글
 			</label>
-			<div className='flex flex-col w-[450px] min-h-[110px] p-4 items-start gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2  relative'>
+			<div className='relative flex min-h-[110px] w-[450px] flex-col items-start gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white p-4 text-base font-normal focus-within:outline-none focus-within:ring-[1px]  focus-within:ring-violet2'>
 				<textarea
 					ref={textareaRef}
 					name='comment'
 					id='comment'
 					placeholder='댓글 작성하기'
 					onChange={handleTextareaChange}
-					className='w-full h-full border-none outline-none resize-none'
+					className='size-full resize-none border-none outline-none'
 				/>
 				{/* 차후 button 컴포넌트 삽입 예정(크기만 맞춘 임시 버튼) */}
-				<button className='flex w-[83px] h-8 py-[9px] px-[31px] justify-center items-center gap-2.5 shrink-0 absolute bottom-3 right-3 border-solid border-[1px] border-gray3' />
+				<button className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 border-[1px] border-solid border-gray3 px-[31px] py-[9px]' />
 			</div>
 		</div>
 	);
@@ -190,14 +190,54 @@ function ModalTitleInput() {
 				name='title'
 				id='title'
 				placeholder='제목을 입력해주세요'
-				className='flex w-[450px] h-12 py-[14px] px-4 items-center gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus:outline-none focus:ring-[1px] focus:ring-violet2'
+				className='flex h-12 w-[450px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white px-4 py-[14px] text-base font-normal focus:outline-none focus:ring-[1px] focus:ring-violet2'
 			/>
 		</div>
 	);
 }
 
 function ModalDeadlineInput() {
-	return <div></div>;
+	const [deadline, setDeadline] = useState('');
+
+	const handleFileInputClick = () => {
+		const dateTimeInput = document.getElementById(
+			'datetimeInput',
+		) as HTMLInputElement;
+		dateTimeInput.click();
+	};
+
+	const handleDeadlineChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const selectedDate = e.target.value;
+		setDeadline(selectedDate);
+	};
+
+	return (
+		<div className='inline-flex flex-col items-start gap-2.5'>
+			<label htmlFor='deadline' className='text-lg font-medium'>
+				마감일
+			</label>
+			<div className='flex h-12 w-[450px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white px-4 py-[14px] text-base font-normal focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2'>
+				<Image
+					src='/icons/calendar.svg'
+					width={20}
+					height={20}
+					alt='Deadline'
+				/>
+				<button
+					onClick={handleFileInputClick}
+					className='grow text-left text-base font-normal not-italic text-gray4'
+				>
+					날짜를 입력해주세요 : {deadline}
+				</button>
+				<input
+					id='datetimeInput'
+					type='datetime-local'
+					onChange={handleDeadlineChange}
+					// className='hidden'
+				/>
+			</div>
+		</div>
+	);
 }
 
 function ModalTagInput() {
@@ -221,13 +261,13 @@ function ModalTagInput() {
 			<label htmlFor='tag' className='text-lg font-medium'>
 				태그
 			</label>
-			<div className='w-[450px] px-2 flex flex-row items-center gap-[10px] text-base font-normal border-gray3 bg-white border-solid border-[1px] rounded-md focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2 overflow-x-auto scroll-smooth snap-x'>
+			<div className='flex w-[450px] snap-x flex-row items-center gap-[10px] overflow-x-auto scroll-smooth rounded-md border-[1px] border-solid border-gray3 bg-white px-2 text-base font-normal focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2'>
 				{
 					// chip 생기면 대체할 예정
 					tags.map((tag, index) => (
 						<p
 							key={index}
-							className='inline-flex items-center h-12 px-1 snap-start shrink-0'
+							className='inline-flex h-12 shrink-0 snap-start items-center px-1'
 						>
 							{tag}
 						</p>
@@ -240,7 +280,7 @@ function ModalTagInput() {
 					placeholder='입력 후 Enter'
 					onChange={handleTagInputChange}
 					onKeyDown={handleAddTag}
-					className='w-full h-12 py-[14px] border-none outline-none min-w-24 snap-end shrink-0'
+					className='h-12 w-full min-w-24 shrink-0 snap-end border-none py-[14px] outline-none'
 				/>
 			</div>
 		</div>
@@ -248,15 +288,71 @@ function ModalTagInput() {
 }
 
 function ModalImageInput() {
-	return <div></div>;
+	const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+
+	const handleFileInputClick = () => {
+		const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+		fileInput.click();
+	};
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const selectedFile = e.target.files?.[0];
+
+		if (selectedFile) {
+			const reader = new FileReader();
+
+			reader.onload = (event) => {
+				const imageSrc = event.target?.result as string;
+				setBackgroundImage(imageSrc);
+			};
+
+			reader.readAsDataURL(selectedFile);
+		}
+	};
+
+	return (
+		<button
+			onClick={handleFileInputClick}
+			className='group relative flex size-[76px] shrink-0 items-center justify-center rounded-md bg-white'
+		>
+			{backgroundImage ? (
+				<>
+					<Image
+						src={backgroundImage}
+						fill={true}
+						alt='test Image'
+						className='rounded-md'
+					/>
+					<div className='z-10 flex size-[76px] items-center justify-center rounded-md bg-black4 opacity-0 group-hover:opacity-60'>
+						<Image
+							src='/icons/edit.svg'
+							width={30}
+							height={30}
+							alt='Edit Image'
+						/>
+					</div>
+				</>
+			) : (
+				<div className='rounded-md bg-gray3 p-6'>
+					<div className='size-[28px] bg-violet2' />
+				</div>
+			)}
+			<input
+				type='file'
+				id='fileInput'
+				className='hidden'
+				onChange={handleFileChange}
+			/>
+		</button>
+	);
 }
 
 export {
-	ModalProgressInput,
-	ModalManagerInput,
 	ModalCommentInput,
-	ModalTitleInput,
 	ModalDeadlineInput,
-	ModalTagInput,
 	ModalImageInput,
+	ModalManagerInput,
+	ModalProgressInput,
+	ModalTagInput,
+	ModalTitleInput,
 };
