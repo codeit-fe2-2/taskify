@@ -328,7 +328,7 @@ function ModalImageInput() {
 							src='/icons/edit.svg'
 							width={30}
 							height={30}
-							alt='Edit Image'
+							alt='Edit Image Icon'
 						/>
 					</div>
 				</>
