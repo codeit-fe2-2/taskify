@@ -197,9 +197,9 @@ function ModalTitleInput() {
 }
 
 function ModalDeadlineInput() {
-	const [deadline, setDeadline] = useState('');
+	const [deadline, setDeadline] = useState<string>('');
 
-	const handleFileInputClick = () => {
+	const handleDeadlineInput = () => {
 		const dateTimeInput = document.getElementById(
 			'datetimeInput',
 		) as HTMLInputElement;
@@ -209,6 +209,21 @@ function ModalDeadlineInput() {
 	const handleDeadlineChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const selectedDate = e.target.value;
 		setDeadline(selectedDate);
+	};
+
+	const formatDateTime = (dateTimeString: string): string => {
+		const datetimeValue = new Date(dateTimeString);
+
+		const localDate = datetimeValue.toLocaleString('ko-KR', {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit',
+			hour: '2-digit',
+			minute: '2-digit',
+			hourCycle: 'h24',
+			timeZone: 'Asia/Seoul',
+		});
+		return `${localDate}`;
 	};
 
 	return (
@@ -224,10 +239,14 @@ function ModalDeadlineInput() {
 					alt='Deadline'
 				/>
 				<button
-					onClick={handleFileInputClick}
-					className='grow text-left text-base font-normal not-italic text-gray4'
+					onClick={handleDeadlineInput}
+					className='grow text-left text-base font-normal not-italic '
 				>
-					날짜를 입력해주세요 : {deadline}
+					{deadline ? (
+						formatDateTime(deadline)
+					) : (
+						<p className='text-gray4'>날짜를 입력해주세요</p>
+					)}
 				</button>
 				<input
 					id='datetimeInput'
