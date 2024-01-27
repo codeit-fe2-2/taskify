@@ -47,8 +47,18 @@ const addInvalidClass = (event: React.FocusEvent<HTMLInputElement>) => {
 };
 
 export default function Input(props: InputProps) {
-	const { id, type, label, placeholder, onChange } = props;
-	const { regex, invalidMessage } = props as signInputProps;
+	const {
+		id,
+		type,
+		label,
+		placeholder,
+		onChange,
+		regex,
+		invalidMessage,
+		...rest
+	} = props as signInputProps;
+	// const { id, type, label, placeholder, onChange } = props;
+	// const { regex, invalidMessage } = props as signInputProps;
 	const [value, setValue] = useState('');
 	const [htmlType, setHtmlType] = useState(type);
 
@@ -92,6 +102,7 @@ export default function Input(props: InputProps) {
 						type === 'password' ? 'text-black3' : 'text-black2',
 						'rounded-lg border-[1px] border-solid border-gray3 placeholder:text-gray4 focus:border-purple focus:outline-none data-[invalid]:border-red',
 					)}
+					{...rest}
 				/>
 				{type === 'password' && (
 					<button
