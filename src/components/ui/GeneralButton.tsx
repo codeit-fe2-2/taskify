@@ -1,80 +1,65 @@
-// components/Button.tsx
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-
-import arrowBefore from '../../../public/icons/arrowBefore.svg';
-import arrowNext from '../../../public/icons/arrowNext.svg';
-
-type ButtonType =
-	| 'login'
-	| 'accept'
-	| 'reject'
-	| 'dashboardDelete'
-	| 'delete'
-	| 'prev'
-	| 'next';
+import React, { ReactNode } from 'react';
 
 interface ButtonProps {
-	buttonText: string;
-	onClick: () => void;
-	isActive?: boolean;
-	buttonType: ButtonType;
+	buttonSize?: 'sm' | 'md' | 'lg' | 'xl' | 'custom';
+	textSize?: 'small' | 'large';
+	color?: 'primary' | 'secondary' | 'custom';
+	children?: ReactNode;
+	onClick?: () => void;
+	disabled?: boolean;
+	fullWidth?: boolean;
+	className?: string;
 }
 
-const GeneralButton: React.FC<ButtonProps> = ({
-	buttonText,
+const GeneralButton2: React.FC<ButtonProps> = ({
+	buttonSize,
+	textSize,
+	color,
+	children,
 	onClick,
-	isActive = false,
-	buttonType,
-}: ButtonProps) => {
-	const buttonStyle = getButtonStyle(buttonType);
+	disabled = false,
+	className,
+	fullWidth,
+}) => {
+	const buttonSizeClasses =
+		buttonSize === 'sm'
+			? `px-[29px] py-[7px] sm:px-[9px] sm:py-[7px]`
+			: buttonSize === 'md'
+				? `px-[29px] py-[7px] md:px-[72px] md:py-[23px] sm:px-[37px] sm:py-[7px]`
+				: buttonSize === 'lg'
+					? `py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]`
+					: buttonSize === 'xl'
+						? 'px-[236.5px] py-[14.5px] sm:px-[152px] '
+						: '';
+
+	const textSizeClasses =
+		textSize === 'small'
+			? 'text-[12px] md:text-[14px] lg:text-[14px]'
+			: textSize === 'large'
+				? 'text-lg'
+				: '';
+
+	const colorClasses =
+		color === 'primary'
+			? disabled
+				? 'bg-gray4 text-white rounded-md'
+				: 'bg-violet2 text-white rounded-md'
+			: color === 'secondary'
+				? 'text-violet2 border-[1px] rounded-md'
+				: '';
+
+	const buttonFullClasses = fullWidth ? 'w-full' : '';
+	const disabledClasses = disabled ? 'text-white cursor-not-allowed ' : '';
 
 	return (
-		<div className='flex justify-center'>
-			{buttonText ? (
-				<button
-					className={`${buttonStyle} ${isActive ? 'cursor-not-allowed' : ''}`}
-					onClick={onClick}
-					disabled={isActive}
-				>
-					<span>{buttonText}</span>
-				</button>
-			) : (
-				<Link
-					className={`${buttonStyle} ${isActive ? 'cursor-not-allowed' : ''}`}
-					href='/'
-				>
-					<Image
-						// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-						src={buttonType === 'next' ? arrowNext : arrowBefore}
-						alt={`${buttonType} button`}
-						width={16}
-						height={16}
-					/>
-				</Link>
-			)}
-		</div>
+		<button
+			className={`${disabledClasses} ${textSizeClasses} ${colorClasses} ${buttonSizeClasses} ${buttonFullClasses} ${className} `}
+			onClick={onClick}
+			disabled={disabled}
+		>
+			{children}
+		</button>
 	);
 };
 
-const getButtonStyle = (type: ButtonType): string => {
-	const styles = {
-		login:
-			'w-[350px] h-[50px] text-[18px] rounded-lg text-white bg-[#5534DA] cursor-pointer lg:w-[520px]',
-		accept:
-			'w-[109px] h-7 text-[12px] rounded-[4px] bg-[#5534DA] text-white cursor-pointer md:w-[72px] md:text-sm  md:h-[30px] lg:w-[84px] lg:text-sm lg:h-8',
-		reject:
-			'w-[109px] h-7 text-[12px] rounded-[4px] bg-white text-[#5534DA] cursor-pointer border-[1px] border-[#D9D9D9] md:w-[72px] md:text-sm  md:h-[30px] lg:w-[84px] lg:text-sm lg:h-8',
-		dashboardDelete:
-			'w-[284px] h-[52px] text-[16px] rounded-lg cursor-pointer border-[1px] border-[#D9D9D9] lg:w-[320px] lg:h-[62px] lg:text-lg',
-		delete:
-			'w-[52px] h-7 text-sm rounded-[4px] bg-white text-[#5534DA] cursor-pointer border-[1px] border-[#D9D9D9] lg:w-[84px] lg:text-[12px]',
-		next: 'w-9 h-9 flex items-center justify-center rounded-r-[4px] border-[1px] border-[#D9D9D9] lg:w-10 lg:h-10 ',
-		prev: 'w-9 h-9 flex items-center justify-center rounded-l-[4px] border-[1px] border-[#D9D9D9] lg:w-10 lg:h-10',
-	};
-
-	return styles[type];
-};
-
-export default GeneralButton;
+export default GeneralButton2;
