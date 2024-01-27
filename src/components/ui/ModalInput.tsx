@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import React, { ChangeEvent, useRef, useState } from 'react';
+import Datetime from 'react-datetime';
 
 function ModalProgressInput() {
 	const [open, setOpen] = useState(false);
@@ -197,40 +198,13 @@ function ModalTitleInput() {
 }
 
 function ModalDeadlineInput() {
-	const [deadline, setDeadline] = useState<string>('');
-
-	const handleDeadlineInput = () => {
-		const dateTimeInput = document.getElementById(
-			'datetimeInput',
-		) as HTMLInputElement;
-		dateTimeInput.click();
+	const inputProps = {
+		placeholder: '날짜를 입력해주세요',
+		className: 'w-full h-full outline-none',
 	};
-
-	const handleDeadlineChange = (e: ChangeEvent<HTMLInputElement>) => {
-		const selectedDate = e.target.value;
-		setDeadline(selectedDate);
-	};
-
-	const formatDateTime = (dateTimeString: string): string => {
-		const datetimeValue = new Date(dateTimeString);
-
-		const localDate = datetimeValue.toLocaleString('ko-KR', {
-			year: 'numeric',
-			month: '2-digit',
-			day: '2-digit',
-			hour: '2-digit',
-			minute: '2-digit',
-			hourCycle: 'h24',
-			timeZone: 'Asia/Seoul',
-		});
-		return `${localDate}`;
-	};
-
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
-			<label htmlFor='deadline' className='text-lg font-medium'>
-				마감일
-			</label>
+			<p className='text-lg font-medium'>마감일</p>
 			<div className='flex h-12 w-[450px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white px-4 py-[14px] text-base font-normal focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2'>
 				<Image
 					src='/icons/calendar.svg'
@@ -238,21 +212,10 @@ function ModalDeadlineInput() {
 					height={20}
 					alt='Deadline'
 				/>
-				<button
-					onClick={handleDeadlineInput}
-					className='grow text-left text-base font-normal not-italic '
-				>
-					{deadline ? (
-						formatDateTime(deadline)
-					) : (
-						<p className='text-gray4'>날짜를 입력해주세요</p>
-					)}
-				</button>
-				<input
-					id='datetimeInput'
-					type='datetime-local'
-					onChange={handleDeadlineChange}
-					// className='hidden'
+				<Datetime
+					dateFormat='YYYY.MM.DD'
+					timeFormat='HH:mm'
+					inputProps={inputProps}
 				/>
 			</div>
 		</div>
