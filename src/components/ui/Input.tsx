@@ -1,106 +1,102 @@
-import { useState } from 'react';
-//눈 모양, 반응형
-type InputTypes = 'email' | 'username' | 'password';
+import clsx from 'clsx';
+import { HTMLInputTypeAttribute, useState } from 'react';
 
-interface InputProps {
-	type: InputTypes;
+type GeneralInputType =
+	| 'number'
+	| 'button'
+	| 'checkbox'
+	| 'color'
+	| 'date'
+	| 'datetime-local'
+	| 'file'
+	| 'hidden'
+	| 'image'
+	| 'month'
+	| 'radio'
+	| 'range'
+	| 'reset'
+	| 'search'
+	| 'submit'
+	| 'tel'
+	| 'text'
+	| 'time'
+	| 'url'
+	| 'week';
+
+interface generalInputProps {
+	id: string;
+	type: GeneralInputType;
+	label?: string;
+	placeholder?: string;
 	onChange?: (value: string) => void;
 }
-interface PasswordCheckProps {
-	type: 'password-check';
-	password: string;
-	onChange?: (value: string) => void;
+
+interface signInputProps extends Omit<generalInputProps, 'type'> {
+	type: Extract<HTMLInputTypeAttribute, 'text' | 'email' | 'password'>;
+	regex: string;
+	invalidMessage: string;
 }
 
-const cls = (...classnames: string[]) => {
-	return classnames.join(' ');
+type InputProps = generalInputProps | signInputProps;
+
+const addInvalidClass = (event: React.FocusEvent<HTMLInputElement>) => {
+	const isValid = event.target.validity.valid;
+	!isValid
+		? event.target.setAttribute('data-invalid', '')
+		: event.target.removeAttribute('data-invalid');
 };
 
-const types = {
-	email: {
-		inputType: 'email',
-		label: '이메일',
-		regex: '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$',
-		invalidMessage: '이메일 형식으로 작성해주세요',
-		placeholder: '이메일을 입력해주세요',
-	},
-	username: {
-		inputType: 'text',
-		label: '닉네임',
-		regex: '^.{0,10}$',
-		invalidMessage: '10자 이하로 작성해주세요',
-		placeholder: '닉네임을 입력해주세요',
-	},
-	password: {
-		inputType: 'password',
-		label: '비밀번호',
-		regex: '^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$',
-		invalidMessage: '영문자와 숫자를 포함한 8자 이상의 비밀번호를 입력하세요',
-		placeholder: '비밀번호를 입력해주세요',
-	},
-	'password-check': {
-		inputType: 'password',
-		label: '비밀번호 확인',
-		regex: '',
-		invalidMessage: '비밀번호가 일치하지 않습니다',
-		placeholder: '비밀번호를 한 번 더 입력해주세요',
-	},
-};
-
-export default function Input({
-	type,
-	onChange = () => {},
-	...props
-}: InputProps | PasswordCheckProps) {
-	const { inputType, label, regex, invalidMessage, placeholder } = types[type];
+export default function Input(props: InputProps) {
+	const { id, type, label, placeholder, onChange } = props;
+	const { regex, invalidMessage } = props as signInputProps;
 	const [value, setValue] = useState('');
-	const [htmlType, setHtmlType] = useState(inputType);
+	const [htmlType, setHtmlType] = useState(type);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValue(event.target.value);
-		onChange(event.target.value);
+		if (onChange) {
+			onChange(event.target.value);
+		}
 	};
-	const validateOnBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-		const isValid = event.target.validity.valid;
-		!isValid
-			? event.target.setAttribute('data-invalid', '')
-			: event.target.removeAttribute('data-invalid');
+	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+		if (regex) {
+			addInvalidClass(event);
+		}
 	};
-
 	const togglePasswordTypeOnClick = () => {
-		setHtmlType((prev) => (prev === 'password' ? 'text' : 'password'));
+		setHtmlType((prev: HTMLInputTypeAttribute) =>
+			prev === 'password' ? 'text' : 'password',
+		);
 	};
 
 	return (
 		<div className='flex flex-col items-start gap-2'>
 			{/* eslint-disable-next-line jsx-a11y/label-has-associated-control, jsx-a11y/label-has-for */}
-			<label htmlFor={type} className='text-base text-black2'>
-				{label}
-			</label>
-			<div className='relative w-[520px]'>
+			{label && (
+				<label htmlFor={id} className='text-base text-black2'>
+					{label}
+				</label>
+			)}
+			<div className='relative w-[520px] sm:w-[351px]'>
 				<input
-					id={type}
+					id={id}
 					type={htmlType}
 					value={value}
 					placeholder={placeholder}
 					onChange={handleChange}
-					onBlur={validateOnBlur}
+					onBlur={handleBlur}
 					required
-					pattern={
-						type !== 'password-check'
-							? regex
-							: `^${(props as PasswordCheckProps).password}$`
-					}
-					className={cls(
-						'peer flex flex-col items-center w-full h-[50px] py-3 px-4 text-base',
+					pattern={regex}
+					className={clsx(
+						'peer flex h-[50px] w-full flex-col items-center px-4 py-3 text-base',
 						type === 'password' ? 'text-black3' : 'text-black2',
-						'border-[1px] border-solid rounded-lg border-gray3 placeholder:text-gray4 focus:outline-none focus:border-purple data-[invalid]:border-red',
+						'rounded-lg border-[1px] border-solid border-gray3 placeholder:text-gray4 focus:border-purple focus:outline-none data-[invalid]:border-red',
 					)}
 				/>
-				{(type === 'password' || type === 'password-check') && (
+				{type === 'password' && (
 					<button
 						onClick={togglePasswordTypeOnClick}
-						className={cls(
+						className={clsx(
 							'absolute right-4 top-[13px] size-6 border-none',
 							htmlType === 'password'
 								? 'bg-[url("/icons/visibility_off.svg")]'
@@ -108,9 +104,11 @@ export default function Input({
 						)}
 					/>
 				)}
-				<span className='hidden text-sm text-red peer-data-[invalid]:block'>
-					{invalidMessage}
-				</span>
+				{invalidMessage && (
+					<span className='hidden text-sm text-red peer-data-[invalid]:block'>
+						{invalidMessage}
+					</span>
+				)}
 			</div>
 		</div>
 	);
