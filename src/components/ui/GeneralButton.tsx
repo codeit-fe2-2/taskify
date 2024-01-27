@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 
 interface ButtonProps {
-	buttonSize?: 'sm' | 'md' | 'lg' | 'xl' | 'custom';
+	buttonSize?: 'sm' | 'md' | 'lg' | 'xl';
 	textSize?: 'small' | 'large';
-	color?: 'primary' | 'secondary' | 'custom';
+	color?: 'primary' | 'secondary';
 	children?: ReactNode;
 	onClick?: () => void;
 	disabled?: boolean;
@@ -11,7 +11,7 @@ interface ButtonProps {
 	className?: string;
 }
 
-const GeneralButton2: React.FC<ButtonProps> = ({
+const GeneralButton: React.FC<ButtonProps> = ({
 	buttonSize,
 	textSize,
 	color,
@@ -45,7 +45,7 @@ const GeneralButton2: React.FC<ButtonProps> = ({
 				? 'bg-gray4 text-white rounded-md'
 				: 'bg-violet2 text-white rounded-md'
 			: color === 'secondary'
-				? 'text-violet2 border-[1px] rounded-md'
+				? ' text-black4 border-[1px] border-gray3 rounded-md'
 				: '';
 
 	const buttonFullClasses = fullWidth ? 'w-full' : '';
@@ -62,4 +62,4 @@ const GeneralButton2: React.FC<ButtonProps> = ({
 	);
 };
 
-export default GeneralButton2;
+export default GeneralButton;
