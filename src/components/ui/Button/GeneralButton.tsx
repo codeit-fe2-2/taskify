@@ -1,8 +1,7 @@
-import Image from 'next/image';
 import React, { ReactNode } from 'react';
 
 interface ButtonProps {
-	buttonSize?: 'sm' | 'md' | 'lg' | 'xl' | 'icon';
+	buttonSize?: 'sm' | 'md' | 'lg' | 'xl';
 	textSize?: 'small' | 'large';
 	color?: 'primary' | 'secondary';
 	children?: ReactNode;
@@ -10,11 +9,9 @@ interface ButtonProps {
 	disabled?: boolean;
 	fullWidth?: boolean;
 	className?: string;
-	src?: string;
-	iconSize?: string;
 }
 
-const GeneralButton2: React.FC<ButtonProps> = ({
+const GeneralButton = ({
 	buttonSize,
 	textSize = 'small',
 	color,
@@ -23,9 +20,7 @@ const GeneralButton2: React.FC<ButtonProps> = ({
 	disabled = false,
 	className,
 	fullWidth,
-	src,
-	iconSize,
-}) => {
+}: ButtonProps) => {
 	const buttonSizeClasses =
 		buttonSize === 'sm'
 			? `px-[29px] py-[7px] sm:px-[9px] sm:py-[7px]`
@@ -35,9 +30,7 @@ const GeneralButton2: React.FC<ButtonProps> = ({
 					? `py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]`
 					: buttonSize === 'xl'
 						? 'px-[236.5px] py-[14.5px] sm:px-[152px] '
-						: buttonSize === 'icon'
-							? ' size-[36px] lg:size-[40px]'
-							: '';
+						: '';
 
 	const textSizeClasses =
 		textSize === 'small'
@@ -55,22 +48,16 @@ const GeneralButton2: React.FC<ButtonProps> = ({
 
 	const buttonFullClasses = fullWidth ? 'w-full' : '';
 	const disabledClasses = disabled ? ' text-white cursor-not-allowed' : '';
-	const iconSizeClasses = iconSize ? iconSize : 'w-[16px] h-[16px] ';
+
 	return (
 		<button
 			className={`${className} ${disabledClasses} ${textSizeClasses} ${colorClasses} ${buttonSizeClasses} ${buttonFullClasses}`}
 			onClick={onClick}
 			disabled={disabled}
 		>
-			{src ? (
-				<div className={`relative flex justify-center ${iconSizeClasses}`}>
-					<Image src={src} alt='Image Alt Text' fill />
-				</div>
-			) : (
-				children
-			)}
+			{children}
 		</button>
 	);
 };
 
-export default GeneralButton2;
+export default GeneralButton;
