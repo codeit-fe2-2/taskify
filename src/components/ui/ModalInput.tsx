@@ -106,7 +106,7 @@ function ModalManagerInput() {
 		}
 	};
 
-	const handleOpen = () => {
+	const handleFocus = () => {
 		if (managerOptions.length > 0) {
 			setOpen(!open);
 		}
@@ -136,7 +136,7 @@ function ModalManagerInput() {
 					onKeyDown={handleAddManager}
 					className='flex size-full items-center gap-[10px] rounded-md p-4 text-base font-normal outline-none'
 				/>
-				<button className='absolute right-4 top-3' onClick={handleOpen}>
+				<button className='absolute right-4 top-3' onClick={handleFocus}>
 					<Image
 						src='/icons/arrow_drop_down.svg'
 						width={26}
