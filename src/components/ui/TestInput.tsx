@@ -5,15 +5,16 @@ import Datetime from 'react-datetime';
 const inputClassNames = {
 	border:
 		'relative rounded-md border border-solid border-gray3 bg-white focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2',
+	label: 'text-lg font-medium',
 	// 사이즈를 결정하는 키워드
-	type: {
+	inputType: {
 		dropdown: 'h-12 w-[217px]',
 		input: 'h-12 w-[450px]',
 		textarea: 'min-h-[110px] w-[450px] sm:w-[287px]',
 	},
 };
 
-type ModalInputType = 'title' | 'deadline' | 'tag';
+type ModalInputType = '제목' | '마감일' | '태그';
 
 interface ModalInputInputProps {
 	type: ModalInputType;
@@ -43,33 +44,29 @@ function ModalInputInput({ type }: ModalInputInputProps): JSX.Element {
 	};
 
 	switch (type) {
-		case 'title':
+		case '제목':
 			inputElement = (
 				<>
-					<label htmlFor='title' className='text-lg font-medium'>
-						제목 <span className='text-violet2'>*</span>
-					</label>
 					<div
-						className={`${inputClassNames.type.input} ${inputClassNames.border}`}
+						className={`flex items-center gap-[10px] px-4 py-[14px] text-base font-normal ${inputClassNames.inputType.input} ${inputClassNames.border}`}
 					>
 						<input
 							type='text'
 							name='title'
 							id='title'
 							placeholder='제목을 입력해주세요'
-							className='flex size-full items-center gap-[10px] rounded-md px-4 py-[14px] text-base font-normal outline-none'
+							className='size-full rounded-md outline-none'
 						/>
 					</div>
 				</>
 			);
 			break;
 
-		case 'deadline':
+		case '마감일':
 			inputElement = (
 				<>
-					<p className='text-lg font-medium'>마감일</p>
 					<div
-						className={`flex ${inputClassNames.type.input} items-center gap-[10px] px-4 py-[14px] text-base font-normal ${inputClassNames.border}`}
+						className={`flex items-center gap-[10px] px-4 py-[14px] text-base font-normal ${inputClassNames.inputType.input} ${inputClassNames.border}`}
 					>
 						<Image
 							src='/icons/calendar.svg'
@@ -87,14 +84,13 @@ function ModalInputInput({ type }: ModalInputInputProps): JSX.Element {
 			);
 			break;
 
-		case 'tag':
+		case '태그':
 			inputElement = (
 				<>
-					<label htmlFor='tag' className='text-lg font-medium'>
-						태그
-					</label>
+					{/* flex items-center gap-[10px] px-4 py-[14px] text-base font-normal */}
+					{/* snap-x flex-row overflow-x-auto scroll-smooth */}
 					<div
-						className={`flex ${inputClassNames.type.input} snap-x flex-row items-center gap-[10px] overflow-x-auto scroll-smooth px-2 text-base font-normal ${inputClassNames.border}`}
+						className={`flex snap-x flex-row items-center gap-[10px] overflow-x-auto scroll-smooth px-4 text-base font-normal ${inputClassNames.inputType.input} ${inputClassNames.border}`}
 					>
 						{
 							// chip 생기면 대체할 예정
@@ -124,13 +120,12 @@ function ModalInputInput({ type }: ModalInputInputProps): JSX.Element {
 
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
+			<p className={`${inputClassNames.label}`}>
+				{type} {type === '제목' && <span className='text-violet2'>*</span>}
+			</p>
 			<div>{inputElement}</div>
 		</div>
 	);
 }
 
-function Chip() {
-	return <button className='size-9 rounded-full bg-violet2' />;
-}
-
-export { Chip, ModalInputInput };
+export { ModalInputInput };
