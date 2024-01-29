@@ -9,19 +9,22 @@ import {
 } from '@/src/components/ui/ModalInput';
 import ModalDropdown from '@/src/components/ui/ModalInput/ModalDropdown';
 import ModalInput from '@/src/components/ui/ModalInput/ModalInput';
+import ModalTextareaInput from '@/src/components/ui/ModalInput/ModalTextareaInput';
 
 export default function Page() {
 	return (
 		<>
-			<ModalInput type='제목' />
+			<ModalInput label='제목' />
 			<br />
-			<ModalInput type='마감일' />
+			<ModalInput label='마감일' />
 			<br />
-			<ModalInput type='태그' />
+			<ModalInput label='태그' />
 			<br />
-			<ModalDropdown type='상태' />
+			<ModalDropdown label='상태' />
 			<br />
-			<ModalDropdown type='담당자' />
+			<ModalDropdown label='담당자' />
+			<br />
+			<ModalTextareaInput label='댓글' />
 
 			<hr className='my-4' />
 

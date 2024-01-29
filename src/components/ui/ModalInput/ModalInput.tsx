@@ -7,10 +7,12 @@ import { inputClassNames } from './inputClassNames';
 type ModalInputType = '제목' | '마감일' | '태그';
 
 interface ModalInputProps {
-	type: ModalInputType;
+	label: ModalInputType;
 }
 
-export default function ModalInput({ type }: ModalInputProps): JSX.Element {
+export default function ModalInput({
+	label: type,
+}: ModalInputProps): JSX.Element {
 	const [tags, setTags] = useState<string[]>([]); // chip 생기면 대체할 예정
 	const [tagInput, setTagInput] = useState<string>('');
 
@@ -21,7 +23,7 @@ export default function ModalInput({ type }: ModalInputProps): JSX.Element {
 		className: 'size-full outline-none rounded-md',
 	};
 
-	const classNames = `${inputClassNames.inputContainer} ${inputClassNames.type.input} ${type === '태그' && 'snap-x scroll-pl-4 flex-row overflow-x-auto scroll-smooth scrollbar-hide'}`;
+	const classNames = `${inputClassNames.container} ${inputClassNames.inputStyle} ${inputClassNames.type.input} ${type === '태그' && 'snap-x scroll-pl-4 flex-row overflow-x-auto scroll-smooth scrollbar-hide'}`;
 
 	const handleTagInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setTagInput(event.target.value);

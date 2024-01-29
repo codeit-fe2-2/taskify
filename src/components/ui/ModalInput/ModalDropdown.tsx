@@ -6,11 +6,11 @@ import { inputClassNames } from './inputClassNames';
 type ModalDropdownType = '상태' | '담당자';
 
 interface ModalDropdownProps {
-	type: ModalDropdownType;
+	label: ModalDropdownType;
 }
 
 export default function ModalDropdown({
-	type,
+	label: type,
 }: ModalDropdownProps): JSX.Element {
 	let dropdownElement;
 	// chip 생기면 대대적으로 수정 예정... 임시로 string으로 대체
@@ -98,7 +98,7 @@ export default function ModalDropdown({
 		<div className='inline-flex flex-col items-start gap-2.5'>
 			<p className={`${inputClassNames.label}`}>{type}</p>
 			<div
-				className={`${inputClassNames.type.dropdown} ${inputClassNames.dropdownContainer}`}
+				className={`${inputClassNames.type.dropdown} ${inputClassNames.container}`}
 			>
 				{dropdownElement}
 				{open && (

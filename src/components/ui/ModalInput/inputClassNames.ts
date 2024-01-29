@@ -1,8 +1,10 @@
 export const inputClassNames = {
-	inputContainer:
-		'relative flex items-center gap-[10px] rounded-md border border-solid border-gray3 bg-white px-4 py-[14px] text-base font-normal focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2',
-	dropdownContainer:
+	container:
 		'relative rounded-md border border-solid border-gray3 bg-white focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2',
+	inputStyle:
+		'flex items-center gap-[10px] px-4 py-[14px] text-base font-normal',
+	textareaStyle:
+		'flex flex-col items-start gap-[10px] p-4 text-base font-normal',
 	dropdownOptions:
 		'absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]',
 	label: 'text-lg font-medium',
