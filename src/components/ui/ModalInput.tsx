@@ -2,6 +2,17 @@ import Image from 'next/image';
 import React, { ChangeEvent, useRef, useState } from 'react';
 import Datetime from 'react-datetime';
 
+const inputClassNames = {
+	border:
+		'relative rounded-md border border-solid border-gray3 bg-white focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2',
+	// 사이즈를 결정하는 키워드
+	type: {
+		dropdown: 'h-12 w-[217px]',
+		input: 'h-12 w-[450px]',
+		textarea: 'min-h-[110px] w-[450px] sm:w-[287px]',
+	},
+};
+
 function ModalProgressInput() {
 	const [open, setOpen] = useState(false);
 	// chip 생기면 대대적으로 수정 예정... 임시로 string으로 대체
@@ -26,11 +37,13 @@ function ModalProgressInput() {
 			<label htmlFor='progress' className='text-lg font-medium'>
 				상태
 			</label>
-			<div>
+			<div
+				className={`${inputClassNames.type.dropdown} ${inputClassNames.border}`}
+			>
 				<button
-					className='relative h-12 w-[217px] rounded-md border-[1px] border-solid border-gray3 bg-white focus:z-20 focus:outline-none focus:ring-[1px] focus:ring-violet2'
 					onFocus={handleFocus}
 					// onBlur={handleBlur} <- 이거 넣으면 li 클릭하는 것보다 onBlur가 먼저 동작해서 handleProgress가 동작 안 함... ㅠㅠ
+					className='size-full rounded-md focus:z-20'
 				>
 					<p>{progress}</p>
 					<Image
@@ -42,7 +55,7 @@ function ModalProgressInput() {
 					/>
 				</button>
 				{open && (
-					<ul className='absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border-[1px] border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]'>
+					<ul className='absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]'>
 						{progressOptions.map((progressOption, index) => (
 							<li key={index}>
 								<button
@@ -110,7 +123,9 @@ function ModalManagerInput() {
 			<label htmlFor='manager' className='text-lg font-medium'>
 				담당자
 			</label>
-			<div className='relative'>
+			<div
+				className={`${inputClassNames.type.dropdown} ${inputClassNames.border}`}
+			>
 				<input
 					type='text'
 					name='manager'
@@ -119,7 +134,7 @@ function ModalManagerInput() {
 					value={managerInput}
 					onChange={handleManagerInputChange}
 					onKeyDown={handleAddManager}
-					className='flex h-12 w-[217px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white p-4 text-base font-normal focus:outline-none focus:ring-[1px] focus:ring-violet2'
+					className='flex size-full items-center gap-[10px] rounded-md p-4 text-base font-normal outline-none'
 				/>
 				<button className='absolute right-4 top-3' onClick={handleOpen}>
 					<Image
@@ -130,7 +145,7 @@ function ModalManagerInput() {
 					/>
 				</button>
 				{open && (
-					<ul className='absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border-[1px] border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]'>
+					<ul className='absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]'>
 						{managerOptions.map((managerOption, index) => (
 							<li key={index}>
 								<button
@@ -164,17 +179,19 @@ function ModalCommentInput() {
 			<label htmlFor='comment' className='text-lg font-medium'>
 				댓글
 			</label>
-			<div className='relative flex min-h-[110px] w-[450px] flex-col items-start gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white p-4 text-base font-normal focus-within:outline-none focus-within:ring-[1px]  focus-within:ring-violet2'>
+			<div
+				className={`flex flex-col items-start gap-[10px] p-4 text-base font-normal ${inputClassNames.type.textarea} ${inputClassNames.border}`}
+			>
 				<textarea
 					ref={textareaRef}
 					name='comment'
 					id='comment'
 					placeholder='댓글 작성하기'
 					onChange={handleTextareaChange}
-					className='size-full resize-none border-none outline-none'
+					className='size-full resize-none rounded-md border-none outline-none'
 				/>
-				{/* 차후 button 컴포넌트 삽입 예정(크기만 맞춘 임시 버튼) */}
-				<button className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 border-[1px] border-solid border-gray3 px-[31px] py-[9px]' />
+				{/* 차후 button 컴포넌트 삽입 예정(크기와 위치만 맞춘 임시 버튼) */}
+				<button className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 border border-solid border-gray3 px-[31px] py-[9px]' />
 			</div>
 		</div>
 	);
@@ -186,13 +203,17 @@ function ModalTitleInput() {
 			<label htmlFor='title' className='text-lg font-medium'>
 				제목 <span className='text-violet2'>*</span>
 			</label>
-			<input
-				type='text'
-				name='title'
-				id='title'
-				placeholder='제목을 입력해주세요'
-				className='flex h-12 w-[450px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white px-4 py-[14px] text-base font-normal focus:outline-none focus:ring-[1px] focus:ring-violet2'
-			/>
+			<div
+				className={`${inputClassNames.type.input} ${inputClassNames.border}`}
+			>
+				<input
+					type='text'
+					name='title'
+					id='title'
+					placeholder='제목을 입력해주세요'
+					className='flex size-full items-center gap-[10px] rounded-md px-4 py-[14px] text-base font-normal outline-none'
+				/>
+			</div>
 		</div>
 	);
 }
@@ -200,12 +221,14 @@ function ModalTitleInput() {
 function ModalDeadlineInput() {
 	const inputProps = {
 		placeholder: '날짜를 입력해주세요',
-		className: 'w-full h-full outline-none',
+		className: 'size-full outline-none rounded-md',
 	};
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
 			<p className='text-lg font-medium'>마감일</p>
-			<div className='flex h-12 w-[450px] items-center gap-[10px] rounded-md border-[1px] border-solid border-gray3 bg-white px-4 py-[14px] text-base font-normal focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2'>
+			<div
+				className={`flex ${inputClassNames.type.input} items-center gap-[10px] px-4 py-[14px] text-base font-normal ${inputClassNames.border}`}
+			>
 				<Image
 					src='/icons/calendar.svg'
 					width={20}
@@ -243,7 +266,9 @@ function ModalTagInput() {
 			<label htmlFor='tag' className='text-lg font-medium'>
 				태그
 			</label>
-			<div className='flex w-[450px] snap-x flex-row items-center gap-[10px] overflow-x-auto scroll-smooth rounded-md border-[1px] border-solid border-gray3 bg-white px-2 text-base font-normal focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2'>
+			<div
+				className={`flex ${inputClassNames.type.input} snap-x flex-row items-center gap-[10px] overflow-x-auto scroll-smooth px-2 text-base font-normal ${inputClassNames.border}`}
+			>
 				{
 					// chip 생기면 대체할 예정
 					tags.map((tag, index) => (
@@ -262,7 +287,7 @@ function ModalTagInput() {
 					placeholder='입력 후 Enter'
 					onChange={handleTagInputChange}
 					onKeyDown={handleAddTag}
-					className='h-12 w-full min-w-24 shrink-0 snap-end border-none py-[14px] outline-none'
+					className='size-full min-w-24 shrink-0 snap-end border-none py-[14px] outline-none'
 				/>
 			</div>
 		</div>
