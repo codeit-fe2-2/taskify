@@ -60,6 +60,7 @@ function ModalProgressInput() {
 							<li key={index}>
 								<button
 									className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
+									className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
 									onClick={() => handleProgress(progressOption)}
 								>
 									{progress === progressOption ? (
@@ -149,6 +150,7 @@ function ModalManagerInput() {
 						{managerOptions.map((managerOption, index) => (
 							<li key={index}>
 								<button
+									className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
 									className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
 									onClick={() => handleManager(managerOption)}
 								>
@@ -261,6 +263,21 @@ function ModalTagInput() {
 		}
 	};
 
+	const [tags, setTags] = useState<string[]>([]); // chip 생기면 대체할 예정
+	const [tagInput, setTagInput] = useState<string>('');
+
+	const handleTagInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setTagInput(event.target.value);
+	};
+
+	const handleAddTag = (event: React.KeyboardEvent<HTMLInputElement>) => {
+		if (event.key === 'Enter') {
+			if (tagInput.trim() !== '' && !tags.includes(tagInput.trim())) {
+				setTags([...tags, tagInput.trim()]);
+			}
+		}
+	};
+
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
 			<label htmlFor='tag' className='text-lg font-medium'>
@@ -295,6 +312,63 @@ function ModalTagInput() {
 }
 
 function ModalImageInput() {
+	const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
+
+	const handleFileInputClick = () => {
+		const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+		fileInput.click();
+	};
+
+	const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const selectedFile = e.target.files?.[0];
+
+		if (selectedFile) {
+			const reader = new FileReader();
+
+			reader.onload = (event) => {
+				const imageSrc = event.target?.result as string;
+				setBackgroundImage(imageSrc);
+			};
+
+			reader.readAsDataURL(selectedFile);
+		}
+	};
+
+	return (
+		<button
+			onClick={handleFileInputClick}
+			className='group relative flex size-[76px] shrink-0 items-center justify-center rounded-md bg-white'
+		>
+			{backgroundImage ? (
+				<>
+					<Image
+						src={backgroundImage}
+						fill={true}
+						alt='test Image'
+						className='rounded-md'
+					/>
+					<div className='z-10 flex size-[76px] items-center justify-center rounded-md bg-black4 opacity-0 group-hover:opacity-60'>
+						<Image
+							src='/icons/edit.svg'
+							width={30}
+							height={30}
+							alt='Edit Image Icon'
+						/>
+					</div>
+				</>
+			) : (
+				<div className='rounded-md bg-gray3 p-6'>
+					<div className='size-[28px] bg-violet2' />
+				</div>
+			)}
+			<input
+				type='file'
+				id='fileInput'
+				className='hidden'
+				onChange={handleFileChange}
+			/>
+		</button>
+	);
 	const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
 
 	const handleFileInputClick = () => {
