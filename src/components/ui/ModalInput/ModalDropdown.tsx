@@ -14,12 +14,12 @@ export default function ModalDropdown({
 }: ModalDropdownProps): JSX.Element {
 	let dropdownElement;
 	// chip 생기면 대대적으로 수정 예정... 임시로 string으로 대체
-	const progressOptions = ['To Do', 'On Progress', 'Done'];
+	const progressOptions: string[] = ['To Do', 'On Progress', 'Done'];
 	const [open, setOpen] = useState<boolean>(false);
 	const [options, setOptions] = useState<string[]>(
 		type === '상태' ? progressOptions : [],
 	);
-	const [currentOption, setCurrentOption] = useState(options[0] || '');
+	const [currentOption, setCurrentOption] = useState<string>(options[0] || '');
 
 	const handleFocus = () => {
 		if (options.length > 0) {
