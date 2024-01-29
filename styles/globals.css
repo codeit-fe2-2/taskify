@@ -20,3 +20,12 @@
 * {
 	box-sizing: border-box;
 }
+
+@layer component {
+	._flex-center {
+		@apply flex items-center justify-center;
+	}
+	._pos-center {
+		@apply top-2/4 left-2/4 -translate-x-2/4 -translate-y-2/4;
+	}
+}
