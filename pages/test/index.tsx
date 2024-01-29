@@ -1,11 +1,11 @@
 import {
-	ModalProgressInput,
-	ModalManagerInput,
 	ModalCommentInput,
-	ModalTitleInput,
 	ModalDeadlineInput,
-	ModalTagInput,
 	ModalImageInput,
+	ModalManagerInput,
+	ModalProgressInput,
+	ModalTagInput,
+	ModalTitleInput,
 } from '@/src/components/ui/ModalInput';
 
 export default function Page() {
