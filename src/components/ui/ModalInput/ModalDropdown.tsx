@@ -52,19 +52,21 @@ export default function ModalDropdown({
 	switch (type) {
 		case '상태':
 			dropdownElement = (
-				<button
-					onClick={handleFocus}
-					className='size-full rounded-md focus:z-20'
-				>
-					<p>{currentOption}</p>
-					<Image
-						src='/icons/arrow_drop_down.svg'
-						width={26}
-						height={26}
-						alt='Progress Dropdown'
-						className='absolute right-4 top-3'
-					/>
-				</button>
+				<>
+					<button
+						onClick={handleFocus}
+						className='size-full rounded-md focus:z-20'
+					>
+						<p>{currentOption}</p>
+						<Image
+							src='/icons/arrow_drop_down.svg'
+							width={26}
+							height={26}
+							alt='Progress Dropdown'
+							className='absolute right-4 top-3'
+						/>
+					</button>
+				</>
 			);
 			break;
 		case '담당자':
@@ -78,7 +80,7 @@ export default function ModalDropdown({
 						value={currentOption}
 						onChange={handleManagerInputChange}
 						onKeyDown={handleAddManager}
-						className='flex size-full items-center gap-[10px] rounded-md p-4 text-base font-normal outline-none focus:z-20'
+						className='flex size-full items-center gap-[10px] rounded-md p-4 text-base font-normal outline-none'
 					/>
 					<button className='absolute right-4 top-3' onClick={handleFocus}>
 						<Image

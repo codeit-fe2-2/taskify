@@ -6,7 +6,7 @@ export const inputClassNames = {
 	textareaStyle:
 		'flex flex-col items-start gap-[10px] p-4 text-base font-normal',
 	dropdownOptions:
-		'absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.1)]',
+		'absolute z-10 mt-0.5 flex w-[217px] flex-col rounded-md border border-solid border-gray3 bg-white shadow-[0_4px_20px_0px_rgba(0,0,0,0.8)]',
 	label: 'text-lg font-medium',
 	// 사이즈를 결정하는 키워드
 	type: {
