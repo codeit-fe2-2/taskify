@@ -90,14 +90,14 @@ function ModalInputInput({ type }: ModalInputInputProps): JSX.Element {
 					{/* flex items-center gap-[10px] px-4 py-[14px] text-base font-normal */}
 					{/* snap-x flex-row overflow-x-auto scroll-smooth */}
 					<div
-						className={`flex snap-x flex-row items-center gap-[10px] overflow-x-auto scroll-smooth px-4 text-base font-normal ${inputClassNames.inputType.input} ${inputClassNames.border}`}
+						className={`flex snap-x scroll-pl-4 flex-row items-center gap-[10px] overflow-x-auto scroll-smooth px-4 text-base font-normal scrollbar-hide ${inputClassNames.inputType.input} ${inputClassNames.border}`}
 					>
 						{
 							// chip 생기면 대체할 예정
 							tags.map((tag, index) => (
 								<p
 									key={index}
-									className='inline-flex h-12 shrink-0 snap-start items-center px-1'
+									className='inline-flex h-12 shrink-0 snap-start items-center'
 								>
 									{tag}
 								</p>
