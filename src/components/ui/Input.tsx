@@ -1,30 +1,9 @@
 import clsx from 'clsx';
-import { HTMLInputTypeAttribute, useState } from 'react';
+import { HTMLInputTypeAttribute, useId, useRef, useState } from 'react';
 
-type GeneralInputType =
-	| 'number'
-	| 'button'
-	| 'checkbox'
-	| 'color'
-	| 'date'
-	| 'datetime-local'
-	| 'file'
-	| 'hidden'
-	| 'image'
-	| 'month'
-	| 'radio'
-	| 'range'
-	| 'reset'
-	| 'search'
-	| 'submit'
-	| 'tel'
-	| 'text'
-	| 'time'
-	| 'url'
-	| 'week';
+type GeneralInputType = 'text' | 'number' | 'hidden' | 'search' | 'tel' | 'url';
 
 interface generalInputProps {
-	id: string;
 	type: GeneralInputType;
 	label?: string;
 	placeholder?: string;
@@ -33,7 +12,7 @@ interface generalInputProps {
 
 interface signInputProps extends Omit<generalInputProps, 'type'> {
 	type: Extract<HTMLInputTypeAttribute, 'text' | 'email' | 'password'>;
-	regex: string;
+	pattern: string;
 	invalidMessage: string;
 }
 
@@ -48,28 +27,26 @@ const addInvalidClass = (event: React.FocusEvent<HTMLInputElement>) => {
 
 export default function Input(props: InputProps) {
 	const {
-		id,
 		type,
 		label,
 		placeholder,
 		onChange,
-		regex,
+		pattern,
 		invalidMessage,
 		...rest
 	} = props as signInputProps;
-	// const { id, type, label, placeholder, onChange } = props;
-	// const { regex, invalidMessage } = props as signInputProps;
-	const [value, setValue] = useState('');
+	console.log(pattern);
+	const id = useId();
+	const inputRef = useRef<HTMLInputElement>(null);
 	const [htmlType, setHtmlType] = useState(type);
 
 	const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		setValue(event.target.value);
 		if (onChange) {
 			onChange(event.target.value);
 		}
 	};
 	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-		if (regex) {
+		if (pattern) {
 			addInvalidClass(event);
 		}
 	};
@@ -89,14 +66,14 @@ export default function Input(props: InputProps) {
 			)}
 			<div className='relative w-[520px] sm:w-[351px]'>
 				<input
+					ref={inputRef}
 					id={id}
 					type={htmlType}
-					value={value}
 					placeholder={placeholder}
 					onChange={handleChange}
 					onBlur={handleBlur}
 					required
-					pattern={regex}
+					pattern={pattern}
 					className={clsx(
 						'peer flex h-[50px] w-full flex-col items-center px-4 py-3 text-base',
 						type === 'password' ? 'text-black3' : 'text-black2',
