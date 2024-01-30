@@ -1,4 +1,5 @@
 export const PAGE_ROUTES = {
+	HOME: '/',
 	MY_DASHBOARD: '/mydashboard',
 	MY_PAGE: '/mypage',
 	SIGNUP: '/signup',

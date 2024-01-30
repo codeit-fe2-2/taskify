@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { PAGE_ROUTES } from '@/src/constants/routes';
 import { Dashboard } from '@/src/types/dashboard';
 
 interface Props {
@@ -17,7 +18,7 @@ export default function SideMenu({
 	return (
 		<aside className='h-screen overflow-y-auto border-r border-gray3 px-3 py-5 sm:w-[67px] sm:px-3 md:w-[160px] lg:w-[300px]'>
 			<div className='mb-14 px-3 sm:mb-9 sm:px-0'>
-				<Link href={'/'} className='flex justify-center'>
+				<Link href={PAGE_ROUTES.HOME} className='flex justify-center'>
 					<Image
 						src='/icons/logo.svg'
 						alt=''
@@ -54,7 +55,7 @@ export default function SideMenu({
 							)}
 						>
 							<Link
-								href={`/dashboard/${dashboard.id}`}
+								href={`${PAGE_ROUTES.DASHBOARD}${dashboard.id}`}
 								className='flex w-full items-center gap-4'
 							>
 								<svg
