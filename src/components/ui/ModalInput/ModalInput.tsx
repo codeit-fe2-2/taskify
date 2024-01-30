@@ -1,6 +1,6 @@
 import moment from 'moment';
 import Image from 'next/image';
-import React, { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Datetime from 'react-datetime';
 
 import { inputClassNames } from './inputClassNames';
