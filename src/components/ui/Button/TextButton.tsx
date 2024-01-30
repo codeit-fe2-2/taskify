@@ -1,0 +1,139 @@
+import clsx from 'clsx';
+import React, { ReactNode } from 'react';
+// xxs 삭제, xs 입력,  sm 수락거절, md 취소 확인, lg 대시보드삭제하기,  xl로그인
+interface ButtonProps {
+	type?: 'submit' | 'reset' | 'button';
+	buttonSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+	textSize?: 'small' | 'medium' | 'large';
+	color?: 'primary' | 'secondary' | 'third';
+	children?: ReactNode;
+	onClick?: () => void;
+	disabled?: boolean;
+	fullWidth?: boolean;
+	className?: string;
+}
+
+const GeneralButton = ({
+	type = 'button',
+	buttonSize,
+	textSize = 'small',
+	color,
+	children,
+	onClick,
+	disabled = false,
+	className,
+	fullWidth,
+}: ButtonProps) => {
+	const buttonSizeClasses = clsx({
+		'px-[29px] py-[7px] sm:px-[9px] sm:py-[7px]': buttonSize === 'xxs',
+		'px-[31px] py-[9px]  sm:py-[7px]': buttonSize === 'xs',
+		'px-[29px] py-[7px] md:px-[72px] md:py-[23px] sm:px-[37px] sm:py-[7px]':
+			buttonSize === 'sm',
+		'px-[46px] py-[14px]  sm:px-[56px] sm:py-[12px]': buttonSize === 'md',
+		'py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]': buttonSize === 'lg',
+		'px-[236.5px] py-[14.5px] sm:px-[152px]': buttonSize === 'xl',
+	});
+
+	const textSizeClasses = clsx({
+		'text-[12px] md:text-[14px] lg:text-[14px]': textSize === 'small',
+		'text-[16px] sm:text-[14px] ': textSize === 'medium',
+		'text-lg': textSize === 'large',
+	});
+
+	const colorClasses = clsx({
+		'bg-violet2 border-[1px] border-violet2 text-white rounded-lg':
+			color === 'primary',
+		'text-violet2 border-gray4 border-[1px] rounded-lg': color === 'secondary',
+		'border-gray4 border-[1px] rounded-lg': color === 'third',
+	});
+
+	const buttonFullClasses = fullWidth ? 'w-full' : '';
+	const disabledClasses = disabled
+		? 'bg-gray4 text-white cursor-not-allowed'
+		: '';
+
+	return (
+		<button
+			type={type}
+			className={`${className} ${disabledClasses} ${textSizeClasses} ${colorClasses} ${buttonSizeClasses} ${buttonFullClasses} font-medium`}
+			onClick={onClick}
+			disabled={disabled}
+		>
+			{children}
+		</button>
+	);
+};
+
+export default GeneralButton;
+
+// import clsx from 'clsx';
+// import React, { ReactNode } from 'react';
+
+// interface ButtonProps {
+// 	type?: 'submit' | 'reset' | 'button';
+// 	buttonSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+// 	textSize?: 'small' | 'large';
+// 	color?: 'primary' | 'secondary';
+// 	children?: ReactNode;
+// 	onClick?: () => void;
+// 	disabled?: boolean;
+// 	fullWidth?: boolean;
+// 	className?: string;
+// }
+
+// const GeneralButton = ({
+// 	type = 'button',
+// 	buttonSize,
+// 	textSize = 'small',
+// 	color,
+// 	children,
+// 	onClick,
+// 	disabled = false,
+// 	className,
+// 	fullWidth,
+// }: ButtonProps) => {
+// 	const buttonSizeClasses = {
+// 		xxs: 'px-[29px] py-[7px] sm:px-[9px] sm:py-[7px]',
+// 		xs: 'px-[31px] py-[9px] sm:py-[7px]',
+// 		sm: 'px-[29px] py-[7px] md:px-[72px] md:py-[23px] sm:px-[37px] sm:py-[7px]',
+// 		md: 'px-[46px] py-[14px] sm:px-[56px] sm:py-[12px]',
+// 		lg: 'py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]',
+// 		xl: 'px-[236.5px] py-[14.5px] sm:px-[152px]',
+// 	}[buttonSize];
+
+// 	const textSizeClasses = {
+// 		small: 'text-[12px] md:text-[14px] lg:text-[14px]',
+// 		large: 'text-lg',
+// 	}[textSize];
+
+// 	const colorClasses = {
+// 		primary: 'bg-violet2 text-white rounded-md',
+// 		secondary: 'text-violet2 border-gray4 border-[1px] rounded-md',
+// 	}[color];
+
+// 	const buttonFullClasses = fullWidth ? 'w-full' : '';
+// 	const disabledClasses = disabled ? 'text-white cursor-not-allowed' : '';
+
+// 	const combinedClasses = clsx(
+// 		className,
+// 		disabledClasses,
+// 		textSizeClasses,
+// 		colorClasses,
+// 		buttonSizeClasses,
+// 		buttonFullClasses,
+// 		'font-medium',
+// 	);
+
+// 	return (
+// 		<button
+// 			type={type}
+// 			className={combinedClasses}
+// 			onClick={onClick}
+// 			disabled={disabled}
+// 		>
+// 			{children}
+// 		</button>
+// 	);
+// };
+
+// export default GeneralButton;
