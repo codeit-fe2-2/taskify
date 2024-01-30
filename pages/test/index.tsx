@@ -10,8 +10,8 @@ import mockupData from './mockup.json';
 export default function Page() {
 	// Tag 때문에 타입을 string[]으로 지정함.
 	const [values, setValues] = useState<string[]>([]);
-	// 일단 mockupData에는 string으로 해놨습니다만 실제로는 어떻게 작동할지 모르겠습니다.
-	const progressOptions: string[] = mockupData.columns;
+	// 실제로 상태 드롭다운을 쓸 때는 이렇게 따로 ["To Do", "On Progress", "Done"]를 전달하는 게 맞을 거 같습니다. API 문서에는 그냥 columnId<number>로 나와있어서...
+	const progressOptions: string[] = ['To Do', 'On Progress', 'Done'];
 
 	const membersData = mockupData.members.map((member) => ({
 		id: member.id,

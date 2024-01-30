@@ -5,7 +5,7 @@
 			"userId": 101,
 			"email": "john.doe@example.com",
 			"nickname": "JohnDoe",
-			"profileImageUrl": "https://example.com/profiles/john_doe.jpg",
+			"profileImageUrl": "https://cdn.pixabay.com/photo/2023/11/27/20/29/autumn-8416137_1280.png",
 			"createdAt": "2024-01-30T04:04:21.411Z",
 			"updatedAt": "2024-01-30T04:04:21.411Z",
 			"isOwner": true
@@ -15,7 +15,7 @@
 			"userId": 202,
 			"email": "alice@example.com",
 			"nickname": "Alice",
-			"profileImageUrl": "https://example.com/profiles/alice.jpg",
+			"profileImageUrl": "https://via.placeholder.com/150/a7f3d0/064e3b",
 			"createdAt": "2024-01-30T04:15:20.123Z",
 			"updatedAt": "2024-01-30T04:15:20.123Z",
 			"isOwner": false
@@ -25,11 +25,10 @@
 			"userId": 303,
 			"email": "bob@example.com",
 			"nickname": "Bob",
-			"profileImageUrl": "https://example.com/profiles/bob.jpg",
+			"profileImageUrl": "https://via.placeholder.com/150/831843/fce7f3",
 			"createdAt": "2024-01-30T04:42:35.567Z",
 			"updatedAt": "2024-01-30T04:42:35.567Z",
 			"isOwner": false
 		}
-	],
-	"columns": ["To Do", "On Progress", "Done"]
+	]
 }
