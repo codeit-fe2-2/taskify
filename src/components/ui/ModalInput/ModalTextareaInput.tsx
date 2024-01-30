@@ -1,22 +1,27 @@
-import React, { useRef } from 'react';
+import React, { ChangeEvent, useRef, useState } from 'react';
 
 import { inputClassNames } from './inputClassNames';
 
 interface ModalTextareaInputProps {
 	label: string;
+	onValuesChange: (newValues: string[]) => void;
 }
 
 export default function ModalTextareaInput({
 	label,
+	onValuesChange,
 }: ModalTextareaInputProps): JSX.Element {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
+	// const [values, setValues] = useState<string>(''); // 필요한 경우 주석 해제하여 사용
 
-	const handleTextareaChange = () => {
+	const handleTextareaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
 		const textarea = textareaRef.current;
 		if (textarea) {
 			textarea.style.height = 'auto';
 			textarea.style.height = `${textarea.scrollHeight}px`;
 		}
+		// setValues(event.target.value); // 필요한 경우 주석 해제하여 사용
+		onValuesChange([event.target.value]);
 	};
 
 	return (

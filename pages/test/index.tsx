@@ -5,6 +5,7 @@ import ModalInput from '@/src/components/ui/ModalInput/ModalInput';
 import ModalTextareaInput from '@/src/components/ui/ModalInput/ModalTextareaInput';
 
 export default function Page() {
+	// Tag 때문에 타입을 string[]으로 지정함
 	const [values, setValues] = useState<string[]>([]);
 
 	const handleValuesChange = (newValues: string[]) => {
@@ -24,7 +25,7 @@ export default function Page() {
 			<br />
 			<ModalDropdown label='담당자' />
 			<br />
-			<ModalTextareaInput label='댓글' />
+			<ModalTextareaInput label='댓글' onValuesChange={handleValuesChange} />
 		</>
 	);
 }
