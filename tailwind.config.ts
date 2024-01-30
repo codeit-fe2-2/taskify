@@ -7,11 +7,9 @@ const config: Config = {
 	],
 	theme: {
 		screens: {
-			sm: '480px',
-			md: '768px',
-			lg: '1200px',
-			xl: '1280px',
-			xl2: '1460px',
+			sm: { max: '759px' },
+			md: { min: '760px', max: '1199px' },
+			lg: { min: '1200px' },
 		},
 		colors: {
 			white: '#FFFFFF',

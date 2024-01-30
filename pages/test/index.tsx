@@ -1,23 +1,16 @@
-import {
-	ModalCommentInput,
-	ModalDeadlineInput,
-	ModalImageInput,
-	ModalManagerInput,
-	ModalProgressInput,
-	ModalTagInput,
-	ModalTitleInput,
-} from '@/src/components/ui/ModalInput';
+
+import React from 'react';
+
+import IconButton from '@/src/components/ui/Button/IconButton';
+
 
 export default function Page() {
+	const handleLoginClick = () => {
+		console.log('테슷흐입니다.');
+	};
 	return (
 		<>
-			<ModalProgressInput />
-			<ModalManagerInput />
-			<ModalCommentInput />
-			<ModalTitleInput />
-			<ModalDeadlineInput />
-			<ModalTagInput />
-			<ModalImageInput />
+			<div className='font-bold text-orange'>테스트 페이지!</div>
 		</>
 	);
 }
