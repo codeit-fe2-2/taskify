@@ -81,16 +81,25 @@ export default function ModalDropdown({
 											className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
 											onClick={() => handleOption(members?.indexOf(member))}
 										>
-											{value === members?.indexOf(member) ? (
-												<Image
-													src='/icons/check.svg'
-													width={22}
-													height={22}
-													alt={`${member.nickname} Checked`}
-												/>
-											) : (
-												<div className='w-[22px]' />
-											)}
+											<div className='w-[22px]'>
+												{value === members?.indexOf(member) && (
+													<Image
+														src='/icons/check.svg'
+														width={22}
+														height={22}
+														alt={`${member.nickname} Checked`}
+													/>
+												)}
+											</div>
+											<div
+												className='size-[26px] rounded-full'
+												style={{
+													backgroundImage: `url(${member.profileImageUrl})`,
+													backgroundPosition: 'center',
+													backgroundSize: 'cover',
+													backgroundRepeat: 'no-repeat',
+												}}
+											/>
 											<p>{member.nickname}</p>
 										</button>
 									</li>
