@@ -25,9 +25,9 @@ const GeneralButton = ({
 	fullWidth,
 }: ButtonProps) => {
 	const buttonSizeClasses = clsx({
-		'px-[29px] py-[7px] sm:px-[9px] sm:py-[7px]': buttonSize === 'xxs',
+		'px-[29.5px] py-[7.5px] sm:px-[9px] sm:py-[7px]': buttonSize === 'xxs',
 		'px-[31px] py-[9px]  sm:py-[7px]': buttonSize === 'xs',
-		'px-[29px] py-[7px] md:px-[72px] md:py-[23px] sm:px-[37px] sm:py-[7px]':
+		'px-[29.5px] py-[7.5px] md:px-[23.5px] md:py-[6.5px] sm:px-[44px] sm:py-[7px]':
 			buttonSize === 'sm',
 		'px-[46px] py-[14px]  sm:px-[56px] sm:py-[12px]': buttonSize === 'md',
 		'py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]': buttonSize === 'lg',
@@ -65,75 +65,3 @@ const GeneralButton = ({
 };
 
 export default GeneralButton;
-
-// import clsx from 'clsx';
-// import React, { ReactNode } from 'react';
-
-// interface ButtonProps {
-// 	type?: 'submit' | 'reset' | 'button';
-// 	buttonSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-// 	textSize?: 'small' | 'large';
-// 	color?: 'primary' | 'secondary';
-// 	children?: ReactNode;
-// 	onClick?: () => void;
-// 	disabled?: boolean;
-// 	fullWidth?: boolean;
-// 	className?: string;
-// }
-
-// const GeneralButton = ({
-// 	type = 'button',
-// 	buttonSize,
-// 	textSize = 'small',
-// 	color,
-// 	children,
-// 	onClick,
-// 	disabled = false,
-// 	className,
-// 	fullWidth,
-// }: ButtonProps) => {
-// 	const buttonSizeClasses = {
-// 		xxs: 'px-[29px] py-[7px] sm:px-[9px] sm:py-[7px]',
-// 		xs: 'px-[31px] py-[9px] sm:py-[7px]',
-// 		sm: 'px-[29px] py-[7px] md:px-[72px] md:py-[23px] sm:px-[37px] sm:py-[7px]',
-// 		md: 'px-[46px] py-[14px] sm:px-[56px] sm:py-[12px]',
-// 		lg: 'py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]',
-// 		xl: 'px-[236.5px] py-[14.5px] sm:px-[152px]',
-// 	}[buttonSize];
-
-// 	const textSizeClasses = {
-// 		small: 'text-[12px] md:text-[14px] lg:text-[14px]',
-// 		large: 'text-lg',
-// 	}[textSize];
-
-// 	const colorClasses = {
-// 		primary: 'bg-violet2 text-white rounded-md',
-// 		secondary: 'text-violet2 border-gray4 border-[1px] rounded-md',
-// 	}[color];
-
-// 	const buttonFullClasses = fullWidth ? 'w-full' : '';
-// 	const disabledClasses = disabled ? 'text-white cursor-not-allowed' : '';
-
-// 	const combinedClasses = clsx(
-// 		className,
-// 		disabledClasses,
-// 		textSizeClasses,
-// 		colorClasses,
-// 		buttonSizeClasses,
-// 		buttonFullClasses,
-// 		'font-medium',
-// 	);
-
-// 	return (
-// 		<button
-// 			type={type}
-// 			className={combinedClasses}
-// 			onClick={onClick}
-// 			disabled={disabled}
-// 		>
-// 			{children}
-// 		</button>
-// 	);
-// };
-
-// export default GeneralButton;

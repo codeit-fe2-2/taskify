@@ -125,7 +125,7 @@ export default function Page() {
 				rounded='right'
 				disabled={true}
 			/>
-			<br />
+
 			<DashBoardButton
 				id={dashboards[0].id}
 				title={dashboards[0].title}
