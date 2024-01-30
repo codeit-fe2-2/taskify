@@ -1,5 +1,6 @@
+import moment from 'moment';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Datetime from 'react-datetime';
 
 import { inputClassNames } from './inputClassNames';
@@ -8,13 +9,15 @@ type ModalInputType = '제목' | '마감일' | '태그';
 
 interface ModalInputProps {
 	label: ModalInputType;
+	onValuesChange: (newValues: string[]) => void;
 }
 
 export default function ModalInput({
 	label: type,
+	onValuesChange,
 }: ModalInputProps): JSX.Element {
-	const [tags, setTags] = useState<string[]>([]); // chip 생기면 대체할 예정
 	const [tagInput, setTagInput] = useState<string>('');
+	const [values, setValues] = useState<string[]>([]);
 
 	let inputElement;
 
@@ -23,16 +26,37 @@ export default function ModalInput({
 		className: 'size-full outline-none rounded-md',
 	};
 
-	const classNames = `${inputClassNames.container} ${inputClassNames.inputStyle} ${inputClassNames.type.input} ${type === '태그' && 'snap-x scroll-pl-4 flex-row overflow-x-auto scroll-smooth scrollbar-hide'}`;
+	const classNames = `${inputClassNames.container} ${inputClassNames.inputStyle} ${inputClassNames.type.input} ${
+		type === '태그'
+			? 'snap-x scroll-pl-4 flex-row overflow-x-auto scroll-smooth scrollbar-hide'
+			: ''
+	}`;
 
-	const handleTagInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	const handleTitleValue = (event: ChangeEvent<HTMLInputElement>) => {
+		setValues([event.target.value]);
+		onValuesChange([event.target.value]);
+	};
+
+	const handleDeadlineValue = (selectedMoment: moment.Moment | string) => {
+		if (moment.isMoment(selectedMoment)) {
+			// 타입이 Moment면 (날짜와 시간이면)
+			onValuesChange([selectedMoment.format('YYYY.MM.DD HH:mm')]);
+		} else {
+			// 타입이 String이면
+			setValues([selectedMoment]);
+			onValuesChange([selectedMoment]);
+		}
+	};
+
+	const handleTagInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		setTagInput(event.target.value);
 	};
 
 	const handleAddTag = (event: React.KeyboardEvent<HTMLInputElement>) => {
 		if (event.key === 'Enter') {
-			if (tagInput.trim() !== '' && !tags.includes(tagInput.trim())) {
-				setTags([...tags, tagInput.trim()]);
+			if (tagInput.trim() !== '' && !values.includes(tagInput.trim())) {
+				setValues([...values, tagInput.trim()]);
+				onValuesChange([...values, tagInput.trim()]);
 			}
 		}
 	};
@@ -47,6 +71,7 @@ export default function ModalInput({
 						id='title'
 						placeholder='제목을 입력해주세요'
 						className='size-full rounded-md outline-none'
+						onChange={handleTitleValue}
 					/>
 				</>
 			);
@@ -65,6 +90,7 @@ export default function ModalInput({
 						dateFormat='YYYY.MM.DD'
 						timeFormat='HH:mm'
 						inputProps={deadlineInputProps}
+						onChange={handleDeadlineValue}
 					/>
 				</>
 			);
@@ -73,17 +99,14 @@ export default function ModalInput({
 		case '태그':
 			inputElement = (
 				<>
-					{
-						// chip 생기면 대체할 예정
-						tags.map((tag, index) => (
-							<p
-								key={index}
-								className='inline-flex h-full shrink-0 snap-start items-center'
-							>
-								{tag}
-							</p>
-						))
-					}
+					{values.map((value, index) => (
+						<p
+							key={index}
+							className='inline-flex h-full shrink-0 snap-start items-center'
+						>
+							{value}
+						</p>
+					))}
 					<input
 						type='text'
 						name='tag'
