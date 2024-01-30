@@ -1,44 +1,31 @@
+import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 
 import Header from '@/src/components/layout/Header';
 import SideMenu from '@/src/components/layout/SideMenu';
+import { useGetDashboardList } from '@/src/hooks/dashboard/useGetDashboardList';
 
 export default function CommonLayout({ children }: { children: ReactNode }) {
+	const router = useRouter();
+	const { boardid } = router.query;
+	const boardId = boardid ? parseInt(boardid as string) : 0;
+
+	const { dashboardListInfo, execute } = useGetDashboardList();
+	const dashboards = dashboardListInfo?.dashboards;
+	const cursorId = dashboardListInfo?.cursorId;
+	const currentDashboard = dashboards?.find(
+		(dashboard) => dashboard.id === boardId,
+	);
+
 	return (
 		<div className='flex'>
 			<SideMenu
-				dashboardList={[
-					{
-						id: 1,
-						title: '비브리지',
-						color: '#7AC555',
-						createdAt: '2024-01-26T05:42:12.264Z',
-						updatedAt: '2024-01-26T05:42:12.264Z',
-						createdByMe: true,
-						userId: 10,
-					},
-					{
-						id: 2,
-						title: '코드잇',
-						color: '#760DDE',
-						createdAt: '2024-01-26T05:42:12.264Z',
-						updatedAt: '2024-01-26T05:42:12.264Z',
-						createdByMe: true,
-						userId: 10,
-					},
-					{
-						id: 3,
-						title: '3분기 계획',
-						color: '#FFA500',
-						createdAt: '2024-01-26T05:42:12.264Z',
-						updatedAt: '2024-01-26T05:42:12.264Z',
-						createdByMe: false,
-						userId: 11,
-					},
-				]}
+				dashboardList={dashboards}
+				cursorId={cursorId}
+				currentBoardId={boardId}
 			/>
 			<div className='grow'>
-				<Header />
+				<Header currentDashboard={currentDashboard} />
 				<main>{children}</main>
 			</div>
 		</div>
