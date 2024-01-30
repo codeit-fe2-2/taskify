@@ -1,15 +1,24 @@
+import React, { useState } from 'react';
+
 import ModalDropdown from '@/src/components/ui/ModalInput/ModalDropdown';
 import ModalInput from '@/src/components/ui/ModalInput/ModalInput';
 import ModalTextareaInput from '@/src/components/ui/ModalInput/ModalTextareaInput';
 
 export default function Page() {
+	const [values, setValues] = useState<string[]>([]);
+
+	const handleValuesChange = (newValues: string[]) => {
+		setValues(newValues);
+	};
+
 	return (
 		<>
-			<ModalInput label='제목' />
+			<p>{values}</p>
+			<ModalInput label='제목' onValuesChange={handleValuesChange} />
 			<br />
-			<ModalInput label='마감일' />
+			<ModalInput label='마감일' onValuesChange={handleValuesChange} />
 			<br />
-			<ModalInput label='태그' />
+			<ModalInput label='태그' onValuesChange={handleValuesChange} />
 			<br />
 			<ModalDropdown label='상태' />
 			<br />
