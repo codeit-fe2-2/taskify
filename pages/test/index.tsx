@@ -1,3 +1,7 @@
+import React from 'react';
+
+import IconButton from '@/src/components/ui/Button/IconButton';
+
 import {
 	ModalCommentInput,
 	ModalDeadlineInput,
@@ -7,6 +11,8 @@ import {
 	ModalTagInput,
 	ModalTitleInput,
 } from '@/src/components/ui/ModalInput';
+
+import Chips from '@/src/components/ui/Modal/Chips';
 
 export default function Page() {
 	return (
@@ -18,6 +24,7 @@ export default function Page() {
 			<ModalDeadlineInput />
 			<ModalTagInput />
 			<ModalImageInput />
+			<Chips />
 		</>
 	);
 }
