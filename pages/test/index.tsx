@@ -12,7 +12,7 @@ import {
 	ModalTitleInput,
 } from '@/src/components/ui/ModalInput';
 
-import Chips from '@/src/components/ui/Modal/Chips';
+import Chips from '@/src/components/ui/Chips/Chips';
 
 export default function Page() {
 	return (

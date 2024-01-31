@@ -12,7 +12,7 @@ export default function ColorTags({
 	return (
 		<div>
 			<button
-				className={`${textColor} ${bgColor} ${fontSize <= '10' ? 'text-xs' : 'text-base'} px-3 py-2 rounded-lg text-xs`}
+				className={`${textColor} ${bgColor} ${fontSize < '12' ? 'text-xs' : 'text-base'} rounded-[4px] px-[6px] py-[4px] text-sm`}
 			>
 				{children}
 			</button>
