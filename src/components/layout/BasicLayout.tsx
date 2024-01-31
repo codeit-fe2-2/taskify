@@ -5,7 +5,7 @@ import Header from '@/src/components/layout/Header';
 import SideMenu from '@/src/components/layout/SideMenu';
 import { useGetDashboardList } from '@/src/hooks/dashboard/useGetDashboardList';
 
-export default function CommonLayout({ children }: { children: ReactNode }) {
+export default function BaicLayout({ children }: { children: ReactNode }) {
 	const router = useRouter();
 	const { boardid } = router.query;
 	const boardId = boardid ? parseInt(boardid as string) : 0;

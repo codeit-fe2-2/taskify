@@ -1,5 +1,5 @@
-import CommonLayout from '@/src/components/layout/CommonLayout';
+import BasicLayout from '@/src/components/layout/BasicLayout';
 
 export default function DashboardEditPage() {
-	return <CommonLayout>대시보드 편집 페이지</CommonLayout>;
+	return <BasicLayout>대시보드 편집 페이지</BasicLayout>;
 }

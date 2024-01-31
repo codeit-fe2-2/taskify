@@ -1,5 +1,5 @@
-import CommonLayout from '@/src/components/layout/CommonLayout';
+import BasicLayout from '@/src/components/layout/BasicLayout';
 
 export default function Page() {
-	return <CommonLayout>마이 페이지</CommonLayout>;
+	return <BasicLayout>마이 페이지</BasicLayout>;
 }
