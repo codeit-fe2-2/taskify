@@ -2,12 +2,10 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
 interface ModalImageProps {
-	onValuesChange: (newValues: string[]) => void;
+	onImageSelect: (imageUrl: string | null) => void;
 }
 
-export default function ModalImage({
-	onValuesChange,
-}: ModalImageProps): JSX.Element {
+export default function ModalImage({ onImageSelect }: ModalImageProps): JSX.Element {
 	const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
 
 	const handleFileInputClick = () => {
@@ -24,7 +22,7 @@ export default function ModalImage({
 			reader.onload = (event) => {
 				const imageSrc = event.target?.result as string;
 				setBackgroundImage(imageSrc);
-				onValuesChange([imageSrc]);
+				onImageSelect(imageSrc);
 			};
 
 			reader.readAsDataURL(selectedFile);
