@@ -1,23 +1,24 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 
+import { PAGE_ROUTES } from '@/src/constants/routes';
 import { Dashboard } from '@/src/types/dashboard';
 
 interface Props {
-	dashboardList: Dashboard[];
+	dashboardList: Dashboard[] | undefined;
+	cursorId: number | undefined;
+	currentBoardId: number;
 }
 
-export default function SideMenu({ dashboardList }: Props) {
-	const router = useRouter();
-	const { boardid } = router.query;
-	const boardId = parseInt(boardid as string);
-
+export default function SideMenu({
+	dashboardList = [],
+	currentBoardId,
+}: Props) {
 	return (
 		<aside className='h-screen overflow-y-auto border-r border-gray3 px-3 py-5 sm:w-[67px] sm:px-3 md:w-[160px] lg:w-[300px]'>
 			<div className='mb-14 px-3 sm:mb-9 sm:px-0'>
-				<Link href={'/'} className='flex justify-center'>
+				<Link href={PAGE_ROUTES.HOME} className='flex justify-center'>
 					<Image
 						src='/icons/logo.svg'
 						alt=''
@@ -50,11 +51,11 @@ export default function SideMenu({ dashboardList }: Props) {
 							key={dashboard.id}
 							className={clsx(
 								'p-3 text-lg font-medium text-gray5',
-								dashboard.id === boardId && 'bg-violet1',
+								dashboard.id === currentBoardId && 'bg-violet1',
 							)}
 						>
 							<Link
-								href={`/dashboard/${dashboard.id}`}
+								href={`${PAGE_ROUTES.DASHBOARD}${dashboard.id}`}
 								className='flex w-full items-center gap-4'
 							>
 								<svg
