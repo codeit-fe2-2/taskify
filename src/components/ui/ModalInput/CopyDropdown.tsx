@@ -8,6 +8,7 @@ interface ModalDropdownProps<T> {
 	label: string;
 	data: T[];
 	currentData?: T;
+	onDropdownSelect: (dataId: number) => void;
 }
 
 interface DropdownOptionsProps {
@@ -55,6 +56,7 @@ export default function CopyDropdown<T>({
 	label,
 	data,
 	currentData,
+	onDropdownSelect,
 }: ModalDropdownProps<T>) {
 	const [open, setOpen] = useState<boolean>(false);
 	const [options, setOptions] = useState(data);
@@ -113,6 +115,7 @@ export default function CopyDropdown<T>({
 								<button
 									onClick={() => {
 										setSelectedValue(option);
+										onDropdownSelect(option.userId ? option.userId : option.id);
 										handleClose();
 									}}
 									className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
