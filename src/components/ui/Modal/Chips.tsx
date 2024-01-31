@@ -1,114 +1,19 @@
 import React from 'react';
 import Image from 'next/image';
-
-function CountNumber({
-	children,
-}: {
-	children: React.ReactNode;
-}): React.JSX.Element {
-	return (
-		<div>
-			<div className='flex justify-center align-middle w-6 bg-gray2 gap-10 rounded-md text-gray5'>
-				{children}
-			</div>
-		</div>
-	);
-}
-
-function ColorTags({
-	children,
-	textColor,
-	bgColor,
-	fontSize,
-}: {
-	children: React.ReactNode;
-	textColor: string;
-	bgColor: string;
-	fontSize: string;
-}): React.JSX.Element {
-	return (
-		<div>
-			<button
-				className={`${textColor} ${bgColor} ${fontSize <= '10' ? 'text-xs' : 'text-base'} px-3 py-2 rounded-lg text-xs`}
-			>
-				{children}
-			</button>
-		</div>
-	);
-}
-
-enum DotSize {
-	Small = 28,
-	Medium = 30,
-}
-
-export function ColorDots({
-	src,
-	tagName,
-	width,
-	height,
-}: {
-	src: string;
-	tagName: string;
-	width: DotSize;
-	height: DotSize;
-}): React.JSX.Element {
-	return (
-		<div>
-			<button>
-				<Image src={src} width={width} height={height} alt={tagName} />
-			</button>
-		</div>
-	);
-}
-
-enum Size {
-	Small = 14.5,
-	Medium = 16,
-}
-
-function AddButton({ size }: { size: Size }): React.JSX.Element {
-	return (
-		<div>
-			<br />
-
-			<button className='flex bg-violet1 p-1 rounded-md'>
-				<Image
-					src='/icons/chip_add_sm.svg'
-					width={size}
-					height={size}
-					alt='chip add'
-				/>
-			</button>
-		</div>
-	);
-}
-
-function DotTags({
-	children,
-	width,
-	height,
-}: {
-	children: React.ReactNode;
-	width: number;
-	height: number;
-}): React.JSX.Element {
-	return (
-		<div>
-			<button className='flex items-center align-middle bg-violet1 rounded-2xl px-2 py-2 gap-2 '>
-				<Image
-					src='/icons/chip_ellipse_sm_purple.svg'
-					width={width}
-					height={height}
-					alt='chip dot purple'
-				/>
-				<div className='text-violet2'>{children}</div>
-			</button>
-		</div>
-	);
-}
+import AddButton from './Chips/AddButton';
+import ColorDots from './Chips/ColorDots';
+import ColorTags from './Chips/ColorTags';
+import CountNumber from './Chips/CountNumber';
+import DotTags from './Chips/DotTags';
 
 function Chips() {
+	enum Size {
+		Xsmall = 6,
+		Small = 8,
+		Medium = 14.5,
+		Large = 16,
+	}
+
 	return (
 		<div>
 			<CountNumber>3</CountNumber>
@@ -212,71 +117,10 @@ function Chips() {
 			<br />
 
 			<div className='flex gap-2'>
-				{/* sm */}
-				<ColorDots
-					tagName='green'
-					src='/icons/chips_ellipse_green.svg'
-					width={DotSize.Small}
-					height={DotSize.Small}
-				/>
-
-				<ColorDots
-					tagName='purple'
-					src='/icons/chips_ellipse_purple.svg'
-					width={DotSize.Small}
-					height={DotSize.Small}
-				/>
-				<ColorDots
-					tagName='orange'
-					src='/icons/chips_ellipse_orange.svg'
-					width={DotSize.Small}
-					height={DotSize.Small}
-				/>
-				<ColorDots
-					tagName='blue'
-					src='/icons/chips_ellipse_blue.svg'
-					width={DotSize.Small}
-					height={DotSize.Small}
-				/>
-				<ColorDots
-					tagName='pink'
-					src='/icons/chips_ellipse_pink.svg'
-					width={DotSize.Small}
-					height={DotSize.Small}
-				/>
-				{/* md */}
-				<ColorDots
-					tagName='green'
-					src='/icons/chips_ellipse_green.svg'
-					width={DotSize.Medium}
-					height={DotSize.Medium}
-				/>
-				<ColorDots
-					tagName='purple'
-					src='/icons/chips_ellipse_purple.svg'
-					width={DotSize.Medium}
-					height={DotSize.Medium}
-				/>
-				<ColorDots
-					tagName='orange'
-					src='/icons/chips_ellipse_orange.svg'
-					width={DotSize.Medium}
-					height={DotSize.Medium}
-				/>
-				<ColorDots
-					tagName='blue'
-					src='/icons/chips_ellipse_blue.svg'
-					width={DotSize.Medium}
-					height={DotSize.Medium}
-				/>
-				<ColorDots
-					tagName='pink'
-					src='/icons/chips_ellipse_pink.svg'
-					width={DotSize.Medium}
-					height={DotSize.Medium}
-				/>
+				<ColorDots width='x-6' height='h-6' bgColor='bg-purple' />
+				<ColorDots width='x-6' height='h-6' bgColor='bg-green' />
+				<ColorDots width='x-6' height='h-6' bgColor='bg-purple' />
 			</div>
-			<div className='rounded-full bg-purple w-6 y-6'></div>
 		</div>
 	);
 }
