@@ -1,11 +1,9 @@
-import { useState } from 'react';
+import React from 'react';
 
 import CopyDropdown from '@/src/components/ui/ModalInput/CopyDropdown';
 import ModalImage from '@/src/components/ui/ModalInput/ModalImage';
 import ModalInput from '@/src/components/ui/ModalInput/ModalInput';
 import ModalTextarea from '@/src/components/ui/ModalInput/ModalTextarea';
-
-import mockupData from './mockup.json';
 
 export default function Page() {
 	const columnsData = mockupData.data.map((column) => ({
