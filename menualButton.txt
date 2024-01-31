@@ -2,7 +2,7 @@ import React from 'react';
 
 import DashBoardButton from '@/src/components/ui/Button/DashBoardButton';
 import IconButton from '@/src/components/ui/Button/IconButton';
-import GeneralButton from '@/src/components/ui/Button/TextButton';
+import TextButton from '@/src/components/ui/Button/TextButton';
 
 export default function Page() {
 	const handleLoginClick = () => {
@@ -24,70 +24,70 @@ export default function Page() {
 		<>
 			<div className='font-bold text-orange'>테스트 페이지!</div>
 			<br />
-			<GeneralButton
+			<TextButton
 				buttonSize='xl'
 				color='primary'
 				textSize='large'
 				disabled={false}
 			>
 				로그인
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='sm'
 				color='primary'
 				textSize='medium'
 				onClick={handleLoginClick}
 			>
 				수락
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='sm'
 				color='secondary'
 				textSize='medium'
 				onClick={handleLoginClick}
 			>
 				거절
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='xxs'
 				color='secondary'
 				textSize='small'
 				onClick={handleLoginClick}
 			>
 				삭제
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='lg'
 				color='third'
 				textSize='large'
 				onClick={handleLoginClick}
 			>
 				대시보드 삭제하기
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='xs'
 				color='secondary'
 				textSize='large'
 				onClick={handleLoginClick}
 			>
 				입력
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='md'
 				color='secondary'
 				textSize='medium'
 				onClick={handleLoginClick}
 			>
 				취소
-			</GeneralButton>
-			<GeneralButton
+			</TextButton>
+			<TextButton
 				buttonSize='md'
 				color='primary'
 				textSize='medium'
 				onClick={handleLoginClick}
 			>
 				확인
-			</GeneralButton>
+			</TextButton>
 			<IconButton
 				src='/icons/plus.svg'
 				alt='plus'

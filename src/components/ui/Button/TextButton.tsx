@@ -13,7 +13,7 @@ interface ButtonProps {
 	className?: string;
 }
 
-const GeneralButton = ({
+const TextButton = ({
 	type = 'button',
 	buttonSize,
 	textSize = 'small',
@@ -25,12 +25,13 @@ const GeneralButton = ({
 	fullWidth,
 }: ButtonProps) => {
 	const buttonSizeClasses = clsx({
-		'px-[29.5px] py-[7.5px] sm:px-[9px] sm:py-[7px]': buttonSize === 'xxs',
-		'px-[31px] py-[9px]  sm:py-[7px]': buttonSize === 'xs',
+		'px-[29.5px] py-[7.5px] sm:px-[15.5px] sm:py-[7px]': buttonSize === 'xxs',
+		'px-[31px] py-[9px] sm:px-[31.5px] sm:py-[7px]': buttonSize === 'xs',
 		'px-[29.5px] py-[7.5px] md:px-[23.5px] md:py-[6.5px] sm:px-[44px] sm:py-[7px]':
 			buttonSize === 'sm',
-		'px-[46px] py-[14px]  sm:px-[56px] sm:py-[12px]': buttonSize === 'md',
-		'py-[20px] px-[95px] sm:px-[84px] sm:py-[16px]': buttonSize === 'lg',
+		'px-[46px] py-[14.5px]  sm:px-[56px] sm:py-[12.5px]': buttonSize === 'md',
+		'py-[20.5px] px-[95.5px] sm:px-[84.5px] sm:py-[16.5px]':
+			buttonSize === 'lg',
 		'px-[236.5px] py-[14.5px] sm:px-[152px]': buttonSize === 'xl',
 	});
 
@@ -64,4 +65,4 @@ const GeneralButton = ({
 	);
 };
 
-export default GeneralButton;
+export default TextButton;
