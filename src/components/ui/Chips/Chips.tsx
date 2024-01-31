@@ -1,8 +1,15 @@
-import AddButton, { Size } from '../AddButton';
-import ColorDotButtons from '../ColorDotButtons';
+import AddButton from '../AddButton';
+import ColorDotButtons from '../ColorDotButton';
 import ColorTagChips from './ColorTagChip';
 import CountNumber from './CountNumberChip';
-import DotTags from './DotTags';
+import DotTags from './DotNameTagChip';
+
+export enum Size {
+	Xsmall = 6,
+	Small = 8,
+	Medium = 14.5,
+	Large = 16,
+}
 
 function Chips() {
 	return (
