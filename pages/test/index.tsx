@@ -120,8 +120,12 @@ export default function Page() {
 			<ModalInput label='마감일' onValueChange={handleDueDate} />
 			<ModalInput label='태그' onValueChange={handleTags} />
 			<ModalImage label='이미지' onImageSelect={handleImageUrl} />
-			<button onClick={handleCreateCard}>createCardData</button>
-			<button onClick={handleEditCard}>editCardData</button>
+			<button className='w-36 bg-gray3' onClick={handleCreateCard}>
+				createCardData
+			</button>
+			<button className='w-36 bg-gray3' onClick={handleEditCard}>
+				editCardData
+			</button>
 		</div>
 	);
 }
