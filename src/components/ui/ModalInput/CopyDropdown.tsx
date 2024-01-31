@@ -73,10 +73,10 @@ export default function CopyDropdown<T>({
 	};
 
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const foundedData = data.filter((datum) =>
+		const filteredData = data.filter((datum) =>
 			datum.nickname.includes(event.target.value),
 		);
-		setOptions([...foundedData]);
+		setOptions([...filteredData]);
 	};
 
 	return (
