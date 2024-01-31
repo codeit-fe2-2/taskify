@@ -74,11 +74,11 @@ export default function ModalDropdown({
 				</button>
 				{open && (
 					<ul className={`${inputClassNames.dropdownOptions}`}>
-						{members
+						{type === '담당자'
 							? members?.map((member, index) => (
 									<li key={index}>
 										<button
-											className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
+											className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
 											onClick={() => handleOption(members?.indexOf(member))}
 										>
 											<div className='w-[22px]'>
@@ -107,7 +107,7 @@ export default function ModalDropdown({
 							: options?.map((option, index) => (
 									<li key={index}>
 										<button
-											className='flex w-full flex-row gap-1.5 px-2 py-[13px]'
+											className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
 											onClick={() => handleOption(options?.indexOf(option))}
 										>
 											{value === options?.indexOf(option) ? (
