@@ -6,7 +6,7 @@ import { ReactNode } from 'react';
 
 interface iconButtonProps {
 	buttonSize?: 'xs' | 'sm' | 'md' | 'lg';
-	rounded?: 'right' | 'left';
+	rounded?: 'right' | 'left' | 'md' | 'lg';
 	onClick?: () => void;
 	src?: string;
 	disabled?: boolean;
@@ -42,7 +42,8 @@ const IconButton = ({
 	const roundedSizeClasses = clsx({
 		'rounded-r-[4px]': rounded === 'right',
 		'rounded-l-[4px]': rounded === 'left',
-		'rounded-md': !(rounded === 'right' || rounded === 'left'),
+		'rounded-md': rounded === 'md',
+		'rounded-lg': rounded === 'lg',
 	});
 
 	const disabledStyle = disabled ? { filter: 'invert(100%)' } : {};
@@ -56,7 +57,7 @@ const IconButton = ({
 			disabled={disabled}
 		>
 			<div
-				className={`flex items-center justify-center rounded-r-[4px] text-lg ${
+				className={`flex items-center justify-center rounded rounded-r-[4px] text-lg ${
 					children && 'gap-3'
 				}`}
 			>

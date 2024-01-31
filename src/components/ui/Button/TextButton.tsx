@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 interface ButtonProps {
 	type?: 'submit' | 'reset' | 'button';
 	buttonSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-	textSize?: 'small' | 'medium' | 'large';
+	textSize?: 'xs' | 'sm' | 'md' | 'lg';
 	color?: 'primary' | 'secondary' | 'third';
 	children?: ReactNode;
 	onClick?: () => void;
@@ -16,7 +16,7 @@ interface ButtonProps {
 const TextButton = ({
 	type = 'button',
 	buttonSize,
-	textSize = 'small',
+	textSize = 'sm',
 	color,
 	children,
 	onClick,
@@ -36,9 +36,10 @@ const TextButton = ({
 	});
 
 	const textSizeClasses = clsx({
-		'text-[12px] md:text-[14px] lg:text-[14px]': textSize === 'small',
-		'text-[16px] sm:text-[14px] ': textSize === 'medium',
-		'text-lg': textSize === 'large',
+		'text-sm': textSize === 'xs',
+		'text-md sm:text-xs': textSize === 'sm',
+		'text-base sm:text-[14px] ': textSize === 'md',
+		'text-lg': textSize === 'lg',
 	});
 
 	const colorClasses = clsx({
