@@ -32,6 +32,6 @@ const config: Config = {
 			pink: '#E876EA',
 		},
 	},
-	plugins: [],
+	plugins: [require('tailwind-scrollbar-hide')],
 };
 export default config;
