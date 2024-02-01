@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ReactNode } from 'react';
 
 import ColorTagChip from './Chips/ColorTagChip';
 
@@ -33,7 +34,7 @@ export default function Card() {
 				</div>
 			</div>
 
-			{/* without image */}
+			{/* with image */}
 			<div className='m-5  h-[297px] w-[314px] rounded-[6px] border-[1px] border-solid border-gray3'>
 				<div className='ml-2 mt-5'>
 					<Image
