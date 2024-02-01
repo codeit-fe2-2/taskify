@@ -37,7 +37,7 @@ function Chips() {
 					bgColor='bg-sortTextBgOrange'
 					fontSize='10'
 				>
-					프젝젝트
+					프로젝트
 				</ColorTagChips>
 
 				<ColorTagChips
