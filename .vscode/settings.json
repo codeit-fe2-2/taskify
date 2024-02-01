@@ -5,6 +5,6 @@
 	"javascript.preferences.importModuleSpecifier": "non-relative",
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"cSpell.words": ["Pretendard", "taskify"],
+	"cSpell.words": ["clsx", "Pretendard", "taskify"],
 	"typescript.tsdk": "node_modules/typescript/lib"
 }
