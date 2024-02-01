@@ -1,11 +1,12 @@
 {
+	"주석1": "해당 대시보드의 멤버 목록 조회",
 	"members": [
 		{
 			"id": 1,
 			"userId": 101,
 			"email": "john.doe@example.com",
-			"nickname": "JohnDoe",
-			"profileImageUrl": "https://example.com/profiles/john_doe.jpg",
+			"nickname": "이서영",
+			"profileImageUrl": "https://cdn.pixabay.com/photo/2023/11/27/20/29/autumn-8416137_1280.png",
 			"createdAt": "2024-01-30T04:04:21.411Z",
 			"updatedAt": "2024-01-30T04:04:21.411Z",
 			"isOwner": true
@@ -14,8 +15,8 @@
 			"id": 2,
 			"userId": 202,
 			"email": "alice@example.com",
-			"nickname": "Alice",
-			"profileImageUrl": "https://example.com/profiles/alice.jpg",
+			"nickname": "이채빈",
+			"profileImageUrl": "https://via.placeholder.com/150/a7f3d0/064e3b",
 			"createdAt": "2024-01-30T04:15:20.123Z",
 			"updatedAt": "2024-01-30T04:15:20.123Z",
 			"isOwner": false
@@ -24,12 +25,44 @@
 			"id": 3,
 			"userId": 303,
 			"email": "bob@example.com",
-			"nickname": "Bob",
-			"profileImageUrl": "https://example.com/profiles/bob.jpg",
+			"nickname": "성은지",
+			"profileImageUrl": "https://via.placeholder.com/150/831843/fce7f3",
 			"createdAt": "2024-01-30T04:42:35.567Z",
 			"updatedAt": "2024-01-30T04:42:35.567Z",
 			"isOwner": false
 		}
 	],
-	"columns": ["To Do", "On Progress", "Done"]
+	"totalCount": 3,
+	"주석2": "해당 대시보드의 칼럼 목록 조회",
+	"result": "SUCCESS",
+	"data": [
+		{
+			"id": 1,
+			"title": "Task 1",
+			"teamId": "2-2",
+			"createdAt": "2024-01-31T06:00:00.000Z",
+			"updatedAt": "2024-01-31T06:00:00.000Z"
+		},
+		{
+			"id": 2,
+			"title": "Task 2",
+			"teamId": "2-2",
+			"createdAt": "2024-01-31T07:15:00.000Z",
+			"updatedAt": "2024-01-31T07:15:00.000Z"
+		},
+		{
+			"id": 3,
+			"title": "Task 3",
+			"teamId": "2-2",
+			"createdAt": "2024-01-31T08:30:00.000Z",
+			"updatedAt": "2024-01-31T08:30:00.000Z"
+		},
+		{
+			"id": 4,
+			"title": "Task 4",
+			"teamId": "2-2",
+			"createdAt": "2024-01-31T08:30:00.000Z",
+			"updatedAt": "2024-01-31T08:30:00.000Z"
+		}
+	]
 }
