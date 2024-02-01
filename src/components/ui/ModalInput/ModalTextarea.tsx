@@ -1,5 +1,6 @@
 import React, { ChangeEvent, useRef } from 'react';
 
+import GeneralButton from '../Button/GeneralButton';
 import { inputClassNames } from './inputClassNames';
 
 interface ModalTextareaProps {
@@ -7,6 +8,7 @@ interface ModalTextareaProps {
 	required: boolean;
 	isButton: boolean;
 	onTextChange: (value: string) => void;
+	onButtonClick?: () => void; // 새로 추가한 함수
 }
 
 export default function ModalTextarea({
@@ -14,6 +16,7 @@ export default function ModalTextarea({
 	required,
 	isButton,
 	onTextChange,
+	onButtonClick, // 새로 추가한 함수
 }: ModalTextareaProps): JSX.Element {
 	const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -24,6 +27,10 @@ export default function ModalTextarea({
 			textarea.style.height = `${textarea.scrollHeight}px`;
 		}
 		onTextChange(event.target.value);
+	};
+
+	const handleButtonClick = () => {
+		onButtonClick();
 	};
 
 	return (
@@ -44,9 +51,14 @@ export default function ModalTextarea({
 					onChange={handleTextareaChange}
 					className='size-full resize-none rounded-md border-none outline-none'
 				/>
-				{/* 차후 button 컴포넌트 삽입 예정(크기와 위치만 맞춘 임시 버튼) */}
 				{isButton && (
-					<button className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 border border-solid border-gray3 px-[31px] py-[9px]' />
+					<GeneralButton
+						color='secondary'
+						onClick={handleButtonClick}
+						className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5'
+					>
+						입력
+					</GeneralButton>
 				)}
 			</div>
 		</div>

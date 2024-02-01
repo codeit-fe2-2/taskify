@@ -28,8 +28,9 @@ export default function Page() {
 
 	const [columnId, setColumnId] = useState<number | null>(currentColumnId);
 	const [assigneeUserId, setAssigneeUserId] = useState<number | null>();
-	const [title, setTitle] = useState<string>('');
+	const [title, setTitle] = useState<string | null>();
 	const [description, setDescription] = useState<string>('');
+	const [comment, setComment] = useState<string>('');
 	const [dueDate, setDueDate] = useState<string | null>();
 	const [tags, setTags] = useState<string[] | null>();
 	const [imageUrl, setImageUrl] = useState<string | null>();
@@ -71,6 +72,10 @@ export default function Page() {
 		setDescription(value);
 	};
 
+	const handleComment = (value: string) => {
+		setComment(value);
+	};
+
 	const handleDueDate = (value: string[] | null) => {
 		if (value) {
 			setDueDate(value[0]);
@@ -95,6 +100,10 @@ export default function Page() {
 		console.log(editCardData);
 	};
 
+	const handleButtonClick = () => {
+		console.log(comment);
+	};
+
 	return (
 		<div className='flex flex-col gap-y-3 p-3'>
 			<div className='flex flex-row gap-x-3'>
@@ -116,6 +125,13 @@ export default function Page() {
 				required={true}
 				isButton={false}
 				onTextChange={handleDescription}
+			/>
+			<ModalTextarea
+				label='댓글'
+				required={false}
+				isButton={true}
+				onTextChange={handleComment}
+				onButtonClick={handleButtonClick}
 			/>
 			<ModalInput label='마감일' onValueChange={handleDueDate} />
 			<ModalInput label='태그' onValueChange={handleTags} />
