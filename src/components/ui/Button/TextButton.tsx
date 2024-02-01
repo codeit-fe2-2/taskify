@@ -45,8 +45,8 @@ const TextButton = ({
 	const colorClasses = clsx({
 		'bg-violet2 border-[1px] border-violet2 text-white rounded-lg':
 			color === 'primary',
-		'text-violet2 border-gray4 border-[1px] rounded-lg': color === 'secondary',
-		'border-gray4 border-[1px] rounded-lg': color === 'third',
+		'text-violet2 border-gray3 border-[1px] rounded-lg': color === 'secondary',
+		'border-gray3 border-[1px] rounded-lg': color === 'third',
 	});
 
 	const buttonFullClasses = fullWidth ? 'w-full' : '';
