@@ -1,3 +1,5 @@
+import BasicLayout from '@/src/components/layout/BasicLayout';
+
 export default function Page() {
-	return <div>마이 페이지</div>;
+	return <BasicLayout>마이 페이지</BasicLayout>;
 }
