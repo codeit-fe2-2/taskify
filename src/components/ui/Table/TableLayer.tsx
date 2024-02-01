@@ -8,6 +8,7 @@ interface TableLayerProps {
 	tableName: string;
 	isInvite?: boolean;
 	needPage?: boolean;
+	layerWidth?: 'small' | 'large'; // Updated layerWidth type
 	children: ReactNode;
 }
 
@@ -15,10 +16,19 @@ export default function TableLayer({
 	tableName,
 	isInvite,
 	needPage,
+	layerWidth = 'small',
 	children,
 }: TableLayerProps) {
+	// Define a class variable based on layerWidth
+	const layerWidthClass =
+		layerWidth === 'small'
+			? 'w-[620px] sm:w-[284px]'
+			: 'w-[1022px] sm:w-[260px]';
+
 	return (
-		<div className='flex flex-col gap-2 px-2 py-1 text-black2'>
+		<div
+			className={`flex flex-col gap-2 rounded-lg bg-white px-2 py-1 text-black2 ${layerWidthClass}`}
+		>
 			<div className='flex flex-row items-center gap-2'>
 				<h1 className='grow'>{tableName}</h1>
 				{needPage && (
