@@ -31,5 +31,51 @@
 			"isOwner": false
 		}
 	],
-	"columns": ["To Do", "On Progress", "Done"]
+	"columns": ["To Do", "On Progress", "Done"],
+
+	"invitations": [
+		{
+			"id": 2809,
+			"inviter": {
+				"id": 715,
+				"email": "seoyoung@test.com",
+				"nickname": "이서영2"
+			},
+			"teamId": "2-2",
+			"dashboard": {
+				"id": 2716,
+				"title": "테스트 대시보드"
+			},
+			"invitee": {
+				"id": 765,
+				"email": "ejsung91@naver.com",
+				"nickname": "eunjiya"
+			},
+			"inviteAccepted": false,
+			"createdAt": "2024-02-01T16:11:18.403Z",
+			"updatedAt": "2024-02-01T16:11:18.403Z"
+		},
+		{
+			"id": 2802,
+			"inviter": {
+				"id": 715,
+				"email": "seoyoung@test.com",
+				"nickname": "이서영2"
+			},
+			"teamId": "2-2",
+			"dashboard": {
+				"id": 2716,
+				"title": "테스트 대시보드"
+			},
+			"invitee": {
+				"id": 624,
+				"email": "test@codeit.com",
+				"nickname": "이팀맨"
+			},
+			"inviteAccepted": false,
+			"createdAt": "2024-02-01T16:05:11.537Z",
+			"updatedAt": "2024-02-01T16:05:11.537Z"
+		}
+	],
+	"totalCount": 2
 }
