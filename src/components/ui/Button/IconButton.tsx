@@ -1,9 +1,12 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 import { ReactNode } from 'react';
 
+//lg 새로운 칼럼 추가하기 md 새로운 대시보드 추가 sm 화살표 버튼 xs 그냥 plus img
+
 interface iconButtonProps {
-	buttonSize?: 'sm' | 'md' | 'lg';
-	rounded?: 'right' | 'left';
+	buttonSize?: 'xs' | 'sm' | 'md' | 'lg';
+	rounded?: 'right' | 'left' | 'md' | 'lg';
 	onClick?: () => void;
 	src?: string;
 	disabled?: boolean;
@@ -11,6 +14,7 @@ interface iconButtonProps {
 	iconSize?: number;
 	className?: string;
 	alt?: string;
+	fullWidth?: boolean;
 }
 
 const IconButton = ({
@@ -23,42 +27,47 @@ const IconButton = ({
 	iconSize,
 	className,
 	alt = '',
+	fullWidth,
 }: iconButtonProps) => {
-	const buttonSizeClasses =
-		buttonSize === 'sm'
-			? `p-[12px] sm:p-[10px]`
-			: buttonSize === 'md'
-				? `w-full h-[40px] sm:h-[32px] text-[16px]`
-				: buttonSize === 'lg'
-					? `w-full lg:w-[354px] h-[70px] sm:h-[60px] text-xl text-lg`
-					: '';
-	const roundedSizeClasses =
-		rounded === 'right'
-			? `rounded-r-[4px]`
-			: rounded === 'left'
-				? `rounded-l-[4px]`
-				: 'rounded-md';
-	const srcClasses = disabled
-		? rounded === 'right'
-			? '/icons/arrowNextDisabled.svg'
-			: '/icons/arrowBeforeDisabled.svg'
-		: `${src}`;
+	const buttonSizeClasses = clsx({
+		'p-[12px] sm:p-[10px]': buttonSize === 'xs',
+		'px-[146px] py-[9px] md:px-[261px] sm:px-[132px] sm:py-[6px]':
+			buttonSize === 'sm',
+		'px-[98.5px] py-[24px] md:px-[56px] md:py-[23px] sm:px-[69.5px] sm:py-[19px] sm:text-[14px] text-[16px]':
+			buttonSize === 'md',
+		'px-[85.5px] py-[24px] md:px-[180.5px]  sm:px-[60px] sm:py-[20.5px] sm:text-xl text-lg':
+			buttonSize === 'lg',
+	});
 
+	const roundedSizeClasses = clsx({
+		'rounded-r-[4px]': rounded === 'right',
+		'rounded-l-[4px]': rounded === 'left',
+		'rounded-md': rounded === 'md',
+		'rounded-lg': rounded === 'lg',
+	});
+
+	const disabledStyle = disabled ? { filter: 'invert(100%)' } : {};
+	const widthFullClasses = fullWidth && 'w-full';
 	return (
 		<button
-			className={`${className} border-[1px] border-gray3  ${buttonSizeClasses} ${roundedSizeClasses} ${disabled ? 'cursor-not-allowed' : ''}`}
+			className={`${className} border-[1px] border-gray3 ${widthFullClasses}  ${buttonSizeClasses} ${roundedSizeClasses} ${
+				disabled && 'cursor-not-allowed'
+			}`}
 			onClick={onClick}
 			disabled={disabled}
 		>
 			<div
-				className={`flex items-center justify-center gap-3 rounded-r-[4px] ${children ? '' : ''}`}
+				className={`flex items-center justify-center rounded rounded-r-[4px] text-lg ${
+					children && 'gap-3'
+				}`}
 			>
-				{children}
+				<span className={`font-semibold`}>{children}</span>
 				<Image
-					src={`${srcClasses}`}
+					src={src}
 					alt={alt}
 					width={iconSize}
 					height={iconSize}
+					style={disabledStyle}
 				/>
 			</div>
 		</button>
