@@ -27,7 +27,7 @@ const Section1: React.FC = () => {
 			</span>
 
 			<Link
-				href='/signin'
+				href='/login'
 				className='bg-violet2 font-Pretendard mt-[66px] rounded-lg px-[101px] py-[14.5px] text-lg font-medium leading-6 text-[white] sm:mt-[70px] sm:px-[87px] sm:py-[12.5px] sm:text-sm sm:leading-4 md:px-[105px] md:py-[15.5px] md:text-base md:leading-5'
 			>
 				로그인하기
