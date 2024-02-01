@@ -5,6 +5,7 @@ const config: Config = {
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
 	],
+	darkMode: 'class',
 	theme: {
 		screens: {
 			sm: { max: '759px' },
@@ -30,6 +31,14 @@ const config: Config = {
 			orange: '#FFA500',
 			blue: '#76A5EA',
 			pink: '#E876EA',
+			sortTextBgGreen: '#E7F7DB',
+			sortTextBgPink: '#F7DBF0',
+			sortTextBgBlue: '#DBE6F7',
+			sortTextBgOrange: '#F9EEE3',
+			sortTextGreen: '#86D549',
+			sortTextPink: '#D549B6',
+			sortTextBlue: '#4981D5',
+			sortTextOrange: '#D58D49',
 		},
 	},
 	plugins: [require('tailwind-scrollbar-hide')],
