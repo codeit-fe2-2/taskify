@@ -15,7 +15,7 @@ export default function ColorTags({
 
 	const textLength = typeof children === 'string' ? children.length : 1;
 
-	const colorIndex = Math.min(textLength, tagColorSet.length) - 1;
+	const colorIndex = textLength % 5;
 
 	const { textColor, bgColor } = tagColorSet[colorIndex];
 
