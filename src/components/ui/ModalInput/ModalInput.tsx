@@ -25,7 +25,7 @@ export default function ModalInput({
 
 	const deadlineInputProps = {
 		placeholder: '날짜를 입력해주세요',
-		className: 'size-full outline-none rounded-md',
+		className: 'size-full outline-none rounded-md text-sm',
 	};
 
 	const classNames = `${inputClassNames.container} ${inputClassNames.inputStyle} ${inputClassNames.type.input} ${
@@ -72,7 +72,7 @@ export default function ModalInput({
 						name='title'
 						id='title'
 						placeholder='제목을 입력해주세요'
-						className='size-full rounded-md outline-none'
+						className='size-full rounded-md text-sm outline-none'
 						onChange={handleTitleValue}
 					/>
 				</>
@@ -104,7 +104,7 @@ export default function ModalInput({
 					{values.map((value, index) => (
 						<p
 							key={index}
-							className='inline-flex h-full shrink-0 snap-start items-center'
+							className='inline-flex h-full shrink-0 snap-start items-center text-sm'
 						>
 							{value}
 						</p>
@@ -116,7 +116,7 @@ export default function ModalInput({
 						placeholder='입력 후 Enter'
 						onChange={handleTagInputChange}
 						onKeyDown={handleAddTag}
-						className='size-full min-w-24 shrink snap-end border-none  outline-none'
+						className='size-full min-w-24 shrink snap-end border-none text-sm outline-none'
 					/>
 				</>
 			);

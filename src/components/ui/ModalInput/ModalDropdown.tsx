@@ -43,7 +43,7 @@ const DropdownOptions = ({
 					placeholder='이름을 입력해주세요'
 					value={inputValue}
 					onChange={onInputChange}
-					className='w-full outline-none'
+					className='w-full text-base outline-none'
 				/>
 			) : (
 				<p className='text-base font-normal text-black3'>{text}</p>
@@ -118,7 +118,7 @@ export default function ModalDropdown<T>({
 										onDropdownSelect(option.userId ? option.userId : option.id);
 										handleClose();
 									}}
-									className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
+									className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px] text-base hover:bg-gray2'
 								>
 									<div className='relative size-[22px]'>
 										{option === selectedValue && (

@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useRef } from 'react';
 
-import GeneralButton from '../Button/GeneralButton';
+import TextButton from '../Button/TextButton';
 import { inputClassNames } from './inputClassNames';
 
 interface ModalTextareaProps {
@@ -52,13 +52,14 @@ export default function ModalTextarea({
 					className='size-full resize-none rounded-md border-none outline-none'
 				/>
 				{isButton && (
-					<GeneralButton
+					<TextButton
 						color='secondary'
+						buttonSize='xxs'
 						onClick={handleButtonClick}
-						className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5'
+						className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 text-xs'
 					>
 						입력
-					</GeneralButton>
+					</TextButton>
 				)}
 			</div>
 		</div>
