@@ -5,6 +5,7 @@ const config: Config = {
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
 	],
+	darkMode: 'class',
 	theme: {
 		screens: {
 			sm: { max: '759px' },
