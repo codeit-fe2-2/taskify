@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import CopyDropdown from '@/src/components/ui/ModalInput/CopyDropdown';
+import ModalDropdown from '@/src/components/ui/ModalInput/ModalDropdown';
 import ModalImage from '@/src/components/ui/ModalInput/ModalImage';
 import ModalInput from '@/src/components/ui/ModalInput/ModalInput';
 import ModalTextarea from '@/src/components/ui/ModalInput/ModalTextarea';
@@ -98,13 +98,13 @@ export default function Page() {
 	return (
 		<div className='flex flex-col gap-y-3 p-3'>
 			<div className='flex flex-row gap-x-3'>
-				<CopyDropdown
+				<ModalDropdown
 					label='상태'
 					data={columnsData}
 					currentData={currentColumn}
 					onDropdownSelect={handleColumnId}
 				/>
-				<CopyDropdown
+				<ModalDropdown
 					label='담당자'
 					data={membersData}
 					onDropdownSelect={handleAssigneeUserId}

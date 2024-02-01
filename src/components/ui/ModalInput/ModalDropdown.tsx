@@ -1,69 +1,105 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import Image from 'next/image';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { inputClassNames } from './inputClassNames';
 
-interface Member {
-	id: number;
-	userId: number;
-	nickname: string;
-	profileImageUrl: string;
-	isOwner: boolean;
-}
-interface ModalDropdownProps {
-	type: string;
-	options?: string[];
-	currentValue: number;
-	members?: Member[];
-	currentMemberId?: number;
-	onValuesChange: (newValues: string[]) => void;
+interface ModalDropdownProps<T> {
+	label: string;
+	data: T[];
+	currentData?: T;
+	onDropdownSelect: (dataId: number) => void;
 }
 
-export default function ModalDropdown({
-	type,
-	options,
-	currentValue,
-	members,
-	onValuesChange,
-}: ModalDropdownProps): JSX.Element {
-	// chip 생기면 대대적으로 수정 예정... 임시로 string으로 대체
+interface DropdownOptionsProps {
+	text: string;
+	image?: string;
+	inputValue?: string;
+	onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+}
 
+const DropdownOptions = ({
+	text,
+	image,
+	inputValue,
+	onInputChange,
+}: DropdownOptionsProps) => {
+	return (
+		<div className='flex items-center gap-1.5'>
+			{image && (
+				<div
+					className='size-[26px] rounded-full'
+					style={{
+						backgroundImage: `url(${image})`,
+						backgroundPosition: 'center',
+						backgroundSize: 'cover',
+						backgroundRepeat: 'no-repeat',
+					}}
+				/>
+			)}
+			{!text ? (
+				<input
+					type='text'
+					placeholder='이름을 입력해주세요'
+					value={inputValue}
+					onChange={onInputChange}
+					className='w-full outline-none'
+				/>
+			) : (
+				<p className='text-base font-normal text-black3'>{text}</p>
+			)}
+		</div>
+	);
+};
+
+export default function ModalDropdown<T>({
+	label,
+	data,
+	currentData,
+	onDropdownSelect,
+}: ModalDropdownProps<T>) {
 	const [open, setOpen] = useState<boolean>(false);
-	const [value, setValue] = useState<number>(currentValue);
+	const [options, setOptions] = useState(data);
+	const [selectedValue, setSelectedValue] = useState<T | undefined>(
+		currentData,
+	);
 
-	if (!options) {
-		options = members?.map((member) => member.nickname);
-	}
-
-	const handleFocus = () => {
-		if (options) {
-			setOpen(!open);
-		}
+	const handleOpen = () => {
+		setOpen(!open);
 	};
 
-	const handleOption = (option: number) => {
-		if (options) {
-			onValuesChange([options[option]]);
-			setValue(option);
-			setOpen(false);
-		}
+	const handleClose = () => {
+		setOpen(false);
+	};
+
+	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+		const filteredData = data.filter((datum) =>
+			datum.nickname.includes(event.target.value),
+		);
+		setOptions([...filteredData]);
 	};
 
 	return (
 		<div className='relative inline-flex flex-col items-start gap-2.5'>
-			<p className={`${inputClassNames.label}`}>{type}</p>
+			<p className={`${inputClassNames.label}`}>{label}</p>
 			<div
 				className={`${inputClassNames.type.dropdown} ${inputClassNames.container}`}
 			>
 				<button
-					onClick={handleFocus}
+					onClick={handleOpen}
 					className='relative flex size-full items-center gap-[10px] rounded-md bg-white p-4 text-base font-normal outline-none focus:z-20'
 				>
-					{value === -1 ? (
-						<p className='text-gray4'>이름을 입력해주세요</p>
-					) : (
-						<p>{options && options[value]}</p>
-					)}
+					<DropdownOptions
+						text={
+							label === '담당자'
+								? selectedValue?.nickname
+								: selectedValue?.title
+						}
+						image={
+							label === '담당자' ? selectedValue?.profileImageUrl : undefined
+						}
+						onInputChange={handleInputChange}
+					/>
 					<Image
 						src='/icons/arrow_drop_down.svg'
 						width={26}
@@ -74,56 +110,38 @@ export default function ModalDropdown({
 				</button>
 				{open && (
 					<ul className={`${inputClassNames.dropdownOptions}`}>
-						{type === '담당자'
-							? members?.map((member, index) => (
-									<li key={index}>
-										<button
-											className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
-											onClick={() => handleOption(members?.indexOf(member))}
-										>
-											<div className='w-[22px]'>
-												{value === members?.indexOf(member) && (
-													<Image
-														src='/icons/check.svg'
-														width={22}
-														height={22}
-														alt={`${member.nickname} Checked`}
-													/>
-												)}
-											</div>
-											<div
-												className='size-[26px] rounded-full'
-												style={{
-													backgroundImage: `url(${member.profileImageUrl})`,
-													backgroundPosition: 'center',
-													backgroundSize: 'cover',
-													backgroundRepeat: 'no-repeat',
-												}}
+						{options.map((option, index) => (
+							<li key={index}>
+								<button
+									onClick={() => {
+										setSelectedValue(option);
+										onDropdownSelect(option.userId ? option.userId : option.id);
+										handleClose();
+									}}
+									className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
+								>
+									<div className='relative size-[22px]'>
+										{option === selectedValue && (
+											<Image
+												src='/icons/check.svg'
+												fill={true}
+												alt={`Checked`}
 											/>
-											<p>{member.nickname}</p>
-										</button>
-									</li>
-								))
-							: options?.map((option, index) => (
-									<li key={index}>
-										<button
-											className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px]'
-											onClick={() => handleOption(options?.indexOf(option))}
-										>
-											{value === options?.indexOf(option) ? (
-												<Image
-													src='/icons/check.svg'
-													width={22}
-													height={22}
-													alt={`${option} Checked`}
-												/>
-											) : (
-												<div className='w-[22px]' />
-											)}
-											<p>{option}</p>
-										</button>
-									</li>
-								))}
+										)}
+									</div>
+
+									{label === '담당자' ? (
+										<DropdownOptions
+											text={option.nickname}
+											image={option.profileImageUrl}
+										/>
+									) : (
+										// 담당자가 아니라면
+										<DropdownOptions text={option.title} />
+									)}
+								</button>
+							</li>
+						))}
 					</ul>
 				)}
 			</div>
