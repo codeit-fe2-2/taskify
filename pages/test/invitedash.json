@@ -1,0 +1,89 @@
+{
+	"invitations": [
+		{
+			"id": 2831,
+			"inviter": {
+				"id": 624,
+				"email": "test@codeit.com",
+				"nickname": "이팀맨"
+			},
+			"teamId": "2-2",
+			"dashboard": {
+				"id": 2603,
+				"title": "맥시무스"
+			},
+			"invitee": {
+				"id": 715,
+				"email": "seoyoung@test.com",
+				"nickname": "이서영2"
+			},
+			"inviteAccepted": null,
+			"createdAt": "2024-02-01T18:10:10.719Z",
+			"updatedAt": "2024-02-01T18:10:10.719Z"
+		},
+		{
+			"id": 2830,
+			"inviter": {
+				"id": 624,
+				"email": "test@codeit.com",
+				"nickname": "이팀맨"
+			},
+			"teamId": "2-2",
+			"dashboard": {
+				"id": 2602,
+				"title": "메르치볶음"
+			},
+			"invitee": {
+				"id": 715,
+				"email": "seoyoung@test.com",
+				"nickname": "이서영2"
+			},
+			"inviteAccepted": null,
+			"createdAt": "2024-02-01T18:10:05.402Z",
+			"updatedAt": "2024-02-01T18:10:05.402Z"
+		},
+		{
+			"id": 2829,
+			"inviter": {
+				"id": 624,
+				"email": "test@codeit.com",
+				"nickname": "이팀맨"
+			},
+			"teamId": "2-2",
+			"dashboard": {
+				"id": 2601,
+				"title": "메르씨보꾸"
+			},
+			"invitee": {
+				"id": 715,
+				"email": "seoyoung@test.com",
+				"nickname": "이서영2"
+			},
+			"inviteAccepted": null,
+			"createdAt": "2024-02-01T18:10:02.735Z",
+			"updatedAt": "2024-02-01T18:10:02.735Z"
+		},
+		{
+			"id": 2828,
+			"inviter": {
+				"id": 624,
+				"email": "test@codeit.com",
+				"nickname": "이팀맨"
+			},
+			"teamId": "2-2",
+			"dashboard": {
+				"id": 2604,
+				"title": "몇시몇분"
+			},
+			"invitee": {
+				"id": 715,
+				"email": "seoyoung@test.com",
+				"nickname": "이서영2"
+			},
+			"inviteAccepted": null,
+			"createdAt": "2024-02-01T18:09:40.195Z",
+			"updatedAt": "2024-02-01T18:09:40.195Z"
+		}
+	],
+	"cursorId": null
+}
