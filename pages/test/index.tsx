@@ -1,11 +1,11 @@
 import React from 'react';
 
-import Chips from '@/src/components/ui/Chips/Chips';
+import Card from '@/src/components/ui/Card';
 
 export default function Page() {
 	return (
 		<>
-			<Chips />
+			<Card title='제목' tagText='상' hasImage={true} />
 		</>
 	);
 }
