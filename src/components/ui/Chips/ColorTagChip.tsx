@@ -1,14 +1,24 @@
 export default function ColorTags({
 	children,
-	textColor,
-	bgColor,
 	fontSize,
 }: {
 	children: React.ReactNode;
-	textColor: string;
-	bgColor: string;
 	fontSize: string;
 }): React.JSX.Element {
+	const tagColorSet = [
+		{ textColor: 'text-sortTextGreen', bgColor: 'bg-sortTextBgGreen' },
+		{ textColor: 'text-sortTextPink', bgColor: 'bg-sortTextBgPink' },
+		{ textColor: 'text-sortTextBlue', bgColor: 'bg-sortTextBgBlue' },
+		{ textColor: 'text-sortTextOrange', bgColor: 'bg-sortTextBgOrange' },
+		{ textColor: 'text-violet2', bgColor: 'bg-violet1' },
+	];
+
+	const textLength = typeof children === 'string' ? children.length : 1;
+
+	const colorIndex = Math.min(textLength, tagColorSet.length) - 1;
+
+	const { textColor, bgColor } = tagColorSet[colorIndex];
+
 	return (
 		<div>
 			<button
