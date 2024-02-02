@@ -24,6 +24,14 @@ export default function Page() {
 		inviterNickname: invitation.inviter.nickname,
 	}));
 
+	const handleInvitedashAccept = (id: number) => {
+		console.log(id, { inviteAccepted: true });
+	};
+
+	const handleInvitedashCancle = (id: number) => {
+		console.log(id, { inviteAccepted: false });
+	};
+
 	return (
 		<div className='flex flex-col gap-6 p-1'>
 			<TableLayer tableName={'구성원'} needPage>
@@ -33,7 +41,11 @@ export default function Page() {
 				<InvitelistTable data={invitelistData} />
 			</TableLayer>
 			<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>
-				<InvitedashTable data={invitedashData} />
+				<InvitedashTable
+					data={invitedashData}
+					onAccept={handleInvitedashAccept}
+					onCancel={handleInvitedashCancle}
+				/>
 			</TableLayer>
 		</div>
 	);

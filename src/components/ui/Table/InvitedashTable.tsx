@@ -11,12 +11,17 @@ interface DataType {
 
 interface InvitedashTableProps {
 	data: DataType[];
+	onAccept: (id: number) => void;
+	onCancel: (id: number) => void;
 }
 
-export default function InvitedashTable({ data }: InvitedashTableProps) {
+export default function InvitedashTable({
+	data,
+	onAccept,
+	onCancel,
+}: InvitedashTableProps) {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 
-	// 검색어를 포함하는 데이터 필터링
 	const filteredData = data.filter(
 		(item) =>
 			item.dashboardTitle.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -35,12 +40,12 @@ export default function InvitedashTable({ data }: InvitedashTableProps) {
 					onChange={(e) => setSearchTerm(e.target.value)}
 				/>
 			</div>
-			<table>
+			<table className='table-auto'>
 				<thead>
 					<tr>
 						<th className='text-left'>이름</th>
 						<th className='text-left'>초대자</th>
-						<th className='text-right'>수락 여부</th>
+						<th className='text-left'>수락 여부</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -57,13 +62,25 @@ export default function InvitedashTable({ data }: InvitedashTableProps) {
 									</div>
 								</td>
 								<td className='py-2 text-left'>{inviterNickname}</td>
-								<td className='float-end flex flex-row gap-1 py-2'>
-									<TextButton buttonSize='xxs' color='primary' textSize='sm'>
-										수락
-									</TextButton>
-									<TextButton buttonSize='xxs' color='secondary' textSize='sm'>
-										취소
-									</TextButton>
+								<td className='py-2'>
+									<div className='flex flex-row gap-1'>
+										<TextButton
+											buttonSize='xxs'
+											color='primary'
+											textSize='sm'
+											onClick={() => onAccept(id)}
+										>
+											수락
+										</TextButton>
+										<TextButton
+											buttonSize='xxs'
+											color='secondary'
+											textSize='sm'
+											onClick={() => onCancel(id)}
+										>
+											취소
+										</TextButton>
+									</div>
 								</td>
 							</tr>
 						),
