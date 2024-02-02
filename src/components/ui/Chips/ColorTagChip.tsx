@@ -1,4 +1,4 @@
-export default function ColorTags({
+export default function ColorTagChip({
 	children,
 	fontSize,
 }: {
