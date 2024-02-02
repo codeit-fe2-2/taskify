@@ -7,3 +7,22 @@ export interface Dashboard {
 	createdByMe: boolean;
 	userId: number;
 }
+
+export interface DashboardListGetResponse {
+	dashboards: Dashboard[];
+	cursorId: number;
+	totalCount: number;
+}
+
+export interface Column {
+	id: number;
+	title: string;
+	teamId: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface ColumnListGetResponse {
+	result: string;
+	data: Column[];
+}
