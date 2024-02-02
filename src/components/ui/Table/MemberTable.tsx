@@ -6,9 +6,10 @@ interface MemberTableProps {
 		nickname: string;
 		profileImageUrl: string;
 	}[];
+	onDelete: (id: number) => void;
 }
 
-export default function MemberTable({ data }: MemberTableProps) {
+export default function MemberTable({ data, onDelete }: MemberTableProps) {
 	return (
 		<>
 			<table>
@@ -39,7 +40,12 @@ export default function MemberTable({ data }: MemberTableProps) {
 								</div>
 							</td>
 							<td className='float-end py-2'>
-								<TextButton buttonSize='xxs' color='secondary' textSize='sm'>
+								<TextButton
+									buttonSize='xxs'
+									color='secondary'
+									textSize='sm'
+									onClick={() => onDelete(id)}
+								>
 									삭제
 								</TextButton>
 							</td>

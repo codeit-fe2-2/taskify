@@ -24,6 +24,14 @@ export default function Page() {
 		inviterNickname: invitation.inviter.nickname,
 	}));
 
+	const handleMemberDelete = (id: number) => {
+		console.log(id);
+	};
+
+	const handleInvite = () => {
+		console.log('invite button');
+	};
+
 	const handleInvitelistCancle = (id: number) => {
 		console.log(id);
 		// 초대 취소에 필요한 dashboardId는 이미 초대 불러오기 한 시점에서 준비되어 있을 것으로 추정되어 생략함
@@ -39,10 +47,22 @@ export default function Page() {
 
 	return (
 		<div className='flex flex-col gap-6 p-1'>
-			<TableLayer tableName={'구성원'} needPage>
-				<MemberTable data={membersData} />
+			<TableLayer
+				tableName={'구성원'}
+				needPage
+				// onPrevious={ }
+				// onNext={ }
+			>
+				<MemberTable data={membersData} onDelete={handleMemberDelete} />
 			</TableLayer>
-			<TableLayer tableName={'초대 내역'} needPage isInvite>
+			<TableLayer
+				tableName={'초대 내역'}
+				needPage
+				// onPrevious={}
+				// onNext={}
+				isInvite
+				onInvite={handleInvite}
+			>
 				<InvitelistTable
 					data={invitelistData}
 					onCancel={handleInvitelistCancle}
