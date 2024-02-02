@@ -59,8 +59,7 @@ function Chips() {
 				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-green' />
 				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-orange' />
 				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-pink' />
-				<ColorDotButtons height='h-6' width='w-6' bgColor='bg-purple' />
-				<ColorDotButtons height='h-6' width='w-6' bgColor='bg-blue' />
+				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-purple' />
 			</div>
 		</div>
 	);

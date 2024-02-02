@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import TextButton from '@/src/components/ui/Button/TextButton';
 import CreateModal from '@/src/components/ui/Modal/CreateModal';
 
+import mockdata from '../../dashboardmock.json';
 export default function Page() {
 	const [modalOpen, setModalOpen] = useState(false);
 
@@ -26,7 +26,7 @@ export default function Page() {
 					onClose={handleModalClose}
 				/>
 			)} */}
-			{modalOpen && (
+			{/* {modalOpen && (
 				<CreateModal
 					modalSize='sm'
 					title='새 컬럼 생성'
@@ -34,16 +34,20 @@ export default function Page() {
 					// onClick={handleModalClose}
 					onClose={handleModalClose}
 					secondOnClick={handleModalClose}
+					columns={mockdata.data}
+				/>
+			)} */}
+			{modalOpen && (
+				<CreateModal
+					modalSize='lg'
+					title='새로운 대시보드'
+					subTitle='대시보드이름'
+					// onClick={handleModalClose}
+					onClose={handleModalClose}
+					secondOnClick={handleModalClose}
+					columns={mockdata.data}
 				/>
 			)}
-			<TextButton
-				buttonSize='lg'
-				textSize='lg'
-				color='primary'
-				disabled={false}
-			>
-				로그인
-			</TextButton>
 		</>
 	);
 }
