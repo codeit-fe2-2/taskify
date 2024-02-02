@@ -30,10 +30,10 @@ export default function TableLayer({
 			className={`flex flex-col gap-2 rounded-lg bg-white px-2 py-1 text-black2 ${layerWidthClass}`}
 		>
 			<div className='flex flex-row items-center gap-2'>
-				<h1 className='grow'>{tableName}</h1>
+				<h1 className='grow text-2xl font-bold'>{tableName}</h1>
 				{needPage && (
 					<div className='flex flex-row items-center gap-2'>
-						<p className='text-right'>1 페이지 중 1</p>
+						<p className='text-right text-sm font-normal'>1 페이지 중 1</p>
 						<div>
 							<IconButton
 								buttonSize='xs'
