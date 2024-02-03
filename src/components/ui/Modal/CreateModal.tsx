@@ -10,21 +10,26 @@ import { Column } from '@/src/types/dashboard';
 import ColorDotChip from '../ColorDotChip';
 
 interface CreateModalProps {
-	modalSize: 'sm' | 'lg';
+	modalSize?: 'sm' | 'lg';
 	title: string;
 	subTitle: string;
-	onClick?: () => void;
-	secondOnClick?: () => void;
+
+	onCancel: () => void;
 	columns: Column[];
+	className?: string;
+	onColumnSubmit?: (inputValue: string) => void;
+	onDashBoardSubmit?: (inputValue: string, selectColor: string) => void;
 }
 
 const CreateModal: React.FC<CreateModalProps> = ({
 	modalSize,
 	title,
 	subTitle,
-	onClick,
-	secondOnClick,
+	onColumnSubmit,
+	onDashBoardSubmit,
+	onCancel,
 	columns,
+	className,
 }) => {
 	const [inputValue, setInputValue] = useState('');
 	const [inputError, setInputError] = useState(false);
@@ -37,10 +42,10 @@ const CreateModal: React.FC<CreateModalProps> = ({
 	const handleModalBackgroundClick = useCallback(
 		(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
 			if (e.target === modalBackground.current) {
-				secondOnClick?.();
+				onCancel?.();
 			}
 		},
-		[secondOnClick],
+		[onCancel],
 	);
 
 	//input 컬럼의 중복여부 mockdata를 사용해서 구현하였음
@@ -48,16 +53,24 @@ const CreateModal: React.FC<CreateModalProps> = ({
 		const value = e.target.value;
 
 		setInputValue(value);
-
-		const isDuplicate = columns?.some(
-			(column) => column.title === value.trim(),
-		);
-		setInputError(!!isDuplicate);
+		if (modalSize === 'sm') {
+			const isDuplicate = columns?.some(
+				(column) => column.title === value.trim(),
+			);
+			setInputError(!!isDuplicate);
+		}
 	};
 
 	//체크와 관련된 color 선택 부분 추후 생성에도 값을 넣어 보낼 예정
 	const handleSelectColorChange = (color: string) => {
 		setSelectColor(color);
+	};
+	const handleSubmit = () => {
+		if (onDashBoardSubmit) {
+			onDashBoardSubmit(inputValue, selectColor);
+		} else if (onColumnSubmit) {
+			onColumnSubmit(inputValue);
+		}
 	};
 	const modalSizeClasses = clsx({
 		'sm:px-5 sm:py-7 px-7 pt-8 pb-7': modalSize === 'sm',
@@ -72,7 +85,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 			onClick={handleModalBackgroundClick}
 			className='fixed left-0 top-0 flex size-full items-center justify-center bg-black4 bg-opacity-70'
 		>
-			<div className={` rounded-lg bg-white ${modalSizeClasses}`}>
+			<div className={` rounded-lg bg-white ${className} ${modalSizeClasses}`}>
 				<p className=' text-2xl font-bold leading-7 sm:text-xl'>{title}</p>
 				<form>
 					<div className='mt-8 flex flex-col sm:mt-7'>
@@ -87,7 +100,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 							maxLength={40}
 							className='sm:h-10.5 mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:w-[287px] sm:text-sm sm:leading-4 '
 							value={inputValue}
-							onChange={modalSize === 'sm' ? handleInputChange : undefined}
+							onChange={handleInputChange}
 						/>
 						{inputError && (
 							<p className='mt-2 text-sm leading-4 text-red'>{errorMessage}</p>
@@ -113,7 +126,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 							textSize='md'
 							color='secondary'
 							onClick={() => {
-								secondOnClick?.();
+								onCancel();
 							}}
 						>
 							취소
@@ -123,9 +136,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 							textSize='md'
 							color='primary'
 							disabled={inputError}
-							onClick={() => {
-								onClick?.();
-							}}
+							onClick={handleSubmit}
 						>
 							생성
 						</TextButton>

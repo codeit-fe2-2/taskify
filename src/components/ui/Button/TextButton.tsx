@@ -6,8 +6,8 @@ interface ButtonProps {
 	buttonSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	textSize?: 'xs' | 'sm' | 'md' | 'lg';
 	color?: 'primary' | 'secondary' | 'third';
-	children?: ReactNode;
-	onClick?: () => void;
+	children: ReactNode;
+	onClick: () => void;
 	disabled?: boolean;
 	fullWidth?: boolean;
 	className?: string;
