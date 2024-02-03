@@ -10,16 +10,14 @@ export default function DotTags({
 	size: Size;
 }): React.JSX.Element {
 	return (
-		<div>
-			<button className='flex items-center gap-2 rounded-[11px] bg-violet1 p-2 align-middle'>
-				<Image
-					src='/icons/chip_ellipse_sm_purple.svg'
-					width={size}
-					height={size}
-					alt='chip dot purple'
-				/>
-				<div className='text-violet2'>{children}</div>
-			</button>
-		</div>
+		<button className='flex items-center gap-2 rounded-[11px] bg-violet1 p-2 '>
+			<Image
+				src='/icons/chip_ellipse_sm_purple.svg'
+				width={size}
+				height={size}
+				alt='chip dot purple'
+			/>
+			<div className='text-violet2'>{children}</div>
+		</button>
 	);
 }
