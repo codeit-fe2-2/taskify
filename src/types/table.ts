@@ -1,4 +1,4 @@
-export interface InviteDash {
+interface InviteDash {
 	id: number;
 	inviter: {
 		id: number;
@@ -29,7 +29,7 @@ export interface InviteDashPutResponse {
 	invitations: InviteDash[];
 }
 
-export interface InviteList {
+interface InviteList {
 	id: number;
 	inviter: {
 		id: number;
@@ -56,22 +56,18 @@ export interface InviteListGetResponse {
 	invitations: InviteList[];
 }
 
-export interface Members {
-	members: [
-		{
-			id: number;
-			email: string;
-			nickname: string;
-			profileImageUrl: string;
-			createdAt: string;
-			updatedAt: string;
-			isOwner: true;
-			userId: number;
-		},
-	];
+interface Members {
+	id: number;
+	email: string;
+	nickname: string;
+	profileImageUrl: string;
+	createdAt: string;
+	updatedAt: string;
+	isOwner: true;
+	userId: number;
 }
 
 export interface MembersResponse {
-	totalCount: number;
 	members: Members[];
+	totalCount: number;
 }

@@ -1,15 +1,18 @@
+import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
+import { useGetMembers } from '@/src/hooks/table/useGetMembers';
+
 import TextButton from '../Button/TextButton';
 
-interface MemberTableProps {
-	data: {
-		id: number;
-		nickname: string;
-		profileImageUrl: string;
-	}[];
-	onDelete: (id: number) => void;
-}
+export default function MemberTable() {
+	const dashboardId = 2716;
+	const { membersInfo, execute } = useGetMembers(dashboardId);
+	const members = membersInfo?.members;
+	const totalCount = membersInfo?.totalCount;
 
-export default function MemberTable({ data, onDelete }: MemberTableProps) {
+	const handleDelete = (memberId: number) => {
+		useDeleteMembers(memberId);
+	};
+
 	return (
 		<>
 			<table>
@@ -20,23 +23,23 @@ export default function MemberTable({ data, onDelete }: MemberTableProps) {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map(({ id, nickname, profileImageUrl }, index) => (
+					{members?.map((member, index) => (
 						<tr
-							key={id}
-							className={`h-8 ${index === data.length - 1 ? '' : 'border-b border-gray2'}`}
+							key={member.id}
+							className={`h-8 ${index === members.length - 1 ? '' : 'border-b border-gray2'}`}
 						>
 							<td className='py-2 text-left'>
 								<div className='flex flex-row items-center gap-2'>
 									<div
 										className='size-[26px] rounded-full'
 										style={{
-											backgroundImage: `url(${profileImageUrl})`,
+											backgroundImage: `url(${member.profileImageUrl})`,
 											backgroundPosition: 'center',
 											backgroundSize: 'cover',
 											backgroundRepeat: 'no-repeat',
 										}}
 									/>
-									<p>{nickname}</p>
+									<p>{member.nickname}</p>
 								</div>
 							</td>
 							<td className='float-end py-2'>
@@ -44,7 +47,7 @@ export default function MemberTable({ data, onDelete }: MemberTableProps) {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => onDelete(id)}
+									onClick={() => handleDelete(member.id)}
 								>
 									삭제
 								</TextButton>
