@@ -1,19 +1,18 @@
+import { useDeleteInviteList } from '@/src/hooks/table/useDeleteInviteList';
+import { useGetInviteList } from '@/src/hooks/table/useGetInviteList';
+
 import TextButton from '../Button/TextButton';
+export default function InvitelistTable() {
+	// API 가져오는 코드
+	const dashboardId = 2716; // dashboardId...인데 이걸 어떻게 불러올지가 고민입니다. useRoute 써야하겠죠?
+	const { inviteListInfo, execute } = useGetInviteList(dashboardId);
+	const totalCount = inviteListInfo?.totalCount;
+	const inviteList = inviteListInfo?.invitations;
 
-interface DataType {
-	id: number;
-	inviteeEmail: string;
-}
+	const handleCancel = (invitationId: number) => {
+		useDeleteInviteList(dashboardId, invitationId);
+	};
 
-interface InvitelistTableProps {
-	data: DataType[];
-	onCancel: (id: number) => void;
-}
-
-export default function InvitelistTable({
-	data,
-	onCancel,
-}: InvitelistTableProps) {
 	return (
 		<>
 			<table className='table-auto'>
@@ -24,18 +23,18 @@ export default function InvitelistTable({
 					</tr>
 				</thead>
 				<tbody>
-					{data.map(({ id, inviteeEmail }, index) => (
+					{inviteList?.map((data, index) => (
 						<tr
-							key={id}
-							className={`h-8 ${index !== data.length - 1 && 'border-b border-gray2'}`}
+							key={data.id}
+							className={`h-8 ${index !== inviteList.length - 1 && 'border-b border-gray2'}`}
 						>
-							<td className='py-2 text-left'>{inviteeEmail}</td>
+							<td className='py-2 text-left'>{data.invitee.email}</td>
 							<td className='float-end py-2'>
 								<TextButton
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => onCancel(id)}
+									onClick={() => handleCancel(data.id)}
 								>
 									취소
 								</TextButton>

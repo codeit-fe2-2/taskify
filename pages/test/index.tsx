@@ -12,22 +12,12 @@ export default function Page() {
 		profileImageUrl: member.profileImageUrl,
 	}));
 
-	const invitelistData = mockupData.invitations.map((invitation) => ({
-		id: invitation.id,
-		inviteeEmail: invitation.invitee.email,
-	}));
-
 	const handleMemberDelete = (id: number) => {
 		console.log(id);
 	};
 
 	const handleInvite = () => {
 		console.log('invite button');
-	};
-
-	const handleInvitelistCancle = (id: number) => {
-		console.log(id);
-		// 초대 취소에 필요한 dashboardId는 이미 초대 불러오기 한 시점에서 준비되어 있을 것으로 추정되어 생략함
 	};
 
 	return (
@@ -48,10 +38,7 @@ export default function Page() {
 				isInvite
 				onInvite={handleInvite}
 			>
-				<InvitelistTable
-					data={invitelistData}
-					onCancel={handleInvitelistCancle}
-				/>
+				<InvitelistTable />
 			</TableLayer>
 			<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>
 				<InvitedashTable />

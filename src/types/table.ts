@@ -53,7 +53,7 @@ export interface InviteList {
 
 export interface InviteListGetResponse {
 	totalCount: number;
-	data: InviteList[];
+	invitations: InviteList[];
 }
 
 export interface Members {
@@ -69,10 +69,9 @@ export interface Members {
 			userId: number;
 		},
 	];
-	totalCount: number;
 }
 
 export interface MembersResponse {
 	totalCount: number;
-	data: Members[];
+	members: Members[];
 }
