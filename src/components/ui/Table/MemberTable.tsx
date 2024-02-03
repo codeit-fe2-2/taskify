@@ -2,6 +2,7 @@ import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
 import { useGetMembers } from '@/src/hooks/table/useGetMembers';
 
 import TextButton from '../Button/TextButton';
+import TableLayer from './TableLayer';
 
 export default function MemberTable() {
 	const dashboardId = 2716;
@@ -14,7 +15,7 @@ export default function MemberTable() {
 	};
 
 	return (
-		<>
+		<TableLayer tableName={'구성원'} needPage>
 			<table>
 				<thead>
 					<tr>
@@ -56,6 +57,6 @@ export default function MemberTable() {
 					))}
 				</tbody>
 			</table>
-		</>
+		</TableLayer>
 	);
 }

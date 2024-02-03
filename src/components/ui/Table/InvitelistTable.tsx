@@ -2,6 +2,8 @@ import { useDeleteInviteList } from '@/src/hooks/table/useDeleteInviteList';
 import { useGetInviteList } from '@/src/hooks/table/useGetInviteList';
 
 import TextButton from '../Button/TextButton';
+import TableLayer from './TableLayer';
+
 export default function InvitelistTable() {
 	// API 가져오는 코드
 	const dashboardId = 2716; // dashboardId...인데 이걸 어떻게 불러올지가 고민입니다. useRoute 써야하겠죠?
@@ -9,12 +11,22 @@ export default function InvitelistTable() {
 	const totalCount = inviteListInfo?.totalCount;
 	const inviteList = inviteListInfo?.invitations;
 
+	// 여기에 초대하기 모달창 연결 예정
+	const handleInvite = () => {
+		console.log('invite button');
+	};
+
 	const handleCancel = (invitationId: number) => {
 		useDeleteInviteList(dashboardId, invitationId);
 	};
 
 	return (
-		<>
+		<TableLayer
+			tableName={'초대 내역'}
+			needPage
+			isInvite
+			onInvite={handleInvite}
+		>
 			<table className='table-auto'>
 				<thead>
 					<tr>
@@ -43,6 +55,6 @@ export default function InvitelistTable() {
 					))}
 				</tbody>
 			</table>
-		</>
+		</TableLayer>
 	);
 }

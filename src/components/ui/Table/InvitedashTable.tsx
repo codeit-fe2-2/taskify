@@ -5,6 +5,7 @@ import { useGetInviteDash } from '@/src/hooks/table/useGetInviteDash';
 import { usePutInviteDash } from '@/src/hooks/table/usePutInviteDash';
 
 import TextButton from '../Button/TextButton';
+import TableLayer from './TableLayer';
 
 export default function InvitedashTable() {
 	const [searchTerm, setSearchTerm] = useState<string>('');
@@ -26,7 +27,7 @@ export default function InvitedashTable() {
 	};
 
 	return (
-		<>
+		<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>
 			{isInviteDash ? (
 				<>
 					<div className='relative flex h-10 flex-row gap-2 rounded-md border border-solid border-gray3 p-1'>
@@ -103,6 +104,6 @@ export default function InvitedashTable() {
 					</p>
 				</div>
 			)}
-		</>
+		</TableLayer>
 	);
 }
