@@ -10,12 +10,25 @@ export default function MemberTable() {
 	const members = membersInfo?.members;
 	const totalCount = membersInfo?.totalCount;
 
+	const handlePrevious = () => {
+		alert('이전 페이지로');
+	};
+
+	const handleNext = () => {
+		alert('다음 페이지로');
+	};
+
 	const handleDelete = (memberId: number) => {
 		useDeleteMembers(memberId);
 	};
 
 	return (
-		<TableLayer tableName={'구성원'} needPage>
+		<TableLayer
+			tableName={'구성원'}
+			needPage
+			onPrevious={handlePrevious}
+			onNext={handleNext}
+		>
 			<table>
 				<thead>
 					<tr>

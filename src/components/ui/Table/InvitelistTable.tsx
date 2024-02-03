@@ -11,9 +11,16 @@ export default function InvitelistTable() {
 	const totalCount = inviteListInfo?.totalCount;
 	const inviteList = inviteListInfo?.invitations;
 
-	// 여기에 초대하기 모달창 연결 예정
+	const handlePrevious = () => {
+		alert('이전 페이지로');
+	};
+
+	const handleNext = () => {
+		alert('다음 페이지로');
+	};
+
 	const handleInvite = () => {
-		console.log('invite button');
+		alert('초대하기');
 	};
 
 	const handleCancel = (invitationId: number) => {
@@ -25,6 +32,8 @@ export default function InvitelistTable() {
 			tableName={'초대 내역'}
 			needPage
 			isInvite
+			onPrevious={handlePrevious}
+			onNext={handleNext}
 			onInvite={handleInvite}
 		>
 			<table className='table-auto'>
