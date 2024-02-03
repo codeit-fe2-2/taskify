@@ -28,8 +28,6 @@ export default function MyDashboardPage() {
 	const isExistsNextPage =
 		fetchMethod.page * fetchMethod.size < (dashboardListInfo?.totalCount || 0);
 
-	console.log('dashboardListInfo', dashboardListInfo);
-
 	/**
 	 * size 갯수 1페이지와 나머지를 달라지게 해야 함?
 	 */
