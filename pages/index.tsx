@@ -14,7 +14,7 @@ export default function Home() {
 	const handleDarkModeClick = () => {
 		setTheme(theme === 'dark' ? 'light' : 'dark');
 	};
-	console.log(theme);
+
 	return (
 		<>
 			<LandingHeader theme={theme} />

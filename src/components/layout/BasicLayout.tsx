@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import Header from '@/src/components/layout/Header';
 import SideMenu from '@/src/components/layout/SideMenu';
@@ -10,7 +10,13 @@ export default function BaicLayout({ children }: { children: ReactNode }) {
 	const { boardid } = router.query;
 	const boardId = boardid ? parseInt(boardid as string) : 0;
 
-	const { dashboardListInfo, execute } = useGetDashboardList();
+	const { dashboardListInfo } = useGetDashboardList(
+		'pagination',
+		0,
+		1,
+		15,
+		false,
+	);
 	const dashboards = dashboardListInfo?.dashboards;
 	const cursorId = dashboardListInfo?.cursorId;
 	const currentDashboard = dashboards?.find(
@@ -26,7 +32,9 @@ export default function BaicLayout({ children }: { children: ReactNode }) {
 			/>
 			<div className='grow'>
 				<Header currentDashboard={currentDashboard} />
-				<main>{children}</main>
+				<main className='h-[calc(100vh-var(--header-height))] bg-gray1 sm:h-[calc(100vh-var(--header-height-sm))]'>
+					{children}
+				</main>
 			</div>
 		</div>
 	);
