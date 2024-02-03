@@ -8,6 +8,7 @@ interface DashBoardButtonProps {
 	color: string;
 	title: string;
 	createdByMe?: boolean;
+	className?: string;
 }
 
 const DashBoardButton = ({
@@ -15,6 +16,7 @@ const DashBoardButton = ({
 	title,
 	color,
 	createdByMe = true,
+	className,
 }: DashBoardButtonProps) => {
 	const colorClass = clsx({
 		'bg-green': color === 'green',
@@ -27,7 +29,7 @@ const DashBoardButton = ({
 	return (
 		<Link
 			href={`/dashboard/${id}`}
-			className='flex items-center justify-center gap-[166px] rounded-lg border-[1px] border-gray3 px-[20px] py-[25.5px] sm:gap-[114px] sm:p-[20px] md:gap-[89px] md:py-[24.5px] '
+			className={`${className} flex items-center justify-center gap-[166px] rounded-lg border-[1px] border-gray3 px-[20px] py-[25.5px] sm:gap-[114px] sm:p-[20px] md:gap-[89px] md:py-[24.5px]`}
 		>
 			<div className='flex  items-center '>
 				<div className={`${colorClass} size-[8px] rounded-full`}></div>

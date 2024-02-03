@@ -19,7 +19,7 @@ export default function Header({ currentDashboard, user }: Props) {
 	return (
 		<header
 			className={clsx(
-				'flex h-[70px] items-center justify-between border-b border-gray3 sm:h-[60px]',
+				'flex h-[var(--header-height)] items-center justify-between border-b border-gray3 sm:h-[var(--header-height-sm)]',
 				isDashboardPage && 'sm:justify-around md:justify-around',
 			)}
 		>

@@ -7,6 +7,8 @@
 	--foreground-rgb: 0, 0, 0;
 	--background-start-rgb: 214, 219, 220;
 	--background-end-rgb: 255, 255, 255;
+	--header-height: 70px;
+	--header-height-sm: 60px;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -35,7 +35,6 @@ export default function Input(props: InputProps) {
 		invalidMessage,
 		...rest
 	} = props as signInputProps;
-	console.log(pattern);
 	const id = useId();
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [htmlType, setHtmlType] = useState(type);
