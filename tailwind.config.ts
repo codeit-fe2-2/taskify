@@ -5,13 +5,12 @@ const config: Config = {
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/**/*.{js,ts,jsx,tsx,mdx}',
 	],
+	darkMode: 'class',
 	theme: {
 		screens: {
-			sm: '480px',
-			md: '768px',
-			lg: '1200px',
-			xl: '1280px',
-			xl2: '1460px',
+			sm: { max: '759px' },
+			md: { min: '760px', max: '1199px' },
+			lg: { min: '1200px' },
 		},
 		colors: {
 			white: '#FFFFFF',
@@ -42,6 +41,6 @@ const config: Config = {
 			sortTextOrange: '#D58D49',
 		},
 	},
-	plugins: [],
+	plugins: [require('tailwind-scrollbar-hide')],
 };
 export default config;

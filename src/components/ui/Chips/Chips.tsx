@@ -32,23 +32,24 @@ function Chips() {
 
 			<div className='flex gap-4'>
 				{/* sm */}
-				<ColorTagChips fontSize='10'>프로젝트</ColorTagChips>
 
-				<ColorTagChips fontSize='10'>일반</ColorTagChips>
+				<ColorTagChips fontSize='text-10'>프로젝트</ColorTagChips>
 
-				<ColorTagChips fontSize='10'>백엔드</ColorTagChips>
+				<ColorTagChips fontSize='text-10'>일반</ColorTagChips>
 
-				<ColorTagChips fontSize='10'>상</ColorTagChips>
+				<ColorTagChips fontSize='text-10'>백엔드</ColorTagChips>
+
+				<ColorTagChips fontSize='text-10'>상</ColorTagChips>
 
 				{/* md */}
-				<ColorTagChips fontSize='12'>프로젝트</ColorTagChips>
+				<ColorTagChips fontSize='text-12'>프로젝트</ColorTagChips>
 
-				<ColorTagChips fontSize='12'>일반</ColorTagChips>
+				<ColorTagChips fontSize='text-12'>일반</ColorTagChips>
 
-				<ColorTagChips fontSize='12'>백엔드</ColorTagChips>
+				<ColorTagChips fontSize='text-12'>백엔드</ColorTagChips>
 
-				<ColorTagChips fontSize='12'>상</ColorTagChips>
-				<ColorTagChips fontSize='12'>프론트엔드</ColorTagChips>
+				<ColorTagChips fontSize='text-12'>상</ColorTagChips>
+				<ColorTagChips fontSize='text-12'>프론트엔드</ColorTagChips>
 			</div>
 
 			{/* 색깔 칩 버튼 */}
@@ -56,11 +57,7 @@ function Chips() {
 			<br />
 
 			<div className='flex gap-2'>
-				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-green' />
-				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-orange' />
-				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-pink' />
-				<ColorDotButtons height='h-6' width='w-6' bgColor='bg-purple' />
-				<ColorDotButtons height='h-6' width='w-6' bgColor='bg-blue' />
+				<ColorDotButtons />
 			</div>
 		</div>
 	);
