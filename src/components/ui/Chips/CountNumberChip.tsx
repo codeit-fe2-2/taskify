@@ -1,4 +1,4 @@
-export default function CountNumber({
+export default function CountNumberChip({
 	children,
 }: {
 	children: React.ReactNode;
