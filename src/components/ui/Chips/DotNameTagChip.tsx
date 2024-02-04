@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { Size } from './Chips';
 
-export default function DotTags({
+export default function DotNameTagChip({
 	children,
 	size,
 }: {

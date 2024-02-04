@@ -1,5 +1,5 @@
 import AddButton from '../AddButton';
-import ColorDotButtons from '../ColorDotButton';
+import ColorDotButton from '../ColorDotButton';
 import ColorTagChips from './ColorTagChip';
 import CountNumber from './CountNumberChip';
 import DotTags from './DotNameTagChip';
@@ -12,6 +12,9 @@ export enum Size {
 }
 
 function Chips() {
+	const handleColorSelect = (selectedColor: string) => {
+		console.log('selectedColor', selectedColor);
+	};
 	return (
 		<div>
 			<CountNumber>3</CountNumber>
@@ -57,11 +60,7 @@ function Chips() {
 			<br />
 
 			<div className='flex gap-2'>
-				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-green' />
-				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-orange' />
-				<ColorDotButtons height='h-8' width='w-8' bgColor='bg-pink' />
-				<ColorDotButtons height='h-6' width='w-6' bgColor='bg-purple' />
-				<ColorDotButtons height='h-6' width='w-6' bgColor='bg-blue' />
+				<ColorDotButton onSelectedColor={handleColorSelect} />
 			</div>
 		</div>
 	);
