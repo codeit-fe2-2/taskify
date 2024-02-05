@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useState } from 'react';
+
 interface ColorDotButtonProps {
 	handleSelectorColor: (color: string) => void;
 }
@@ -7,9 +8,7 @@ export default function ColorDotButtons({
 	handleSelectorColor,
 }: ColorDotButtonProps) {
 	const [selectedButton, setSelectedButton] = useState<number | null>(0);
-
 	const colors = ['bg-green', 'bg-pink', 'bg-blue', 'bg-purple', 'bg-orange'];
-
 	const handleClick = (buttonIndex: number) => {
 		if (selectedButton === buttonIndex) {
 			setSelectedButton(null);
@@ -18,6 +17,7 @@ export default function ColorDotButtons({
 			setSelectedButton(buttonIndex);
 			const buttonColor = colors[buttonIndex].slice(3);
 			handleSelectorColor(buttonColor);
+
 		}
 	};
 
