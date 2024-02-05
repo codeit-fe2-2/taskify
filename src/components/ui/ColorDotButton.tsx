@@ -47,6 +47,12 @@ export default function ColorDotButton({
 								height={22}
 								alt='check icon'
 							/>
+							{/* to Reviewers에 있던 Image 태그가 아마 이걸 의미하는 거 같은데,
+							여길 보니까 22로 고정되어 있네요. 이 값을 따로 빼서 변수로
+							만들던지 하면 될 거 같습니다. 아니면 Image에 width과 height 대신
+							fill을 넣어두고, Image를 감싸는 div에 사이즈를 지정하는 방법도
+							있어요. w-[nnpx], md:w-[22px], sm:w-[22px]같은 방식으로 해결하시면
+							될 거 같습니다. */}
 						</div>
 					)}
 				</button>

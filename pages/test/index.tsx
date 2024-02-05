@@ -1,3 +1,5 @@
+import Card from '@/src/components/ui/Card';
+import Chips from '@/src/components/ui/Chips/Chips';
 import InvitedashTable from '@/src/components/ui/Table/InvitedashTable';
 import InvitelistTable from '@/src/components/ui/Table/InvitelistTable';
 import MemberTable from '@/src/components/ui/Table/MemberTable';
@@ -35,6 +37,8 @@ export default function Page() {
 			<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>
 				<InvitedashTable data={invitedashData} />
 			</TableLayer>
+			<Chips />
+			<Card />
 		</div>
 	);
 }
