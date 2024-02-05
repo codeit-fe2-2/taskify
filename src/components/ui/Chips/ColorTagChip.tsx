@@ -1,4 +1,4 @@
-export default function ColorTags({
+export default function ColorTagChip({
 	children,
 	fontSize,
 }: {
@@ -22,7 +22,7 @@ export default function ColorTags({
 	return (
 		<div>
 			<button
-				className={`${textColor} ${bgColor} ${fontSize < '12' ? 'text-xs' : 'text-base'} rounded-[4px] px-[6px] py-[4px] text-sm`}
+				className={`${textColor} ${bgColor} ${fontSize < '12' ? 'text-base' : 'text-xs'} rounded-[4px] px-[6px] py-[4px] text-sm`}
 			>
 				{children}
 			</button>
