@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import AddButton from '../AddButton';
 import ColorDotButtons from '../ColorDotButtons';
 import ColorTagChips from './ColorTagChip';
@@ -5,13 +7,17 @@ import CountNumber from './CountNumberChip';
 import DotTags from './DotNameTagChip';
 
 function Chips() {
+	const [dashboardAdded, setDashboardAdded] = useState(false);
 	const handleSelectColor = (selectedColor: string) => {
 		console.log('selectedColor', selectedColor);
 	};
 
 	return (
 		<div>
-			<CountNumber>3</CountNumber>
+			<CountNumber
+				initialValue={0}
+				dashboardAdded={dashboardAdded}
+			></CountNumber>
 
 			<AddButton
 				handleCreateNew={() => {
