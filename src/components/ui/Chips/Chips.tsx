@@ -24,12 +24,10 @@ function Chips() {
 			<AddButton size={Size.Large} />
 
 			<br />
-			<DotTags size={Size.Xsmall}>To do</DotTags>
-			<DotTags size={Size.Xsmall}>On Progress</DotTags>
-			<DotTags size={Size.Xsmall}>Done</DotTags>
-			<DotTags size={Size.Small}>To do</DotTags>
-			<DotTags size={Size.Small}>On Progress</DotTags>
-			<DotTags size={Size.Small}>Done</DotTags>
+			<DotTags>To do</DotTags>
+			<DotTags>On Progress</DotTags>
+			<DotTags>Done</DotTags>
+
 			<br />
 
 			{/* 컬러 태그 */}

@@ -1,24 +1,23 @@
 import Image from 'next/image';
 
-import { Size } from './Chips';
-
 export default function DotNameTagChip({
 	children,
-	size,
 }: {
 	children: React.ReactNode;
-	size: Size;
 }): React.JSX.Element {
 	return (
 		<div>
-			<button className='flex items-center gap-2 rounded-[11px] bg-violet1 p-2 align-middle'>
+			<button className='m-2 flex items-center gap-2 rounded-[20px] bg-violet1 px-[14px] py-[4px] align-middle '>
 				<Image
 					src='/icons/chip_ellipse_sm_purple.svg'
-					width={size}
-					height={size}
 					alt='chip dot purple'
+					width={2}
+					height={2}
+					className='sm:size-[6px] md:size-[6px] lg:size-[8px]'
 				/>
-				<div className='text-violet2'>{children}</div>
+				<div className='text-violet2 sm:text-[15px] md:text-[15px] lg:text-[18px]'>
+					{children}
+				</div>
 			</button>
 		</div>
 	);
