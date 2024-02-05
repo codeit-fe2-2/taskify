@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import { useDeleteInviteList } from '@/src/hooks/table/useDeleteInviteList';
@@ -14,6 +15,8 @@ export default function InvitelistTable() {
 	const totalCount = inviteListInfo?.totalCount;
 	const inviteList = inviteListInfo?.invitations;
 	const totalPages = Math.ceil(totalCount / size);
+
+	const [isInviteList, setIsInviteList] = useState<boolean>(!inviteListInfo);
 
 	const handlePrevious = () => {
 		if (currentPage > 1) {
@@ -33,6 +36,7 @@ export default function InvitelistTable() {
 
 	const handleCancel = (invitationId: number) => {
 		useDeleteInviteList(invitationId);
+		setIsInviteList(!inviteListInfo);
 	};
 
 	useEffect(() => {
@@ -48,34 +52,49 @@ export default function InvitelistTable() {
 			onNext={handleNext}
 			onInvite={handleInvite}
 		>
-			<table className='table-auto'>
-				<thead>
-					<tr>
-						<th className='text-left'>이메일</th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					{inviteList?.map((data, index) => (
-						<tr
-							key={data.id}
-							className={`h-8 ${index !== inviteList.length - 1 && 'border-b border-gray2'}`}
-						>
-							<td className='py-2 text-left'>{data.invitee.email}</td>
-							<td className='float-end py-2'>
-								<TextButton
-									buttonSize='xxs'
-									color='secondary'
-									textSize='sm'
-									onClick={() => handleCancel(data.id)}
-								>
-									취소
-								</TextButton>
-							</td>
+			{isInviteList ? (
+				<table className='table-auto'>
+					<thead>
+						<tr>
+							<th className='text-left'>이메일</th>
+							<th></th>
 						</tr>
-					))}
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						{inviteList?.map((data, index) => (
+							<tr
+								key={data.id}
+								className={`h-8 ${index !== inviteList.length - 1 && 'border-b border-gray2'}`}
+							>
+								<td className='py-2 text-left'>{data.invitee.email}</td>
+								<td className='float-end py-2'>
+									<TextButton
+										buttonSize='xxs'
+										color='secondary'
+										textSize='sm'
+										onClick={() => handleCancel(data.id)}
+									>
+										취소
+									</TextButton>
+								</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			) : (
+				<div className='flex h-[300px] flex-col items-center justify-center gap-3'>
+					<div className='relative size-[100px] sm:size-[60px]'>
+						<Image
+							src={'/icons/unsubscribe.svg'}
+							fill={true}
+							alt='아직 초대한 유저가 없어요'
+						/>
+					</div>
+					<p className='text-lg font-normal text-gray4'>
+						아직 초대한 유저가 없어요
+					</p>
+				</div>
+			)}
 		</TableLayer>
 	);
 }
