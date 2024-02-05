@@ -9,17 +9,14 @@ import TableLayer from './TableLayer';
 
 export default function InvitedashTable() {
 	const [searchTerm, setSearchTerm] = useState<string>('');
-	// 검색된 초대된 대시보드
 	const { inviteDashInfo, execute } = useGetInviteDash(searchTerm);
-	// 전체 초대된 대시보드 유무
 	const [isInviteDash, setIsInviteDash] = useState<boolean>(!inviteDashInfo);
 
 	useEffect(() => {
-		execute();
+		void execute();
 	}, [searchTerm]);
 
 	const inviteDashes = inviteDashInfo?.invitations;
-	// const cursorId = inviteDashInfo?.cursorId; // 아직 쓰는 법 모름...
 
 	const handleAccept = (invitationId: number, inviteAccepted: boolean) => {
 		usePutInviteDash({ invitationId, inviteAccepted });
@@ -45,50 +42,54 @@ export default function InvitedashTable() {
 							onChange={(e) => setSearchTerm(e.target.value)}
 						/>
 					</div>
-					<table className='table-fixed'>
-						<thead>
-							<tr>
-								<th className='w-52 text-left'>이름</th>
-								<th className='text-left'>초대자</th>
-								<th className='w-[200px] text-left'>수락 여부</th>
-							</tr>
-						</thead>
-						<tbody>
+					<div className='flex flex-col text-base font-normal'>
+						<div className='flex flex-row py-2 text-gray4 sm:hidden'>
+							<div className='w-1/4'>이름</div>
+							<div className='w-1/2'>초대자</div>
+							<div className='w-1/4'>수락 여부</div>
+						</div>
+						<div>
 							{inviteDashes?.map((inviteDash, index) => (
-								<tr
+								<div
 									key={inviteDash.id}
-									className={`h-8 ${index === inviteDashes.length - 1 ? '' : 'border-b border-gray2'}`}
+									className={`${index === inviteDashes.length - 1 ? 'flex flex-row  py-2 sm:flex-col' : 'flex flex-row border-b border-gray2 py-2 sm:flex-col'}`}
 								>
-									<td className='py-2 text-left'>
-										<span>{inviteDash.dashboard.title}</span>
-									</td>
-									<td className='py-2 text-left'>
-										{inviteDash.inviter.nickname}
-									</td>
-									<td className='py-2'>
-										<div className='flex flex-row gap-1'>
-											<TextButton
-												buttonSize='xxs'
-												color='primary'
-												textSize='sm'
-												onClick={() => handleAccept(inviteDash.id, true)}
-											>
-												수락
-											</TextButton>
-											<TextButton
-												buttonSize='xxs'
-												color='secondary'
-												textSize='sm'
-												onClick={() => handleAccept(inviteDash.id, false)}
-											>
-												취소
-											</TextButton>
-										</div>
-									</td>
-								</tr>
+									<div className='flex w-1/4 flex-row items-center gap-2 sm:w-full sm:py-2'>
+										<p className='hidden w-1/4 text-gray4 sm:inline-block'>
+											이름
+										</p>
+										<p>{inviteDash.dashboard.title}</p>
+									</div>
+									<div className='flex w-1/2 flex-row items-center gap-2 sm:w-full sm:py-2'>
+										<p className='hidden w-1/4 text-gray4 sm:inline-block'>
+											초대자
+										</p>
+										<p>{inviteDash.inviter.nickname}</p>
+									</div>
+									<div className='flex w-1/4 flex-row items-center gap-1 sm:w-full sm:py-2'>
+										<TextButton
+											buttonSize='xxs'
+											className='w-full'
+											color='primary'
+											textSize='sm'
+											onClick={() => handleAccept(inviteDash.id, true)}
+										>
+											수락
+										</TextButton>
+										<TextButton
+											buttonSize='xxs'
+											className='w-full'
+											color='secondary'
+											textSize='sm'
+											onClick={() => handleAccept(inviteDash.id, false)}
+										>
+											취소
+										</TextButton>
+									</div>
+								</div>
 							))}
-						</tbody>
-					</table>
+						</div>
+					</div>
 				</>
 			) : (
 				<div className='flex h-[300px] flex-col items-center justify-center gap-3'>
