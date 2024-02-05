@@ -34,7 +34,7 @@ export default function ColorDotButtons({
 				>
 					{selectedButton === index && (
 						<div
-							className='absolute'
+							className='absolute size-[22px] lg:size-[26px]'
 							style={{
 								left: '50%',
 								top: '50%',
@@ -43,8 +43,8 @@ export default function ColorDotButtons({
 						>
 							<Image
 								src='/icons/chip_check.svg'
-								width={22}
-								height={22}
+								layout='fill'
+								objectFit='contain'
 								alt='check icon'
 							/>
 						</div>
