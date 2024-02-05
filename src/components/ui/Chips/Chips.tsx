@@ -20,8 +20,11 @@ function Chips() {
 		<div>
 			<CountNumber>3</CountNumber>
 
-			<AddButton size={Size.Medium} />
-			<AddButton size={Size.Large} />
+			<AddButton
+				handleCreateNew={() => {
+					console.log('clicked');
+				}}
+			/>
 
 			<br />
 			<DotTags>To do</DotTags>
