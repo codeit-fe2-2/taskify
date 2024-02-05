@@ -36,23 +36,13 @@ function Chips() {
 			<div className='flex gap-4'>
 				{/* sm */}
 
-				<ColorTagChips fontSize='text-10'>프로젝트</ColorTagChips>
+				<ColorTagChips>프로젝트</ColorTagChips>
 
-				<ColorTagChips fontSize='text-10'>일반</ColorTagChips>
+				<ColorTagChips>일반</ColorTagChips>
 
-				<ColorTagChips fontSize='text-10'>백엔드</ColorTagChips>
+				<ColorTagChips>백엔드</ColorTagChips>
 
-				<ColorTagChips fontSize='text-10'>상</ColorTagChips>
-
-				{/* md */}
-				<ColorTagChips fontSize='text-12'>프로젝트</ColorTagChips>
-
-				<ColorTagChips fontSize='text-12'>일반</ColorTagChips>
-
-				<ColorTagChips fontSize='text-12'>백엔드</ColorTagChips>
-
-				<ColorTagChips fontSize='text-12'>상</ColorTagChips>
-				<ColorTagChips fontSize='text-12'>프론트엔드</ColorTagChips>
+				<ColorTagChips>상</ColorTagChips>
 			</div>
 
 			{/* 색깔 칩 버튼 */}
