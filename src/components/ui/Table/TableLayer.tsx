@@ -7,7 +7,7 @@ import TextButton from '../Button/TextButton';
 interface TableLayerProps {
 	tableName: string;
 	isInvite?: boolean;
-	needPage?: boolean;
+	needPage?: { totalPages: number; currentPage: number };
 	layerWidth?: 'small' | 'large';
 	onPrevious?: () => void;
 	onNext?: () => void;
@@ -38,7 +38,7 @@ export default function TableLayer({
 				<h1 className='grow text-2xl font-bold'>{tableName}</h1>
 				{needPage && (
 					<div className='flex flex-row items-center gap-2'>
-						<p className='text-right text-sm font-normal'>1 페이지 중 1</p>
+						<p className='text-right text-sm font-normal'>{`${needPage.totalPages} 페이지 중 ${needPage.currentPage}`}</p>
 						<div>
 							<IconButton
 								buttonSize='xs'

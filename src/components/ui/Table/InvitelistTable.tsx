@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { useDeleteInviteList } from '@/src/hooks/table/useDeleteInviteList';
 import { useGetInviteList } from '@/src/hooks/table/useGetInviteList';
 
@@ -5,18 +7,24 @@ import TextButton from '../Button/TextButton';
 import TableLayer from './TableLayer';
 
 export default function InvitelistTable() {
-	// API 가져오는 코드
-	const dashboardId = 2716; // dashboardId...인데 이걸 어떻게 불러올지가 고민입니다. useRoute 써야하겠죠?
-	const { inviteListInfo, execute } = useGetInviteList(dashboardId);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const size = 10;
+
+	const { inviteListInfo, execute } = useGetInviteList(currentPage, size);
 	const totalCount = inviteListInfo?.totalCount;
 	const inviteList = inviteListInfo?.invitations;
+	const totalPages = Math.ceil(totalCount / size);
 
 	const handlePrevious = () => {
-		alert('이전 페이지로');
+		if (currentPage > 1) {
+			setCurrentPage((prevPage) => prevPage - 1);
+		}
 	};
 
 	const handleNext = () => {
-		alert('다음 페이지로');
+		if (currentPage < totalPages) {
+			setCurrentPage((prevPage) => prevPage + 1);
+		}
 	};
 
 	const handleInvite = () => {
@@ -24,13 +32,17 @@ export default function InvitelistTable() {
 	};
 
 	const handleCancel = (invitationId: number) => {
-		useDeleteInviteList(dashboardId, invitationId);
+		useDeleteInviteList(invitationId);
 	};
+
+	useEffect(() => {
+		void execute();
+	}, [currentPage]);
 
 	return (
 		<TableLayer
 			tableName={'초대 내역'}
-			needPage
+			needPage={{ totalPages: totalPages, currentPage: currentPage }}
 			isInvite
 			onPrevious={handlePrevious}
 			onNext={handleNext}

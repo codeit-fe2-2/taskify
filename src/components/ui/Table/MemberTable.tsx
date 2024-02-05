@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
 import { useGetMembers } from '@/src/hooks/table/useGetMembers';
 
@@ -5,27 +7,38 @@ import TextButton from '../Button/TextButton';
 import TableLayer from './TableLayer';
 
 export default function MemberTable() {
-	const dashboardId = 2716;
-	const { membersInfo, execute } = useGetMembers(dashboardId);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const size = 10;
+
+	const { membersInfo, execute } = useGetMembers(currentPage, size);
 	const members = membersInfo?.members;
 	const totalCount = membersInfo?.totalCount;
+	const totalPages = Math.ceil(totalCount / size);
 
 	const handlePrevious = () => {
-		alert('이전 페이지로');
+		if (currentPage > 1) {
+			setCurrentPage((prevPage) => prevPage - 1);
+		}
 	};
 
 	const handleNext = () => {
-		alert('다음 페이지로');
+		if (currentPage < totalPages) {
+			setCurrentPage((prevPage) => prevPage + 1);
+		}
 	};
 
 	const handleDelete = (memberId: number) => {
 		useDeleteMembers(memberId);
 	};
 
+	useEffect(() => {
+		void execute();
+	}, [currentPage]);
+
 	return (
 		<TableLayer
 			tableName={'구성원'}
-			needPage
+			needPage={{ totalPages: totalPages, currentPage: currentPage }}
 			onPrevious={handlePrevious}
 			onNext={handleNext}
 		>
