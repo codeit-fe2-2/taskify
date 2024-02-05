@@ -4,13 +4,6 @@ import ColorTagChips from './ColorTagChip';
 import CountNumber from './CountNumberChip';
 import DotTags from './DotNameTagChip';
 
-export enum Size {
-	Xsmall = 6,
-	Small = 8,
-	Medium = 14.5,
-	Large = 16,
-}
-
 function Chips() {
 	const handleSelectColor = (selectedColor: string) => {
 		console.log('selectedColor', selectedColor);
@@ -33,11 +26,7 @@ function Chips() {
 
 			<br />
 
-			{/* 컬러 태그 */}
-
 			<div className='flex gap-4'>
-				{/* sm */}
-
 				<ColorTagChips>프로젝트</ColorTagChips>
 
 				<ColorTagChips>일반</ColorTagChips>
