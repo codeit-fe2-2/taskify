@@ -1,13 +1,9 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 import { createColumns, createDashBoard, deleteColumn } from '@/src/apis/api';
 import BasicLayout from '@/src/components/layout/BasicLayout';
 import ColorDotButtons from '@/src/components/ui/ColorDotButton';
-import Input from '@/src/components/ui/Input';
 import AlertModal from '@/src/components/ui/Modal/AlertModal';
-import ConfirmModal from '@/src/components/ui/Modal/ConfirmModal';
-import ContextModal from '@/src/components/ui/Modal/ContextModal';
 import CreateModal from '@/src/components/ui/Modal/CreateModal';
 import { useModal } from '@/src/contexts/ModalProvider';
 
@@ -16,6 +12,7 @@ export default function MyDashboardPage() {
 	const { openModal, closeModal } = useModal();
 	const modalId = crypto.randomUUID();
 	const router = useRouter();
+
 	const { columnid } = router.query;
 	const columnId = columnid ? parseInt(columnid as string) : 0;
 	const { dashboardid } = router.query;
