@@ -12,7 +12,7 @@ export default function InvitelistTable() {
 	const size = 10;
 
 	const { inviteListInfo, execute } = useGetInviteList(currentPage, size);
-	const totalCount = inviteListInfo?.totalCount;
+	const totalCount = inviteListInfo?.totalCount as number;
 	const inviteList = inviteListInfo?.invitations;
 	const totalPages = Math.ceil(totalCount / size);
 

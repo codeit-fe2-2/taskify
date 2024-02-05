@@ -12,7 +12,7 @@ export default function MemberTable() {
 
 	const { membersInfo, execute } = useGetMembers(currentPage, size);
 	const members = membersInfo?.members;
-	const totalCount = membersInfo?.totalCount;
+	const totalCount = membersInfo?.totalCount as number;
 	const totalPages = Math.ceil(totalCount / size);
 
 	const handlePrevious = () => {

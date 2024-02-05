@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 import axiosInstance from '@/src/apis/axiosInstance';
 import { useAsync } from '@/src/hooks/useAsync';
@@ -6,13 +7,17 @@ import { InviteListGetResponse } from '@/src/types/table';
 
 export const useGetInviteList = (page: number, size: number) => {
 	const router = useRouter();
-	const { dashboardId } = router.query;
+	const boardid = router.query?.boardid as string;
 
 	const getInviteList = () =>
 		axiosInstance.get<InviteListGetResponse>(
-			`/dashboards/${dashboardId as string}/invitations?page=${page}&size=${size}`,
+			`/dashboards/${boardid}/invitations?page=${page}&size=${size}`,
 		);
 	const { data, execute } = useAsync(getInviteList);
+
+	useEffect(() => {
+		void execute();
+	}, [boardid]);
 
 	return { inviteListInfo: data, execute };
 };

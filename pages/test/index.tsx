@@ -8,8 +8,6 @@ export default function Page() {
 			<MemberTable />
 			<InvitelistTable />
 			<InvitedashTable />
-			<Chips />
-			<Card />
 		</div>
 	);
 }
