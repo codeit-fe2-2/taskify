@@ -5,7 +5,6 @@ import ColorTagChip from './Chips/ColorTagChip';
 interface DynamicCardProps {
 	title: string;
 	tagText: string;
-
 	hasImage: boolean;
 }
 

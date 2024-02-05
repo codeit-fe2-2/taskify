@@ -1,31 +1,46 @@
 import Image from 'next/image';
-export default function ColorDotButtons({
-	bgColor,
-	height,
-	width,
-}: {
-	bgColor: string;
-	height: string;
-	width: string;
-}): React.JSX.Element {
-	const imageSize = {
-		left: `${width === 'w-8' ? 6 : 2.5}px`,
-		top: `${height === 'h-8' ? 5 : 1.5}px`,
+import { useState } from 'react';
+
+export default function ColorDotButtons() {
+	const [selectedButton, setSelectedButton] = useState<number | null>(null);
+
+	const colors = ['bg-green', 'bg-pink', 'bg-blue', 'bg-purple', 'bg-orange'];
+
+	const handleClick = (buttonIndex: number) => {
+		if (selectedButton === buttonIndex) {
+			setSelectedButton(null);
+		} else {
+			setSelectedButton(buttonIndex);
+		}
 	};
 
 	return (
-		<div className='relative'>
-			<button
-				className={` rounded-full ${bgColor} ${height} ${width}`}
-			></button>
-			<div className='absolute ' style={imageSize}>
-				<Image
-					src='/icons/chip_check.svg'
-					width={22}
-					height={22}
-					alt='check icon'
-				/>
-			</div>
+		<div className='relative flex gap-1'>
+			{colors.map((color, index) => (
+				<button
+					key={index}
+					className={`relative rounded-full  ${color} sm:size-6 md:size-6 lg:size-8`}
+					onClick={() => handleClick(index + 1)}
+				>
+					{selectedButton === index + 1 && (
+						<div
+							className='absolute'
+							style={{
+								left: '50%',
+								top: '50%',
+								transform: 'translate(-50%, -50%)',
+							}}
+						>
+							<Image
+								src='/icons/chip_check.svg'
+								width={22}
+								height={22}
+								alt='check icon'
+							/>
+						</div>
+					)}
+				</button>
+			))}
 		</div>
 	);
 }
