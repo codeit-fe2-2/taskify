@@ -1,69 +1,110 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
-import { deleteData } from '@/src/apis/api';
+import { createColumns, createDashBoard, deleteColumn } from '@/src/apis/api';
+import BasicLayout from '@/src/components/layout/BasicLayout';
+import ColorDotButtons from '@/src/components/ui/ColorDotButton';
+import Input from '@/src/components/ui/Input';
 import AlertModal from '@/src/components/ui/Modal/AlertModal';
+import ConfirmModal from '@/src/components/ui/Modal/ConfirmModal';
+import ContextModal from '@/src/components/ui/Modal/ContextModal';
 import CreateModal from '@/src/components/ui/Modal/CreateModal';
+import { useModal } from '@/src/contexts/ModalProvider';
 
-import mockdata from '../../dashboardmock.json';
-export default function Page() {
-	const [modalOpen, setModalOpen] = useState(false);
+import mockdata from './dashboardmock.json';
+export default function MyDashboardPage() {
+	const { openModal, closeModal } = useModal();
+	const modalId = crypto.randomUUID();
 	const router = useRouter();
 	const { columnid } = router.query;
 	const columnId = columnid ? parseInt(columnid as string) : 0;
-	const handleModalState = () => {
-		setModalOpen(!modalOpen);
-	};
-	// const handleCreateDashBoard = (inputValue: string, selectColor: string) => {
-	// 	console.log(inputValue, selectColor);
+	const { dashboardid } = router.query;
+	const dashboardId = dashboardid ? parseInt(dashboardid as string) : 0;
+	const columns = mockdata.data;
+
+	// const handleDeleteColumn = async () => {
+	// 	console.log('이 다음의 처리를 작성해주세요');
+	// 	try {
+	// 		await deleteColumn(columnId);
+	// 		closeModal(modalId);
+	// 	} catch (error) {
+	// 		console.error('Error deleting column card:', error);
+	// 	}
 	// };
-	// const handleCreateColumn = (inputValue: string) => {
-	// 	console.log(inputValue);
-	// };
-	const handleDeleteColumnCard = async () => {
+	const handleCreateDashBoard = async (
+		inputValue: string,
+		selectColor: string,
+	) => {
 		try {
-			await deleteData(columnId);
-			setModalOpen((prevModalOpen) => !prevModalOpen);
+			await createDashBoard(inputValue, selectColor);
 		} catch (error) {
 			console.error('Error deleting column card:', error);
 		}
 	};
-	return (
-		<>
-			<div className='font-bold text-orange'>테스트 페이지!</div>
-			<button onClick={handleModalState}>모달오픈</button>
 
-			{modalOpen && (
-				<AlertModal
-					message='컬럼의 모든 카드가 삭제됩니다.'
-					content='취소'
-					submitButton={true}
-					submitContent='삭제'
-					onCancel={handleModalState}
-					onSubmit={handleDeleteColumnCard}
-				/>
-			)}
-			{/* {modalOpen && (
-				<CreateModal
-					modalSize='sm'
-					title='새 컬럼 생성'
-					subTitle='이름'
-					// onClick={handleModalClose}
-					onCancel={handleModalState}
-					onColumnSubmit={handleCreateColumn}
-					columns={mockdata.data}
-				/>
-			)}
-			{modalOpen && (
-				<CreateModal
-					modalSize='lg'
-					title='새로운 대시보드'
-					subTitle='대시보드이름'
-					onDashBoardSubmit={handleCreateDashBoard}
-					onCancel={handleModalState}
-					columns={mockdata.data}
-				/>
-			)} */}
-		</>
+	// const handleCreateColumn = async (inputValue: string) => {
+	// 	try {
+	// 		await createColumns(inputValue, dashboardId);
+	// 	} catch (error) {
+	// 		console.error('Error deleting column card:', error);
+	// 	}
+	// };
+
+	const handleClickOpenModal = () => {
+		// openModal(
+		// 	<AlertModal
+		// 		message='비밀번호가 일치하지 않습니다.'
+		// 		cancelButtonName='확인'
+		// 		onCancel={() => closeModal(modalId)}
+		// 	/>,
+		// 	modalId,
+		// );
+		// openModal(
+		// 	<AlertModal
+		// 		message='컬럼의 모든 카드가 삭제됩니다.'
+		// 		cancelButtonName='취소'
+		// 		secondButton={true}
+		// 		onCancel={() => closeModal(modalId)}
+		// 		SubmitButtonName='삭제'
+		// 		onSubmit={() => handleDeleteColumn}
+		// 	/>,
+		// 	modalId,
+		// );
+
+		// openModal(
+		// 	<CreateModal
+		// 		modalSize='sm'
+		// 		title='새 컬럼 생성'
+		// 		subTitle='이름'
+		// 		onDashBoardSubmit={handleCreateColumn}
+		// 		onCancel={() => closeModal(modalId)}
+		// 		columns={columns}
+		// 	/>,
+		// 	modalId,
+		// );
+		openModal(
+			<CreateModal
+				modalSize='lg'
+				title='새로운 대시보드'
+				subTitle='대시보드이름'
+				onDashBoardSubmit={handleCreateDashBoard}
+				onCancel={() => closeModal(modalId)}
+				columns={columns}
+			/>,
+			modalId,
+		);
+		// openModal(
+		// 	<ContextModal buttonText='확인' buttonClick={() => closeModal(modalId)}>
+		// 		비밀번호가 일치하지 않습니다.
+		// 	</ContextModal>,
+		// 	modalId,
+		// );
+	};
+	return (
+		<BasicLayout>
+			<button className='bg-pink' onClick={handleClickOpenModal}>
+				모달 얍
+			</button>
+		</BasicLayout>
 	);
 }

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 interface HeaderProps {
-	theme: string;
+	theme: string | undefined;
 	onClick: () => void;
 }
 const DarkModeButton = ({ theme, onClick }: HeaderProps) => {

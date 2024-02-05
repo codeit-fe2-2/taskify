@@ -1,13 +1,10 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-
 import clsx from 'clsx';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useState } from 'react';
 
 import TextButton from '@/src/components/ui/Button/TextButton';
 import { Column } from '@/src/types/dashboard';
 
-import ColorDotChip from '../ColorDotChip';
+import ColorDotButtons from '../ColorDotButton';
 
 interface CreateModalProps {
 	modalSize?: 'sm' | 'lg';
@@ -15,10 +12,13 @@ interface CreateModalProps {
 	subTitle: string;
 
 	onCancel: () => void;
-	columns: Column[];
+	columns?: Column[] | undefined;
 	className?: string;
-	onColumnSubmit?: (inputValue: string) => void;
-	onDashBoardSubmit?: (inputValue: string, selectColor: string) => void;
+	onColumnSubmit?: (inputValue: string) => Promise<void>;
+	onDashBoardSubmit?: (
+		inputValue: string,
+		selectColor: string,
+	) => Promise<void>;
 }
 
 const CreateModal: React.FC<CreateModalProps> = ({
@@ -33,20 +33,11 @@ const CreateModal: React.FC<CreateModalProps> = ({
 }) => {
 	const [inputValue, setInputValue] = useState('');
 	const [inputError, setInputError] = useState(false);
-	const modalBackground = useRef<HTMLDivElement>(null);
-	const [selectColor, setSelectColor] = useState('green');
+	const [selectColor, setSelectColor] = useState<string>('green');
 
-	const colors = ['green', 'purple', 'orange', 'blue', 'pink'];
-
-	//모달 배경화면 클릭하면 모달창 꺼지는 함수
-	const handleModalBackgroundClick = useCallback(
-		(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-			if (e.target === modalBackground.current) {
-				onCancel?.();
-			}
-		},
-		[onCancel],
-	);
+	const handleSelectorColor = (color: string) => {
+		setSelectColor(color);
+	};
 
 	//input 컬럼의 중복여부 mockdata를 사용해서 구현하였음
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,22 +45,18 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
 		setInputValue(value);
 		if (modalSize === 'sm') {
-			const isDuplicate = columns?.some(
-				(column) => column.title === value.trim(),
-			);
+			const isDuplicate =
+				columns && columns.some((column) => column.title === value.trim());
+
 			setInputError(!!isDuplicate);
 		}
 	};
-
 	//체크와 관련된 color 선택 부분 추후 생성에도 값을 넣어 보낼 예정
-	const handleSelectColorChange = (color: string) => {
-		setSelectColor(color);
-	};
 	const handleSubmit = () => {
-		if (onDashBoardSubmit) {
-			onDashBoardSubmit(inputValue, selectColor);
+		if (modalSize === 'lg' && onDashBoardSubmit) {
+			void onDashBoardSubmit(inputValue, selectColor);
 		} else if (onColumnSubmit) {
-			onColumnSubmit(inputValue);
+			void onColumnSubmit(inputValue);
 		}
 	};
 	const modalSizeClasses = clsx({
@@ -80,68 +67,50 @@ const CreateModal: React.FC<CreateModalProps> = ({
 		'중복된 컬럼 이름입니다.': modalSize === 'sm',
 	});
 	return (
-		<div
-			ref={modalBackground}
-			onClick={handleModalBackgroundClick}
-			className='fixed left-0 top-0 flex size-full items-center justify-center bg-black4 bg-opacity-70'
-		>
-			<div className={` rounded-lg bg-white ${className} ${modalSizeClasses}`}>
-				<p className=' text-2xl font-bold leading-7 sm:text-xl'>{title}</p>
-				<form>
-					<div className='mt-8 flex flex-col sm:mt-7'>
-						<label
-							htmlFor='name'
-							className='text-lg font-medium leading-5 sm:text-base sm:leading-5'
-						>
-							{subTitle}
-						</label>
-						<input
-							type='text'
-							maxLength={40}
-							className='sm:h-10.5 mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:w-[287px] sm:text-sm sm:leading-4 '
-							value={inputValue}
-							onChange={handleInputChange}
-						/>
-						{inputError && (
-							<p className='mt-2 text-sm leading-4 text-red'>{errorMessage}</p>
-						)}
-					</div>
-					{modalSize === 'lg' && (
-						<div className='mt-7 flex gap-2'>
-							{colors.map((color, index) => (
-								<ColorDotChip
-									key={index}
-									color={color}
-									isSelected={color === selectColor}
-									onClick={handleSelectColorChange}
-								/>
-							))}
-						</div>
-					)}
-					<div
-						className={`mt-7 flex justify-end gap-3 sm:mt-6 sm:justify-center`}
-					>
-						<TextButton
-							buttonSize='md'
-							textSize='md'
-							color='secondary'
-							onClick={() => {
-								onCancel();
-							}}
-						>
-							취소
-						</TextButton>
-						<TextButton
-							buttonSize='md'
-							textSize='md'
-							color='primary'
-							disabled={inputError}
-							onClick={handleSubmit}
-						>
-							생성
-						</TextButton>
-					</div>
-				</form>
+		<div className={` rounded-lg bg-white ${className} ${modalSizeClasses}`}>
+			<p className=' text-2xl font-bold leading-7 sm:text-xl'>{title}</p>
+
+			<div className='mt-8 flex flex-col sm:mt-7'>
+				<label
+					htmlFor='name'
+					className='text-lg font-medium leading-5 sm:text-base sm:leading-5'
+				>
+					{subTitle}
+				</label>
+				<input
+					type='text'
+					maxLength={40}
+					className='sm:h-10.5 mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:w-[287px] sm:text-sm sm:leading-4 '
+					value={inputValue}
+					onChange={handleInputChange}
+				/>
+				{inputError && (
+					<p className='mt-2 text-sm leading-4 text-red'>{errorMessage}</p>
+				)}
+			</div>
+
+			{modalSize === 'lg' && (
+				<ColorDotButtons handleSelectorColor={handleSelectorColor} />
+			)}
+			<div className={`mt-7 flex justify-end gap-3 sm:mt-6 sm:justify-center`}>
+				<TextButton
+					buttonSize='md'
+					textSize='md'
+					color='secondary'
+					onClick={onCancel}
+				>
+					취소
+				</TextButton>
+				<TextButton
+					buttonSize='md'
+					type='submit'
+					textSize='md'
+					color='primary'
+					disabled={inputError}
+					onClick={handleSubmit}
+				>
+					생성
+				</TextButton>
 			</div>
 		</div>
 	);
