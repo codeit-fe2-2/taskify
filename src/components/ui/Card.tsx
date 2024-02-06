@@ -2,18 +2,38 @@ import Image from 'next/image';
 
 import AddButton from './AddButton';
 import ColorTagChip from './Chips/ColorTagChip';
+import CountNumberChip from './Chips/CountNumberChip';
 
 export default function Card() {
 	return (
-		<div className='flex flex-col gap-4 sm:w-[308px] md:w-[584px] lg:w-[354px] '>
-			<div className='flex h-8 justify-center rounded-[6px] border-[1px] border-solid border-gray3'>
-				<div className='border-[1px] border-solid border-gray3'>
-					<AddButton
-						handleCreateNew={() => {
-							console.log('clicked');
-						}}
+		<div className='flex max-w-[50%] flex-col gap-4 lg:w-[254px] '>
+			<div className='flex justify-between'>
+				<div className='flex items-center gap-3'>
+					<Image
+						src='/icons/chip_ellipse_sm_purple.svg'
+						alt='보라색 점 아이콘'
+						width={2}
+						height={2}
+						className='sm:size-[6px] md:size-[6px] lg:size-[8px]'
 					/>
+					<div className='text-[18px] sm:text-[16px]'>On Progress</div>
+					<CountNumberChip initialValue={3} />
 				</div>
+				<Image
+					src='/icons/setting.svg'
+					alt='설정 아이콘'
+					width={22}
+					height={22}
+					className='size-[22px] lg:size-[24px]'
+				/>
+			</div>
+
+			<div className='flex h-8 w-full items-center justify-center rounded-[6px] border-[1px] border-solid border-gray3'>
+				<AddButton
+					handleCreateNew={() => {
+						console.log('clicked');
+					}}
+				/>
 			</div>
 
 			<div className='flex flex-col gap-[12px] rounded-[6px] border-[1px] border-solid border-gray3 p-5 md:flex-row'>
@@ -22,21 +42,21 @@ export default function Card() {
 					width='274'
 					height='160'
 					alt='사진 예시'
-					className='w-full  sm:w-[260] md:w-[90px] lg:w-[274]'
+					className='w-full sm:w-[260] md:w-[100px] lg:w-[274]'
 				/>
-				<div className='flex flex-col gap-[6px] md:items-start md:justify-center'>
+				<div className='flex w-full flex-col gap-[6px] md:w-[504px] md:items-start md:justify-center'>
 					<div className='h-[21px] text-[16px] text-black2 sm:text-[14px]'>
 						title: strigdddd
 					</div>
-					<div className='md:flex '>
-						<div className='flex w-full gap-2 md:flex-row md:gap-[10px]'>
+					<div className='md:flex md:w-full'>
+						<div className='flex gap-2 md:flex-row md:gap-[10px]'>
 							<ColorTagChip>상</ColorTagChip>
 							<ColorTagChip>프로젝트</ColorTagChip>
-							<ColorTagChip>프론트엔드</ColorTagChip>
+
 							{/* tags:['string'] */}
 						</div>
 
-						<div className=' flex w-auto items-center justify-between gap-[160px]'>
+						<div className='flex w-auto items-center justify-between md:grow '>
 							<div className='flex items-center justify-center gap-[6px]'>
 								{/* assignee */}
 								<Image

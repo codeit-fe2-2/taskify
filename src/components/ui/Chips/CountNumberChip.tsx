@@ -10,11 +10,11 @@ export default function CountNumberChip({
 	const [count, setCount] = useState(initialValue);
 
 	useEffect(() => {
-		setCount((prevCount) => prevCount + 1);
+		setCount(2);
 	});
 
 	return (
-		<div className='flex w-6 justify-center gap-10 rounded-[4px] bg-gray2 px-[6px] py-[3px] align-middle text-gray5'>
+		<div className='inline-flex w-6 justify-center gap-10 rounded-[4px] bg-gray2 px-[6px] py-[3px] align-middle text-gray5'>
 			{count}
 		</div>
 	);
