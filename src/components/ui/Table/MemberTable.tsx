@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
@@ -10,10 +11,13 @@ export default function MemberTable() {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const size = 10;
 
-	const { membersInfo, execute } = useGetMembers(currentPage, size);
+	const { membersInfo, execute: executeGet } = useGetMembers(currentPage, size);
 	const members = membersInfo?.members;
 	const totalCount = membersInfo?.totalCount as number;
 	const totalPages = Math.ceil(totalCount / size);
+
+	const [memberId, setMemeberId] = useState<number>();
+	const { execute: executeDelete } = useDeleteMembers(memberId);
 
 	const handlePrevious = () => {
 		if (currentPage > 1) {
@@ -27,12 +31,17 @@ export default function MemberTable() {
 		}
 	};
 
-	const handleDelete = (memberId: number) => {
-		useDeleteMembers(memberId);
+	const handleDelete = async (memberId: number) => {
+		setMemeberId(memberId);
+		try {
+			await executeDelete();
+		} catch (error) {
+			console.error('Error deleting member:', error);
+		}
 	};
 
 	useEffect(() => {
-		void execute();
+		void executeGet();
 	}, [currentPage]);
 
 	return (
@@ -45,7 +54,7 @@ export default function MemberTable() {
 			<table>
 				<thead>
 					<tr>
-						<th className='text-left'>이름</th>
+						<th className='text-left text-base font-normal text-gray4'>이름</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -57,14 +66,12 @@ export default function MemberTable() {
 						>
 							<td className='py-2 text-left'>
 								<div className='flex flex-row items-center gap-2'>
-									<div
+									<Image
+										src={member.profileImageUrl}
+										alt='Profile Image'
+										width={26}
+										height={26}
 										className='size-[26px] rounded-full'
-										style={{
-											backgroundImage: `url(${member.profileImageUrl})`,
-											backgroundPosition: 'center',
-											backgroundSize: 'cover',
-											backgroundRepeat: 'no-repeat',
-										}}
 									/>
 									<p>{member.nickname}</p>
 								</div>
