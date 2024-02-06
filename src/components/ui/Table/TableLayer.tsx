@@ -8,7 +8,10 @@ interface TableLayerProps {
 	tableName: string;
 	isInvite?: boolean;
 	needPage?: boolean;
-	layerWidth?: 'small' | 'large'; // Updated layerWidth type
+	layerWidth?: 'small' | 'large';
+	onPrevious?: () => void;
+	onNext?: () => void;
+	onInvite?: () => void;
 	children: ReactNode;
 }
 
@@ -17,9 +20,11 @@ export default function TableLayer({
 	isInvite,
 	needPage,
 	layerWidth = 'small',
+	onPrevious,
+	onNext,
+	onInvite,
 	children,
 }: TableLayerProps) {
-	// Define a class variable based on layerWidth
 	const layerWidthClass =
 		layerWidth === 'small'
 			? 'w-[620px] sm:w-[284px]'
@@ -30,10 +35,10 @@ export default function TableLayer({
 			className={`flex flex-col gap-2 rounded-lg bg-white px-2 py-1 text-black2 ${layerWidthClass}`}
 		>
 			<div className='flex flex-row items-center gap-2'>
-				<h1 className='grow'>{tableName}</h1>
+				<h1 className='grow text-2xl font-bold'>{tableName}</h1>
 				{needPage && (
 					<div className='flex flex-row items-center gap-2'>
-						<p className='text-right'>1 페이지 중 1</p>
+						<p className='text-right text-sm font-normal'>1 페이지 중 1</p>
 						<div>
 							<IconButton
 								buttonSize='xs'
@@ -41,6 +46,7 @@ export default function TableLayer({
 								src='/icons/arrowBefore.svg'
 								iconSize={8}
 								alt='previous page'
+								onClick={onPrevious}
 							/>
 							<IconButton
 								buttonSize='xs'
@@ -48,6 +54,7 @@ export default function TableLayer({
 								src='/icons/arrowNext.svg'
 								iconSize={8}
 								alt='next page'
+								onClick={onNext}
 							/>
 						</div>
 					</div>
@@ -57,6 +64,7 @@ export default function TableLayer({
 						buttonSize='xs'
 						textSize='xs'
 						color='primary'
+						onClick={onInvite}
 						className='flex flex-row items-center justify-center gap-1'
 					>
 						<Image
