@@ -5,7 +5,7 @@ import { MembersResponse } from '@/src/types/table';
 export const useDeleteMembers = (memberId: number) => {
 	const deleteMembers = () =>
 		axiosInstance.delete<MembersResponse>(`/members/${memberId}`);
-	const { execute } = useAsync(deleteMembers);
+	const { execute } = useAsync(deleteMembers, true);
 
 	return { execute };
 };

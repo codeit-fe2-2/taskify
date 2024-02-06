@@ -27,7 +27,7 @@ export default function InvitedashTable() {
 		<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>
 			{isInviteDash ? (
 				<>
-					<div className='relative flex h-10 flex-row gap-2 rounded-md border border-solid border-gray3 p-1'>
+					<div className='relative flex h-10 flex-row gap-2 rounded-md border border-solid border-gray3 p-1 sm:h-9'>
 						<Image
 							src={'/icons/search.svg'}
 							width={24}
@@ -37,7 +37,7 @@ export default function InvitedashTable() {
 						<input
 							type='text'
 							placeholder='검색'
-							className='size-full outline-none'
+							className='size-full text-base outline-none sm:text-sm'
 							value={searchTerm}
 							onChange={(e) => setSearchTerm(e.target.value)}
 						/>

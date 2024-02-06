@@ -56,7 +56,9 @@ export default function InvitelistTable() {
 				<table className='table-auto'>
 					<thead>
 						<tr>
-							<th className='text-left'>이메일</th>
+							<th className='text-left text-base font-normal text-gray4'>
+								이메일
+							</th>
 							<th></th>
 						</tr>
 					</thead>

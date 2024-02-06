@@ -13,7 +13,7 @@ export const useGetMembers = (page: number, size: number) => {
 			`/members?page=${page}&size=${size}&dashboardId=${boardid}`,
 		);
 
-	const { data, execute } = useAsync(getMembers);
+	const { data, execute } = useAsync(getMembers, true);
 
 	useEffect(() => {
 		void execute();

@@ -12,7 +12,7 @@ export const useDeleteInviteList = (invitationId: number) => {
 		axiosInstance.delete<InviteListGetResponse>(
 			`/dashboards/${boardid as string}/invitations/${invitationId}`,
 		);
-	const { execute } = useAsync(deleteInviteList);
+	const { execute } = useAsync(deleteInviteList, true);
 
 	return { execute };
 };

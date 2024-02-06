@@ -18,7 +18,7 @@ export const usePutInviteDash = ({
 		);
 	};
 
-	const { data, execute } = useAsync(putInviteDash);
+	const { data, execute } = useAsync(putInviteDash, true);
 
 	return { inviteDashInfo: data, execute };
 };
