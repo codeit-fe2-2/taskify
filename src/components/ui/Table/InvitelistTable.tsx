@@ -41,6 +41,7 @@ export default function InvitelistTable() {
 
 	useEffect(() => {
 		void execute();
+		console.log('!');
 	}, [currentPage]);
 
 	return (

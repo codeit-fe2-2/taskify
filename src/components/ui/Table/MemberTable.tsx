@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
 import { useGetMembers } from '@/src/hooks/table/useGetMembers';
@@ -16,9 +16,6 @@ export default function MemberTable() {
 	const totalCount = membersInfo?.totalCount as number;
 	const totalPages = Math.ceil(totalCount / size);
 
-	const [memberId, setMemeberId] = useState<number>();
-	const { execute: executeDelete } = useDeleteMembers(memberId);
-
 	const handlePrevious = () => {
 		if (currentPage > 1) {
 			setCurrentPage((prevPage) => prevPage - 1);
@@ -31,8 +28,10 @@ export default function MemberTable() {
 		}
 	};
 
-	const handleDelete = async (memberId: number) => {
-		setMemeberId(memberId);
+	const [memberId, setMemberId] = useState<string>('');
+	const { execute: executeDelete } = useDeleteMembers(memberId);
+
+	const handleDelete = async () => {
 		try {
 			await executeDelete();
 		} catch (error) {
@@ -43,6 +42,10 @@ export default function MemberTable() {
 	useEffect(() => {
 		void executeGet();
 	}, [currentPage]);
+
+	useEffect(() => {
+		void handleDelete();
+	}, [memberId]);
 
 	return (
 		<TableLayer
@@ -81,7 +84,9 @@ export default function MemberTable() {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => handleDelete(member.id)}
+									onClick={() => {
+										setMemberId(String(member.id));
+									}}
 								>
 									삭제
 								</TextButton>

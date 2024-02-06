@@ -67,7 +67,7 @@ export default function TableLayer({
 						className='flex h-8 w-[105px] flex-row items-center justify-center gap-1 sm:absolute sm:right-0 sm:top-10 sm:h-[28px] sm:w-[86px] sm:text-xs'
 					>
 						<Image
-							src='/icons/add_box.svg'
+							src='/icons/add_box_white.svg'
 							width={16}
 							height={16}
 							alt='초대하기'
