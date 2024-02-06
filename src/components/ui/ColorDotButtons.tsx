@@ -1,16 +1,25 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-export default function ColorDotButtons() {
+interface ColorDotButtonsProps {
+	onSelectedColor: (color: string) => void;
+}
+
+export default function ColorDotButtons({
+	onSelectedColor,
+}: ColorDotButtonsProps) {
 	const [selectedButton, setSelectedButton] = useState<number | null>(null);
 
-	const colors = ['bg-green', 'bg-pink', 'bg-blue', 'bg-purple', 'bg-orange'];
+	const colors = ['#7AC555', '#E876EA', '#76A5EA', '#760DDE', '#FFA500'];
 
 	const handleClick = (buttonIndex: number) => {
+		const selectedColor = colors[buttonIndex];
 		if (selectedButton === buttonIndex) {
 			setSelectedButton(null);
+			onSelectedColor('');
 		} else {
 			setSelectedButton(buttonIndex);
+			onSelectedColor(selectedColor);
 		}
 	};
 
@@ -19,12 +28,13 @@ export default function ColorDotButtons() {
 			{colors.map((color, index) => (
 				<button
 					key={index}
-					className={`relative rounded-full  ${color} sm:size-6 md:size-6 lg:size-8`}
-					onClick={() => handleClick(index + 1)}
+					className='relative rounded-full  sm:size-6 md:size-6 lg:size-8'
+					style={{ backgroundColor: colors[index] }}
+					onClick={() => handleClick(index)}
 				>
-					{selectedButton === index + 1 && (
+					{selectedButton === index && (
 						<div
-							className='absolute'
+							className='absolute size-[22px] lg:size-[26px]'
 							style={{
 								left: '50%',
 								top: '50%',
@@ -33,9 +43,9 @@ export default function ColorDotButtons() {
 						>
 							<Image
 								src='/icons/chip_check.svg'
-								width={22}
-								height={22}
-								alt='check icon'
+								layout='fill'
+								objectFit='contain'
+								alt='체크 아이콘'
 							/>
 						</div>
 					)}
