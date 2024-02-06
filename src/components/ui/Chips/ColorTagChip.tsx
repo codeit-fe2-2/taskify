@@ -18,12 +18,10 @@ export default function ColorTagChip({
 	const { textColor, bgColor } = tagColorSet[colorIndex];
 
 	return (
-		<div>
-			<button
-				className={`${textColor} ${bgColor} rounded-[4px] px-[6px] py-[4px] text-sm lg:text-base`}
-			>
-				{children}
-			</button>
-		</div>
+		<button
+			className={`${textColor} ${bgColor} l-3 ml-2 rounded-[4px] px-[6px] py-[4px] text-sm lg:text-base`}
+		>
+			{children}
+		</button>
 	);
 }

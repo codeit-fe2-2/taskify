@@ -45,7 +45,7 @@ export default function ColorDotButtons({
 								src='/icons/chip_check.svg'
 								layout='fill'
 								objectFit='contain'
-								alt='check icon'
+								alt='체크 아이콘'
 							/>
 						</div>
 					)}
