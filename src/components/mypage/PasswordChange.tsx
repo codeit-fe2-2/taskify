@@ -56,6 +56,11 @@ function PasswordChange({ updateToastMessage }: PasswordChangeProps) {
 			);
 
 			updateToastMessage('비밀번호가 변경되었습니다.');
+			setFormState({
+				currentPassword: '',
+				newPassword: '',
+				confirmPassword: '',
+			});
 		} catch (error) {
 			handleClickOpenModal();
 		}
