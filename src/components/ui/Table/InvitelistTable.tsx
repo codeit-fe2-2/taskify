@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useDeleteInviteList } from '@/src/hooks/table/useDeleteInviteList';
 import { useGetInviteList } from '@/src/hooks/table/useGetInviteList';
@@ -39,7 +39,7 @@ export default function InvitelistTable() {
 	// 리렌더링용 state
 	// const [update, setUpdate] = useState(0);
 
-	const handleCancel = (invitationId: number) => {
+	const handleCancel = (invitationId: string) => {
 		try {
 			void executeDelete(invitationId);
 		} catch (error) {
@@ -84,7 +84,7 @@ export default function InvitelistTable() {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => handleCancel(data.id)}
+									onClick={() => handleCancel(String(data.id))}
 								>
 									취소
 								</TextButton>

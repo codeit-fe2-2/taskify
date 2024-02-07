@@ -1,20 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import axiosInstance from '@/src/apis/axiosInstance';
-import { useAsync } from '@/src/hooks/useAsync';
 import { MembersResponse } from '@/src/types/table';
-
-// export const useDeleteMembers = () => {
-// 	const deleteMembers = (memberId: string) => {
-// 		const { execute } = useAsync(
-// 			() => axiosInstance.delete<MembersResponse>(`/members/${memberId}`),
-// 			true,
-// 		);
-// 		void execute();
-// 	};
-
-// 	return { deleteMembers };
-// };
 
 // export const useDeleteMembers = (memberId: string) => {
 // 	return useAsync(
@@ -23,12 +10,12 @@ import { MembersResponse } from '@/src/types/table';
 // 	);
 // };
 
-export const useDeleteMembers = () => {
+export const useDeleteMembers = (lazyMode: boolean = true) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<unknown>(null);
 	const [data, setData] = useState(null);
 
-	const execute = async (memberId: number) => {
+	const execute = async (memberId: string) => {
 		setLoading(true);
 		setError(null);
 		try {
@@ -42,6 +29,12 @@ export const useDeleteMembers = () => {
 			setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (!lazyMode) {
+			void execute('');
+		}
+	}, [lazyMode]);
 
 	return { execute, loading, error, data };
 };

@@ -30,7 +30,7 @@ export default function MemberTable() {
 
 	const { execute: executeDelete } = useDeleteMembers();
 
-	const handleDelete = (memberId: number) => {
+	const handleDelete = (memberId: string) => {
 		try {
 			void executeDelete(memberId);
 		} catch (error) {
@@ -77,7 +77,7 @@ export default function MemberTable() {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => void handleDelete(member.id)}
+									onClick={() => void handleDelete(String(member.id))}
 								>
 									삭제
 								</TextButton>

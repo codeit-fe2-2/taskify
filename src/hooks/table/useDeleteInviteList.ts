@@ -1,25 +1,19 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import axiosInstance from '@/src/apis/axiosInstance';
 // import { useAsync } from '@/src/hooks/useAsync';
 import { InviteListGetResponse } from '@/src/types/table';
 
-export const useDeleteInviteList = () => {
+export const useDeleteInviteList = (lazyMode: boolean = true) => {
 	const router = useRouter();
 	const { boardid } = router.query;
-
-	// const deleteInviteList = () =>
-	// 	axiosInstance.delete<InviteListGetResponse>(
-	// 		`/dashboards/${boardid as string}/invitations/${invitationId}`,
-	// 	);
-	// const { execute } = useAsync(deleteInviteList, true);
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<unknown>(null);
 	const [data, setData] = useState(null);
 
-	const execute = async (invitationId: number) => {
+	const execute = async (invitationId: string) => {
 		setLoading(true);
 		setError(null);
 		try {
@@ -33,6 +27,12 @@ export const useDeleteInviteList = () => {
 			setLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		if (!lazyMode) {
+			void execute('');
+		}
+	}, [lazyMode]);
 
 	return { execute, loading, error, data };
 };

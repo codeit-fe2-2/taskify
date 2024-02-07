@@ -13,11 +13,11 @@ export const useGetInviteList = (page: number, size: number) => {
 		axiosInstance.get<InviteListGetResponse>(
 			`/dashboards/${boardid}/invitations?page=${page}&size=${size}`,
 		);
-	const { data, execute } = useAsync(getInviteList);
+	const { data, execute, error } = useAsync(getInviteList);
 
 	useEffect(() => {
 		void execute();
 	}, [boardid, page, size]);
 
-	return { inviteListInfo: data, execute };
+	return { inviteListInfo: data, execute, error };
 };
