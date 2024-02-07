@@ -10,13 +10,14 @@ export default function ColorDotButtons({
 	const [selectedButton, setSelectedButton] = useState<number | null>(0);
 	const colors = ['#7AC555', '#E876EA', '#76A5EA', '#760DDE', '#FFA500'];
 	const handleClick = (buttonIndex: number) => {
+		const selectedColor = colors[buttonIndex];
 		if (selectedButton === buttonIndex) {
 			setSelectedButton(null);
 			handleSelectorColor('');
 		} else {
 			setSelectedButton(buttonIndex);
 
-			handleSelectorColor(colors[buttonIndex]);
+			handleSelectorColor(selectedColor);
 		}
 	};
 
