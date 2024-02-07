@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useEffect, useState } from 'react';
-
+// 이 친구를 직접 건드려서 execute에 props을 받도록 수정하는 게 베스트
 export const useAsync = <T>(
 	asyncFunction: () => Promise<AxiosResponse<T>>,
 	lazyMode: boolean = false,

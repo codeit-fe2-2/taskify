@@ -11,10 +11,13 @@ export default function MemberTable() {
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const size = 10;
 
-	const { membersInfo, execute: executeGet } = useGetMembers(currentPage, size);
+	const { membersInfo } = useGetMembers(currentPage, size);
 	const members = membersInfo?.members;
 	const totalCount = membersInfo?.totalCount as number;
 	const totalPages = Math.ceil(totalCount / size);
+
+	const [memberId, setMemberId] = useState(0);
+	const { deleteMembers } = useDeleteMembers();
 
 	const handlePrevious = () => {
 		if (currentPage > 1) {
@@ -28,24 +31,13 @@ export default function MemberTable() {
 		}
 	};
 
-	const [memberId, setMemberId] = useState<string>('');
-	const { execute: executeDelete } = useDeleteMembers(memberId);
-
-	const handleDelete = async () => {
+	const handleDelete = (memberId: string) => {
 		try {
-			await executeDelete();
+			void deleteMembers(memberId);
 		} catch (error) {
 			console.error('Error deleting member:', error);
 		}
 	};
-
-	useEffect(() => {
-		void executeGet();
-	}, [currentPage]);
-
-	useEffect(() => {
-		void handleDelete();
-	}, [memberId]);
 
 	return (
 		<TableLayer
@@ -84,9 +76,7 @@ export default function MemberTable() {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => {
-										setMemberId(String(member.id));
-									}}
+									onClick={() => void handleDelete(String(member.id))}
 								>
 									삭제
 								</TextButton>

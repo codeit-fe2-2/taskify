@@ -9,19 +9,24 @@ import TableLayer from './TableLayer';
 
 export default function InvitedashTable() {
 	const [searchTerm, setSearchTerm] = useState<string>('');
-	const { inviteDashInfo, execute } = useGetInviteDash(searchTerm);
+	const { inviteDashInfo, execute: executeGet } = useGetInviteDash(searchTerm);
 	const [isInviteDash, setIsInviteDash] = useState<boolean>(!inviteDashInfo);
-
-	useEffect(() => {
-		void execute();
-	}, [searchTerm]);
 
 	const inviteDashes = inviteDashInfo?.invitations;
 
+	const { execute: executePut } = usePutInviteDash();
+
+	// 리렌더링 용 state
+	const [update, setUpdate] = useState(0);
+
 	const handleAccept = (invitationId: number, inviteAccepted: boolean) => {
-		usePutInviteDash({ invitationId, inviteAccepted });
-		setIsInviteDash(!inviteDashInfo);
+		void executePut(invitationId, inviteAccepted);
+		setUpdate((prev) => prev + 1);
 	};
+
+	useEffect(() => {
+		void executeGet();
+	}, [update]);
 
 	return (
 		<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>

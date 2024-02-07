@@ -8,6 +8,7 @@ import { MembersResponse } from '@/src/types/table';
 export const useGetMembers = (page: number, size: number) => {
 	const router = useRouter();
 	const boardid = router.query?.boardid as string;
+
 	const getMembers = () =>
 		axiosInstance.get<MembersResponse>(
 			`/members?page=${page}&size=${size}&dashboardId=${boardid}`,
@@ -17,7 +18,7 @@ export const useGetMembers = (page: number, size: number) => {
 
 	useEffect(() => {
 		void execute();
-	}, [boardid]);
+	}, [boardid, page, size]);
 
 	return { membersInfo: data, execute };
 };
