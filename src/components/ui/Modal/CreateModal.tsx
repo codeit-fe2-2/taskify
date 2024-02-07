@@ -55,6 +55,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 	const handleSubmit = () => {
 		if (modalSize === 'lg' && onDashBoardSubmit) {
 			void onDashBoardSubmit(inputValue, selectColor);
+			console.log(selectColor, inputValue);
 		} else if (onColumnSubmit) {
 			void onColumnSubmit(inputValue);
 		}

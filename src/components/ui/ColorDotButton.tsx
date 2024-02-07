@@ -8,16 +8,15 @@ export default function ColorDotButtons({
 	handleSelectorColor,
 }: ColorDotButtonProps) {
 	const [selectedButton, setSelectedButton] = useState<number | null>(0);
-	const colors = ['bg-green', 'bg-pink', 'bg-blue', 'bg-purple', 'bg-orange'];
+	const colors = ['#7AC555', '#E876EA', '#76A5EA', '#760DDE', '#FFA500'];
 	const handleClick = (buttonIndex: number) => {
 		if (selectedButton === buttonIndex) {
 			setSelectedButton(null);
 			handleSelectorColor('');
 		} else {
 			setSelectedButton(buttonIndex);
-			const buttonColor = colors[buttonIndex].slice(3);
-			handleSelectorColor(buttonColor);
 
+			handleSelectorColor(colors[buttonIndex]);
 		}
 	};
 
@@ -26,8 +25,9 @@ export default function ColorDotButtons({
 			{colors.map((color, index) => (
 				<button
 					key={index}
-					className={`flex items-center justify-center rounded-full ${color} size-8 sm:size-6`}
+					className={`flex size-8 items-center justify-center  rounded-full sm:size-6`}
 					onClick={() => handleClick(index)}
+					style={{ backgroundColor: colors[index] }}
 				>
 					{selectedButton === index && (
 						<Image
