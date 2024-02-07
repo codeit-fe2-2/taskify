@@ -17,7 +17,7 @@ export const useGetInviteList = (page: number, size: number) => {
 
 	useEffect(() => {
 		void execute();
-	}, [boardid, page, size]);
+	}, [boardid, page]);
 
 	return { inviteListInfo: data, execute, error };
 };

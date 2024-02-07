@@ -19,7 +19,7 @@ export default function InvitedashTable() {
 	// 리렌더링 용 state
 	const [update, setUpdate] = useState(0);
 
-	const handleAccept = (invitationId: number, inviteAccepted: boolean) => {
+	const handleAccept = (invitationId: string, inviteAccepted: boolean) => {
 		void executePut(invitationId, inviteAccepted);
 		setUpdate((prev) => prev + 1);
 	};
@@ -77,7 +77,7 @@ export default function InvitedashTable() {
 											className='w-full'
 											color='primary'
 											textSize='sm'
-											onClick={() => handleAccept(inviteDash.id, true)}
+											onClick={() => handleAccept(String(inviteDash.id), true)}
 										>
 											수락
 										</TextButton>
@@ -86,7 +86,7 @@ export default function InvitedashTable() {
 											className='w-full'
 											color='secondary'
 											textSize='sm'
-											onClick={() => handleAccept(inviteDash.id, false)}
+											onClick={() => handleAccept(String(inviteDash.id), false)}
 										>
 											취소
 										</TextButton>
