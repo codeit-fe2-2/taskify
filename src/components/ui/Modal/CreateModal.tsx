@@ -2,9 +2,8 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 
 import TextButton from '@/src/components/ui/Button/TextButton';
+import ColorDotButtons from '@/src/components/ui/Chips/ColorDotButtons';
 import { Column } from '@/src/types/dashboard';
-
-import ColorDotButtons from '../ColorDotButton';
 
 interface CreateModalProps {
 	modalSize?: 'sm' | 'lg';
