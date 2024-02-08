@@ -1,4 +1,7 @@
-import ModalInput from '@/src/components/ui/ModalInput/ModalInput';
+import React from 'react';
+
+import Card from '@/src/components/ui/Card';
+import Chips from '@/src/components/ui/Chips/Chips';
 
 export default function Page() {
 	const handleValue = (value: string[]) => {
@@ -6,7 +9,11 @@ export default function Page() {
 	};
 	return (
 		<div className='flex flex-col gap-6 bg-gray2 p-1'>
-			<ModalInput label='마감일' onValueChange={handleValue} />
+			<MemberTable />
+			<InvitelistTable />
+			<InvitedashTable />
+			<Chips />
+			<Card />
 		</div>
 	);
 }

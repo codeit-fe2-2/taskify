@@ -1,9 +1,7 @@
 export default function ColorTagChip({
 	children,
-	fontSize,
 }: {
 	children: React.ReactNode;
-	fontSize: string;
 }): React.JSX.Element {
 	const tagColorSet = [
 		{ textColor: 'text-sortTextGreen', bgColor: 'bg-sortTextBgGreen' },
@@ -20,12 +18,10 @@ export default function ColorTagChip({
 	const { textColor, bgColor } = tagColorSet[colorIndex];
 
 	return (
-		<div>
-			<button
-				className={`${textColor} ${bgColor} ${fontSize < '12' ? 'text-base' : 'text-xs'} rounded-[4px] px-[6px] py-[4px] text-sm`}
-			>
-				{children}
-			</button>
-		</div>
+		<button
+			className={`${textColor} ${bgColor} l-3 ml-2 rounded-[4px] px-[6px] py-[4px] text-sm lg:text-base`}
+		>
+			{children}
+		</button>
 	);
 }
