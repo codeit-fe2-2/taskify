@@ -1,19 +1,15 @@
 import React from 'react';
 
-import Card from '@/src/components/ui/Card';
-import Chips from '@/src/components/ui/Chips/Chips';
+import DefaultProfileImage from '@/src/components/ui/DefaultProfileImage';
 
 export default function Page() {
-	const handleValue = (value: string[]) => {
-		console.log(value[0]);
-	};
+	const nickname = '각별님 너무 좋아';
 	return (
-		<div className='flex flex-col gap-6 bg-gray2 p-1'>
-			<MemberTable />
-			<InvitelistTable />
-			<InvitedashTable />
-			<Chips />
-			<Card />
+		<div className='flex size-full flex-col gap-6 bg-violet2 p-1'>
+			<DefaultProfileImage
+				nickname={nickname}
+				classNames='size-[96px] text-[16px]'
+			/>
 		</div>
 	);
 }
