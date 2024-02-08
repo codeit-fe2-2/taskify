@@ -38,7 +38,7 @@ export default function TableLayer({
 				<h1 className='grow text-2xl font-bold sm:text-xl'>{tableName}</h1>
 				{needPage && (
 					<div className='flex flex-row items-center gap-2'>
-						<p className='text-right text-sm font-normal'>{`${needPage.totalPages} 페이지 중 ${needPage.currentPage}`}</p>
+						<p className='text-right text-sm font-normal'>{`${needPage.totalPages} 페이지 중 ${needPage.totalPages === 0 ? 0 : needPage.currentPage}`}</p>
 						<div>
 							<IconButton
 								buttonSize='xs'
