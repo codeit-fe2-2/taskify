@@ -28,9 +28,6 @@ export default function DefaultProfileImage({
 			>
 				<p>{nickname.charAt(0).toUpperCase()}</p>
 			</div>
-			<p>
-				{nickname}, {nicknameHash}, {nickname.charCodeAt(0)}
-			</p>
 		</>
 	);
 }
