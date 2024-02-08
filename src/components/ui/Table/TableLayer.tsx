@@ -7,7 +7,7 @@ import TextButton from '../Button/TextButton';
 interface TableLayerProps {
 	tableName: string;
 	isInvite?: boolean;
-	needPage?: boolean;
+	needPage?: { totalPages: number; currentPage: number };
 	layerWidth?: 'small' | 'large';
 	onPrevious?: () => void;
 	onNext?: () => void;
@@ -34,11 +34,11 @@ export default function TableLayer({
 		<div
 			className={`flex flex-col gap-2 rounded-lg bg-white px-2 py-1 text-black2 ${layerWidthClass}`}
 		>
-			<div className='flex flex-row items-center gap-2'>
-				<h1 className='grow text-2xl font-bold'>{tableName}</h1>
+			<div className='relative flex flex-row items-center gap-2'>
+				<h1 className='grow text-2xl font-bold sm:text-xl'>{tableName}</h1>
 				{needPage && (
 					<div className='flex flex-row items-center gap-2'>
-						<p className='text-right text-sm font-normal'>1 페이지 중 1</p>
+						<p className='text-right text-sm font-normal'>{`${needPage.totalPages} 페이지 중 ${needPage.totalPages === 0 ? 0 : needPage.currentPage}`}</p>
 						<div>
 							<IconButton
 								buttonSize='xs'
@@ -61,17 +61,17 @@ export default function TableLayer({
 				)}
 				{isInvite && (
 					<TextButton
-						buttonSize='xs'
 						textSize='xs'
 						color='primary'
 						onClick={onInvite}
-						className='flex flex-row items-center justify-center gap-1'
+						className='flex h-8 w-[105px] flex-row items-center justify-center gap-1 sm:absolute sm:right-0 sm:top-10 sm:h-[28px] sm:w-[86px] sm:text-xs'
 					>
 						<Image
-							src='/icons/add_box.svg'
+							src='/icons/add_box_white.svg'
 							width={16}
 							height={16}
 							alt='초대하기'
+							className='sm:size-3.5'
 						/>
 						초대하기
 					</TextButton>
