@@ -14,7 +14,7 @@ export default function CardTitle() {
 					className='sm:size-[6px] md:size-[6px] lg:size-[8px]'
 				/>
 				<div className='text-[18px] sm:text-[16px]'>On Progress</div>
-				<CountNumberChip initialValue={3} />
+				<CountNumberChip count={3} />
 			</div>
 			<Image
 				src='/icons/setting.svg'
