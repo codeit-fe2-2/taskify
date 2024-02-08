@@ -1,5 +1,16 @@
 import BasicLayout from '@/src/components/layout/BasicLayout';
+import InvitedashTable from '@/src/components/ui/Table/InvitedashTable';
+import InvitelistTable from '@/src/components/ui/Table/InvitelistTable';
+import MemberTable from '@/src/components/ui/Table/MemberTable';
 
 export default function DashboardEditPage() {
-	return <BasicLayout>대시보드 편집 페이지</BasicLayout>;
+	return (
+		<BasicLayout>
+			<div className='flex flex-col gap-6 p-1'>
+				<MemberTable />
+				<InvitelistTable />
+				<InvitedashTable />
+			</div>
+		</BasicLayout>
+	);
 }
