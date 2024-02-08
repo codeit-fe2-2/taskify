@@ -75,6 +75,7 @@ export default function MemberTable() {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
+									disabled={member.isOwner ? true : false}
 									onClick={() => void handleDelete(String(member.id))}
 								>
 									삭제
