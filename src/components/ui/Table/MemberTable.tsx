@@ -32,11 +32,9 @@ export default function MemberTable() {
 
 	const handleDelete = (memberId: string) => {
 		try {
-			void executeDelete(memberId);
+			void executeDelete(memberId).then(executeGet);
 		} catch (error) {
 			console.error('Error deleting member:', error);
-		} finally {
-			void executeGet();
 		}
 	};
 

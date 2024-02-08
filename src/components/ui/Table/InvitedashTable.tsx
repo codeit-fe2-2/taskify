@@ -10,27 +10,22 @@ import TableLayer from './TableLayer';
 export default function InvitedashTable() {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const { inviteDashInfo, execute: executeGet } = useGetInviteDash(searchTerm);
-	const [isInviteDash, setIsInviteDash] = useState<boolean>(!inviteDashInfo);
 
 	const inviteDashes = inviteDashInfo?.invitations;
 
 	const { execute: executePut } = usePutInviteDash();
 
-	// 리렌더링 용 state
-	const [update, setUpdate] = useState(0);
-
 	const handleAccept = (invitationId: string, inviteAccepted: boolean) => {
-		void executePut(invitationId, inviteAccepted);
-		setUpdate((prev) => prev + 1);
+		try {
+			void executePut(invitationId, inviteAccepted).then(executeGet);
+		} catch (error) {
+			console.error('Error putting member:', error);
+		}
 	};
-
-	useEffect(() => {
-		void executeGet();
-	}, [update]);
 
 	return (
 		<TableLayer tableName={'초대받은 대시보드'} layerWidth='large'>
-			{isInviteDash ? (
+			{inviteDashes?.length > 0 ? (
 				<>
 					<div className='relative flex h-10 flex-row gap-2 rounded-md border border-solid border-gray3 p-1 sm:h-9'>
 						<Image
