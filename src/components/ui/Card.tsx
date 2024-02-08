@@ -27,17 +27,16 @@ export default function Card({
 					alt='사진 예시'
 					className='w-full sm:w-[260] md:w-[100px] lg:w-[274]'
 				/>
-			) : (
-				'null'
-			)}
+			) : null}
 			<div className='flex w-full flex-col gap-[6px] md:w-[504px] md:items-start md:justify-center'>
 				<div className='h-[21px] text-[16px] text-black2 sm:text-[14px]'>
 					{title}
 				</div>
 				<div className='md:flex md:w-full'>
 					<div className='flex gap-2 md:flex-row md:gap-[10px]'>
-						<ColorTagChip>{tags}</ColorTagChip>
-						<ColorTagChip>{tags}</ColorTagChip>
+						{tags.map((tag, index) => (
+							<ColorTagChip key={index}>{tag}</ColorTagChip>
+						))}
 					</div>
 
 					<div className='flex w-auto items-center justify-between md:grow '>
