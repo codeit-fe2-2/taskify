@@ -4,7 +4,7 @@ import ColorTagChip from './Chips/ColorTagChip';
 
 interface CardDataProps {
 	title: string;
-	ImageUrl: string;
+	imageUrl: string;
 	profileImageUrl: string;
 	tags: string[];
 	dueDate: string;
@@ -12,7 +12,7 @@ interface CardDataProps {
 
 export default function Card({
 	title,
-	ImageUrl,
+	imageUrl,
 	profileImageUrl,
 	tags,
 	dueDate,
@@ -20,9 +20,9 @@ export default function Card({
 	return (
 		<div className='flex max-w-[50%] flex-col gap-4 lg:w-[254px] '>
 			<div className='flex flex-col gap-[12px] rounded-[6px] border-[1px] border-solid border-gray3 p-5 md:flex-row'>
-				{ImageUrl ? (
+				{imageUrl ? (
 					<Image
-						src={ImageUrl}
+						src={imageUrl}
 						width='274'
 						height='160'
 						alt='사진 예시'

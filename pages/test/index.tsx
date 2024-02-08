@@ -7,7 +7,7 @@ export default function Page() {
 				title='title'
 				tags={['프론트엔드', '상', '랄랄라라']}
 				dueDate='2023-01-31'
-				ImageUrl=''
+				imageUrl='/images/card_image1.png'
 				profileImageUrl=''
 			/>
 		</div>
