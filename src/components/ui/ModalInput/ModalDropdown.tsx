@@ -25,7 +25,7 @@ const DropdownOptions = ({
 	onInputChange,
 }: DropdownOptionsProps) => {
 	return (
-		<div className='flex items-center gap-1.5'>
+		<div className='flex items-center gap-1.5 text-black2'>
 			{image && (
 				<div
 					className='size-[26px] rounded-full'
@@ -46,7 +46,7 @@ const DropdownOptions = ({
 					className='w-full text-base outline-none'
 				/>
 			) : (
-				<p className='text-base font-normal text-black3'>{text}</p>
+				<p className='text-base font-normal'>{text}</p>
 			)}
 		</div>
 	);
@@ -80,7 +80,7 @@ export default function ModalDropdown<T>({
 	};
 
 	return (
-		<div className='relative inline-flex flex-col items-start gap-2.5'>
+		<div className='relative inline-flex flex-col items-start gap-2.5 text-black2'>
 			<p className={`${inputClassNames.label}`}>{label}</p>
 			<div
 				className={`${inputClassNames.type.dropdown} ${inputClassNames.container}`}
