@@ -1,9 +1,15 @@
-import CardStructure from '@/src/components/ui/Card/CardStructure';
+import Card from '@/src/components/ui/Card';
 
 export default function Page() {
 	return (
-		<div className='flex flex-col gap-6 p-1'>
-			<CardStructure />
+		<div className=''>
+			<Card
+				title='title'
+				tags={['프론트엔드', '상', '랄랄라라']}
+				dueDate='2023-01-31'
+				ImageUrl=''
+				profileImageUrl=''
+			/>
 		</div>
 	);
 }
