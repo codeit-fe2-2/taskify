@@ -5,6 +5,7 @@ import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
 import { useGetMembers } from '@/src/hooks/table/useGetMembers';
 
 import TextButton from '../Button/TextButton';
+import DefaultProfileImage from '../DefaultProfileImage';
 import TableLayer from './TableLayer';
 
 export default function MemberTable() {
@@ -60,13 +61,21 @@ export default function MemberTable() {
 						>
 							<td className='py-2 text-left'>
 								<div className='flex flex-row items-center gap-2'>
-									<Image
-										src={member.profileImageUrl}
-										alt='Profile Image'
-										width={26}
-										height={26}
-										className='size-[26px] rounded-full'
-									/>
+									{member.profileImageUrl ? (
+										<Image
+											src={member.profileImageUrl}
+											alt='Profile Image'
+											width={26}
+											height={26}
+											className='size-[26px] rounded-full'
+										/>
+									) : (
+										<DefaultProfileImage
+											nickname={member.nickname}
+											classNames='size-[26px] text-base text-center'
+										/>
+									)}
+
 									<p>{member.nickname}</p>
 								</div>
 							</td>
