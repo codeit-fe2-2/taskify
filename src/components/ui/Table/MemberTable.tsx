@@ -1,38 +1,55 @@
+import Image from 'next/image';
+import { useState } from 'react';
+
 import { useDeleteMembers } from '@/src/hooks/table/useDeleteMembers';
 import { useGetMembers } from '@/src/hooks/table/useGetMembers';
 
 import TextButton from '../Button/TextButton';
+import DefaultProfileImage from '../DefaultProfileImage';
 import TableLayer from './TableLayer';
 
 export default function MemberTable() {
-	const dashboardId = 2716;
-	const { membersInfo, execute } = useGetMembers(dashboardId);
+	const [currentPage, setCurrentPage] = useState<number>(1);
+	const size = 10;
+
+	const { membersInfo, execute: executeGet } = useGetMembers(currentPage, size);
 	const members = membersInfo?.members;
-	const totalCount = membersInfo?.totalCount;
+	const totalCount = membersInfo?.totalCount as number;
+	const totalPages = Math.ceil(totalCount / size);
 
 	const handlePrevious = () => {
-		alert('이전 페이지로');
+		if (currentPage > 1) {
+			setCurrentPage((prevPage) => prevPage - 1);
+		}
 	};
 
 	const handleNext = () => {
-		alert('다음 페이지로');
+		if (currentPage < totalPages) {
+			setCurrentPage((prevPage) => prevPage + 1);
+		}
 	};
 
-	const handleDelete = (memberId: number) => {
-		useDeleteMembers(memberId);
+	const { execute: executeDelete } = useDeleteMembers();
+
+	const handleDelete = (memberId: string) => {
+		try {
+			void executeDelete(memberId).then(executeGet);
+		} catch (error) {
+			console.error('Error deleting member:', error);
+		}
 	};
 
 	return (
 		<TableLayer
 			tableName={'구성원'}
-			needPage
+			needPage={{ totalPages: totalPages, currentPage: currentPage }}
 			onPrevious={handlePrevious}
 			onNext={handleNext}
 		>
 			<table>
 				<thead>
 					<tr>
-						<th className='text-left'>이름</th>
+						<th className='text-left text-base font-normal text-gray4'>이름</th>
 						<th></th>
 					</tr>
 				</thead>
@@ -44,15 +61,21 @@ export default function MemberTable() {
 						>
 							<td className='py-2 text-left'>
 								<div className='flex flex-row items-center gap-2'>
-									<div
-										className='size-[26px] rounded-full'
-										style={{
-											backgroundImage: `url(${member.profileImageUrl})`,
-											backgroundPosition: 'center',
-											backgroundSize: 'cover',
-											backgroundRepeat: 'no-repeat',
-										}}
-									/>
+									{member.profileImageUrl ? (
+										<Image
+											src={member.profileImageUrl}
+											alt='Profile Image'
+											width={26}
+											height={26}
+											className='size-[26px] rounded-full'
+										/>
+									) : (
+										<DefaultProfileImage
+											nickname={member.nickname}
+											classNames='size-[26px] text-base text-center'
+										/>
+									)}
+
 									<p>{member.nickname}</p>
 								</div>
 							</td>
@@ -61,7 +84,8 @@ export default function MemberTable() {
 									buttonSize='xxs'
 									color='secondary'
 									textSize='sm'
-									onClick={() => handleDelete(member.id)}
+									disabled={member.isOwner ? true : false}
+									onClick={() => void handleDelete(String(member.id))}
 								>
 									삭제
 								</TextButton>

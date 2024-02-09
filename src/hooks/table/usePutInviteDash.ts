@@ -1,24 +1,38 @@
+import { useEffect, useState } from 'react';
+
 import axiosInstance from '@/src/apis/axiosInstance';
-import { useAsync } from '@/src/hooks/useAsync';
+// import { useAsync } from '@/src/hooks/useAsync';
 import { InviteDashPutResponse } from '@/src/types/table';
 
-interface UsePutInviteDashProps {
-	invitationId: number;
-	inviteAccepted: boolean;
-}
+export const usePutInviteDash = (lazyMode: boolean = true) => {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState<unknown>(null);
+	const [data, setData] = useState(null);
 
-export const usePutInviteDash = ({
-	invitationId,
-	inviteAccepted,
-}: UsePutInviteDashProps) => {
-	const putInviteDash = () => {
-		return axiosInstance.put<InviteDashPutResponse>(
-			`invitations/${invitationId}`,
-			{ inviteAccepted: inviteAccepted },
-		);
+	const execute = async (
+		invitationId: string,
+		inviteAccepted: boolean = true,
+	) => {
+		setLoading(true);
+		setError(null);
+		try {
+			const response = await axiosInstance.put<InviteDashPutResponse>(
+				`invitations/${invitationId}`,
+				{ inviteAccepted: inviteAccepted },
+			);
+			setData(response?.data ?? null);
+		} catch (error: unknown) {
+			setError(error);
+		} finally {
+			setLoading(false);
+		}
 	};
 
-	const { data, execute } = useAsync(putInviteDash);
+	useEffect(() => {
+		if (!lazyMode) {
+			void execute('');
+		}
+	}, [lazyMode]);
 
-	return { inviteDashInfo: data, execute };
+	return { execute, loading, error, data };
 };
