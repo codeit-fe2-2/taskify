@@ -9,7 +9,7 @@ interface CardDataProps {
 	cardData: Card;
 }
 
-export default function CardBlock({ cardData }: CardDataProps) {
+export default function Card({ cardData }: CardDataProps) {
 	const { title, imageUrl = '', tags, dueDate, assignee } = cardData;
 
 	return (

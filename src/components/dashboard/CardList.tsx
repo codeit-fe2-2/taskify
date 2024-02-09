@@ -5,8 +5,8 @@ import { useGetCardList } from '@/src/hooks/Card/useGetCardList'; // 카드 목�
 import { Column } from '@/src/types/dashboard';
 
 import IconButton from '../ui/Button/IconButton';
+import Card from '../ui/Card';
 import CountNumberChip from '../ui/Chips/CountNumberChip';
-import Card from './Card';
 
 interface CardListProps {
 	column: Column;
@@ -32,6 +32,7 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 			if (result.cards.length >= 0) {
 				setData((prevData) => ({
 					...result,
+					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 					cards: [...(prevData?.cards || []), ...result.cards],
 				}));
 			}
