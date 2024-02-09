@@ -58,7 +58,6 @@ const ManagerOptions = ({
 };
 
 const TagOptions = (value: string) => {
-	console.log(typeof value.value);
 	return (
 		<div className='flex items-center gap-1.5 text-black2'>
 			<DotNameTagChip>{value.value}</DotNameTagChip>
@@ -159,7 +158,6 @@ export default function ModalDropdown<T extends User | Column>({
 									) : (
 										// 담당자가 아니라면
 										<TagOptions value={option.title} />
-										// <p>{option.title}</p>
 									)}
 								</button>
 							</li>
