@@ -1,0 +1,62 @@
+{
+	"result": "SUCCESS",
+	"data": [
+		{
+			"id": 9014,
+			"title": "To do",
+			"teamId": "2-2",
+			"dashboardId": 2716,
+			"createdAt": "2024-01-31T11:14:51.167Z",
+			"updatedAt": "2024-01-31T11:14:51.167Z"
+		},
+		{
+			"id": 9015,
+			"title": "On progress",
+			"teamId": "2-2",
+			"dashboardId": 2716,
+			"createdAt": "2024-01-31T11:14:51.167Z",
+			"updatedAt": "2024-01-31T11:14:51.167Z"
+		},
+		{
+			"id": 9016,
+			"title": "Done",
+			"teamId": "2-2",
+			"dashboardId": 2716,
+			"createdAt": "2024-01-31T11:14:51.167Z",
+			"updatedAt": "2024-01-31T11:14:51.167Z"
+		}
+	],
+	"members": [
+		{
+			"id": 3787,
+			"email": "seoyoung@test.com",
+			"nickname": "각별님너무좋아",
+			"profileImageUrl": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/2-2_715_1706699412760.png",
+			"createdAt": "2024-01-31T20:01:12.081Z",
+			"updatedAt": "2024-02-08T11:24:58.898Z",
+			"isOwner": true,
+			"userId": 715
+		},
+		{
+			"id": 4808,
+			"email": "ejsung91@naver.com",
+			"nickname": "eunjiya",
+			"profileImageUrl": null,
+			"createdAt": "2024-02-01T16:08:03.067Z",
+			"updatedAt": "2024-02-01T16:08:03.067Z",
+			"isOwner": false,
+			"userId": 765
+		},
+		{
+			"id": 4802,
+			"email": "seoyoung2@test.com",
+			"nickname": "각별님영상올려줘",
+			"profileImageUrl": "https://sprint-fe-project.s3.ap-northeast-2.amazonaws.com/taskify/profile_image/2-2_903_1707368949039.jpeg",
+			"createdAt": "2024-02-05T10:36:21.039Z",
+			"updatedAt": "2024-02-08T14:10:58.275Z",
+			"isOwner": false,
+			"userId": 903
+		}
+	],
+	"totalCount": 3
+}
