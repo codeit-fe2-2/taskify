@@ -1,77 +1,66 @@
-import clsx from 'clsx';
 import Image from 'next/image';
 
 import ColorTagChip from './Chips/ColorTagChip';
-interface DynamicCardProps {
+
+interface CardDataProps {
 	title: string;
-	tagText: string;
-	hasImage: boolean;
+	imageUrl: string;
+	profileImageUrl: string;
+	tags: string[];
+	dueDate: string;
 }
 
-const Card = ({
+export default function Card({
 	title,
-	tagText,
-
-	hasImage,
-}: DynamicCardProps) => {
-	// 동적으로 크기 및 스타일 계산
-	const cardStyle = {
-		height: hasImage ? '297px' : '125px',
-		width: '314px',
-		margin: '5px',
-		borderRadius: '6px',
-		border: '1px solid #ccc',
-		padding: '10px',
-	};
-
-	const imageStyle = {
-		marginLeft: hasImage ? '2px' : '20px',
-		marginTop: hasImage ? '5px' : '10px',
-	};
-
-	const marginLeft = hasImage ? '20' : '40';
-	const marginTop = hasImage ? '12' : '20';
+	imageUrl,
+	profileImageUrl,
+	tags,
+	dueDate,
+}: CardDataProps) {
 	return (
-		<div className='m-5' style={cardStyle}>
-			{hasImage && (
-				<div style={imageStyle}>
+		<div className='flex max-w-[50%] flex-col gap-4 lg:w-[254px] '>
+			<div className='flex flex-col gap-[12px] rounded-[6px] border-[1px] border-solid border-gray3 p-5 md:flex-row'>
+				{imageUrl ? (
 					<Image
-						src='/images/card_image1.png'
-						width={274}
-						height={160}
-						alt='example photo'
-						className='m-[10px]'
+						src={imageUrl}
+						width='274'
+						height='160'
+						alt='사진 예시'
+						className='w-full sm:w-[260] md:w-[100px] lg:w-[274]'
 					/>
-				</div>
-			)}
+				) : null}
+				<div className='flex w-full flex-col gap-[6px] md:w-[504px] md:items-start md:justify-center'>
+					<div className='h-[21px] text-[16px] text-black2 sm:text-[14px]'>
+						{title}
+					</div>
+					<div className='md:flex md:w-full'>
+						<div className='flex gap-2 md:flex-row md:gap-[10px]'>
+							{tags.map((tag, index) => (
+								<ColorTagChip key={index}>{tag}</ColorTagChip>
+							))}
+						</div>
 
-			<div
-				className={clsx(
-					`ml-${marginLeft} mt-${marginTop} flex h-[51px] w-[161px] flex-col gap-[10px]`,
-				)}
-			>
-				<div className='text-[16px] text-black2'>{title}</div>
-				<ColorTagChip fontSize='text-xs'>{tagText}</ColorTagChip>
-			</div>
+						<div className='flex w-auto items-center justify-between md:grow '>
+							<div className='flex items-center justify-center gap-[6px]'>
+								<Image
+									src='/icons/calendar.svg'
+									width={18}
+									height={18}
+									alt='캘린더 아이콘'
+									className='sm:size-[14px] lg:size-[18px]'
+								/>
+								<div className='text-[12px] text-gray5 sm:text-[10px]'>
+									{dueDate}
+								</div>
+							</div>
 
-			<div
-				className={`ml-[${marginLeft}px]  mt-[${marginTop} flex h-[24px] w-[247px] items-center justify-between gap-[6px]`}
-			>
-				<div>
-					<div className='flex gap-[6px]'>
-						<Image
-							src='/icons/calendar.svg'
-							width={18}
-							height={18}
-							alt='calendar icon'
-						/>
-						<div className='text-gray5'>마감일</div>
+							<div className='size-6 rounded-full bg-green px-[8px] text-[12px] '>
+								{profileImageUrl}
+							</div>
+						</div>
 					</div>
 				</div>
-				<div>배지</div>
 			</div>
 		</div>
 	);
-};
-
-export default Card;
+}
