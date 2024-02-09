@@ -19,7 +19,7 @@ export default function ColorTagChip({
 
 	return (
 		<button
-			className={`${textColor} ${bgColor} l-3 ml-2 rounded-[4px] px-[6px] py-[4px] text-sm lg:text-base`}
+			className={`${textColor} ${bgColor} rounded-[4px] px-[6px] py-[4px] text-[10px] lg:text-[12px]`}
 		>
 			{children}
 		</button>
