@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { useGetCardList } from '@/src/hooks/Card/useGetCardList'; // 카드 목록 가져오는 훅 추가
@@ -42,7 +43,7 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 	};
 
 	useEffect(() => {
-		fetchData();
+		void fetchData();
 	}, [column.id, page]);
 
 	const loadMoreCards = () => {
@@ -76,9 +77,9 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 							<CountNumberChip count={data?.totalCount} />
 						</div>
 						<IconButton
-							src='/icons/setting.svg'
+							src='/icons/settings.svg'
 							alt='settingImage'
-							iconSize={18}
+							iconSize={24}
 							className='border-none'
 							onClick={() => handleModifyColumn(column.id)}
 						/>
@@ -98,12 +99,22 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 						))}
 						{data?.cards.length < data?.totalCount && (
 							<div className='flex justify-center'>
-								<button
-									onClick={loadMoreCards}
-									className='mt-4 rounded bg-blue px-4 py-2 font-bold text-white hover:bg-green'
-								>
-									더 가져오기
-								</button>
+								{isLoading ? (
+									<Image
+										width={25}
+										height={25}
+										alt='loading'
+										src='/icons/loading.png'
+										className='mt-4 animate-spin'
+									/>
+								) : (
+									<button
+										onClick={loadMoreCards}
+										className='mt-4 rounded bg-blue px-4 py-2 font-bold text-white hover:bg-green'
+									>
+										더 가져오기
+									</button>
+								)}
 							</div>
 						)}
 					</div>

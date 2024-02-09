@@ -1,11 +1,5 @@
-<<<<<<< Updated upstream
-import BasicLayout from '@/src/components/layout/BasicLayout';
-import DotNameTagChip from '@/src/components/ui/Chips/DotNameTagChip';
-import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
-=======
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
->>>>>>> Stashed changes
 
 import CardList from '@/src/components/dashboard/CardList';
 import BasicLayout from '@/src/components/layout/BasicLayout';
@@ -112,15 +106,6 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 		}
 	}, [toastMessage]);
 	return (
-<<<<<<< Updated upstream
-		<BasicLayout>
-			대시보드 페이지
-			<DotNameTagChip>To Do</DotNameTagChip>
-			<div>
-				{columnList?.map((column) => <div key={column.id}>{column.title}</div>)}
-			</div>
-		</BasicLayout>
-=======
 		<>
 			<BasicLayout>
 				<div className=' flex size-full flex-col overflow-hidden overflow-y-auto sm:max-h-[100%] sm:w-[308px] sm:overflow-y-auto md:max-h-[100%]  md:w-[584px] md:overflow-y-auto lg:flex-row  lg:overflow-x-auto'>
@@ -156,7 +141,6 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 				</div>
 			)}
 		</>
->>>>>>> Stashed changes
 	);
 };
 

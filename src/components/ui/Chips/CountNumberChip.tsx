@@ -1,6 +1,5 @@
 interface CountNumberChipProps {
 	count: number;
-	count: number;
 }
 
 export default function CountNumberChip({

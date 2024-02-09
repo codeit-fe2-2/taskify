@@ -19,11 +19,7 @@ export default function ColorTagChip({
 
 	return (
 		<button
-<<<<<<< Updated upstream
 			className={`${textColor} ${bgColor} rounded-[4px] px-[6px] py-[4px] text-[10px] lg:text-[12px]`}
-=======
-			className={`${textColor} ${bgColor}   rounded-[4px] px-[6px] py-[4px] text-sm lg:text-base`}
->>>>>>> Stashed changes
 		>
 			{children}
 		</button>

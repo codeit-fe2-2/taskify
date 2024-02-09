@@ -7,30 +7,27 @@ import PasswordChange from '@/src/components/mypage/PasswordChange';
 import ProfileChange from '@/src/components/mypage/ProfileChange';
 import TextButton from '@/src/components/ui/Button/TextButton';
 import { useGetMe } from '@/src/hooks/myPage/useGetMe';
-
 export default function Page() {
-	const router = useRouter();
+	const { userInfo, execute } = useGetMe();
 	const [toastMessage, setToastMessage] = useState<string>('');
-	const { userInfo, execute } = useGetMe(); // execute 함수를 분해할 수 있음
-
+	const router = useRouter();
 	const handleToastMessage = (message: string) => {
 		setToastMessage(message);
 	};
-
+	//toast메시지가 3초있다가 사라지게 하는 설정
 	useEffect(() => {
 		if (toastMessage) {
 			void execute();
 			const timer = setTimeout(() => {
 				setToastMessage('');
-			}, 1500);
+			}, 3000);
 			return () => clearTimeout(timer);
 		}
 	}, [toastMessage]);
-
+	//이전페이지로 돌아가는 함수
 	const handleTextButtonClick = () => {
 		router.back();
 	};
-
 	return (
 		<>
 			<BasicLayout>
@@ -52,7 +49,6 @@ export default function Page() {
 							<ProfileChange
 								userInfo={userInfo}
 								updateToastMessage={handleToastMessage}
-								onProfileChange={handleProfileChange}
 							/>
 
 							<PasswordChange updateToastMessage={handleToastMessage} />
