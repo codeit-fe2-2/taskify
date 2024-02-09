@@ -1,6 +1,6 @@
 import BasicLayout from '@/src/components/layout/BasicLayout';
 import MyDashboardList from '@/src/components/mydashboard/MyDashboardList';
-import InvitedashTable from '@/src/components/ui/Table/InvitedashTable';
+import InvitedDashboardTable from '@/src/components/ui/Table/InvitedDashboardTable';
 
 export default function MyDashboardPage() {
 	return (
@@ -8,7 +8,7 @@ export default function MyDashboardPage() {
 			<div className='p-10 sm:p-6'>
 				<div className='max-w-[1022px]'>
 					<MyDashboardList />
-					<InvitedashTable />
+					<InvitedDashboardTable />
 				</div>
 			</div>
 		</BasicLayout>

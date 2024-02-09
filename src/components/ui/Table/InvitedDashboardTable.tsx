@@ -5,7 +5,7 @@ import TextButton from '@/src/components/ui/Button/TextButton';
 import { useGetInviteDash } from '@/src/hooks/table/useGetInvitedash';
 import { usePutInviteDash } from '@/src/hooks/table/usePutInviteDash';
 
-export default function InvitedashTable() {
+export default function InvitedDashboardTable() {
 	const [searchTerm, setSearchTerm] = useState<string>('');
 	const { inviteDashInfo, execute: executeGet } = useGetInviteDash(searchTerm);
 
@@ -26,7 +26,7 @@ export default function InvitedashTable() {
 			<span className='mb-5 inline-block text-2xl font-bold sm:text-xl'>
 				초대받은 대시보드
 			</span>
-			{inviteDashes?.length > 0 ? (
+			{(inviteDashes?.length || 0) > 0 ? (
 				<>
 					<div className='relative mb-6 flex h-10 flex-row gap-2 rounded-lg border border-solid border-gray3 p-1 sm:h-9'>
 						<Image
