@@ -7,7 +7,6 @@ import { Dashboard } from '@/src/types/dashboard';
 
 interface Props {
 	dashboardList: Dashboard[] | undefined;
-	cursorId: number | undefined;
 	currentBoardId: number;
 }
 

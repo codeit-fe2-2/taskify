@@ -22,12 +22,10 @@ export default function DefaultProfileImage({
 	];
 	const nicknameHash = nickname.charCodeAt(0) % randomColors.length;
 	return (
-		<>
-			<div
-				className={`${classNames} ${randomColors[nicknameHash]} flex items-center justify-center rounded-full bg-red font-semibold text-white outline outline-4 outline-offset-0 outline-white`}
-			>
-				<p>{nickname.charAt(0).toUpperCase()}</p>
-			</div>
-		</>
+		<div
+			className={`${classNames} ${randomColors[nicknameHash]} flex items-center justify-center rounded-full font-semibold text-white`}
+		>
+			<p>{nickname.charAt(0).toUpperCase()}</p>
+		</div>
 	);
 }
