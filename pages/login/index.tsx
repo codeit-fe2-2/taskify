@@ -1,7 +1,8 @@
+import { AxiosError } from 'axios';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import TextButton from '@/src/components/ui/Button/TextButton';
 import Input from '@/src/components/ui/Input';
@@ -10,8 +11,26 @@ import { PAGE_ROUTES } from '@/src/constants/routes';
 import { useAuth } from '@/src/contexts/AuthProvider';
 import { useModal } from '@/src/contexts/ModalProvider';
 import { usePostLogin } from '@/src/hooks/useAuth/usePostLogin';
-
+import { PostSignResponseData, SignupFormElement } from '@/src/types/auth';
 const { HOME, MY_DASHBOARD, SIGNUP } = PAGE_ROUTES;
+
+const addInvalidClass = (target: HTMLInputElement) => {
+	const isValid = target.validity.valid;
+	!isValid
+		? target.setAttribute('data-invalid', '')
+		: target.removeAttribute('data-invalid');
+};
+
+const checkValidityOnEnterKeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
+	const formChildEl = event.currentTarget.elements;
+	if (event.key === 'Enter') {
+		Array.from(formChildEl).forEach((el) => {
+			if (el instanceof HTMLInputElement) {
+				addInvalidClass(el);
+			}
+		});
+	}
+};
 
 export default function Page() {
 	const router = useRouter();
@@ -20,22 +39,24 @@ export default function Page() {
 	const [isValueMissing, setIsValueMissing] = useState(true);
 	const { openModal, closeModal } = useModal();
 	const modalId = crypto.randomUUID();
-	const { data, error, execute: postLogin } = usePostLogin(formRef);
+	const { data, error, execute: postLogin } = usePostLogin();
 
-	const checkValidityOnChange = (event: ChangeEvent<HTMLFormElement>) => {
+	const checkValueMissingOnInput = (event: FormEvent<HTMLFormElement>) => {
 		const formChildEl = event.currentTarget.elements;
 		const allInputsHasValue = Array.from(formChildEl).every((el) => {
-			return el.tagName === 'INPUT'
-				? !(el as HTMLInputElement).validity.valueMissing
-				: true;
+			return el instanceof HTMLInputElement ? !el.validity.valueMissing : true;
 		});
 		setIsValueMissing(!allInputsHasValue);
 	};
 
-	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: React.FormEvent<SignupFormElement>) => {
 		event.preventDefault();
-		void postLogin();
+		const { email, password } = event.currentTarget;
+		void postLogin({
+			newPayload: { email: email.value, password: password.value },
+		});
 	};
+
 	useEffect(() => {
 		if (data || user) {
 			void router.push(MY_DASHBOARD);
@@ -43,7 +64,8 @@ export default function Page() {
 		if (error) {
 			openModal(
 				<ContextModal buttonText='확인' buttonClick={() => closeModal(modalId)}>
-					{error.response.data.message}
+					{(error as AxiosError<PostSignResponseData>)?.response?.data
+						.message || '네트워크 에러: 관리자에게 문의해주세요'}
 				</ContextModal>,
 				modalId,
 			);
@@ -67,18 +89,19 @@ export default function Page() {
 				</span>
 			</div>
 			<div className='mt-[38px]'>
-				<form
+				<form //eslint-disable-line jsx-a11y/no-noninteractive-element-interactions
 					className='flex w-[520px] flex-col items-center gap-4 sm:w-[351px]'
 					onSubmit={handleSubmit}
-					onChange={checkValidityOnChange}
+					onInput={checkValueMissingOnInput}
 					autoComplete='on'
 					ref={formRef}
+					onKeyDown={checkValidityOnEnterKeyDown}
 				>
 					<Input
 						type='email'
 						label='이메일'
 						name='email'
-						pattern='/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i'
+						pattern='^[0-9a-zA-Z]([\-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([\-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$'
 						placeholder='이메일을 입력해주세요'
 						invalidMessage='이메일 형식으로 작성해주세요'
 					></Input>
@@ -91,11 +114,12 @@ export default function Page() {
 						invalidMessage='영문자와 숫자를 포함한 8자 이상의 비밀번호를 입력하세요'
 					></Input>
 					<TextButton
+						onClick={() => {}}
 						type='submit'
 						buttonSize='xl'
 						textSize='lg'
-						color={isValueMissing ? 'third' : 'primary'}
 						disabled={isValueMissing}
+						color='primary'
 						fullWidth={true}
 						className='mt-1 text-nowrap'
 					>
