@@ -16,7 +16,7 @@ export default function SideMenu({
 	currentBoardId,
 }: Props) {
 	return (
-		<aside className='h-screen overflow-y-auto border-r border-gray3 px-3 py-5 sm:w-[67px] sm:px-3 md:w-[160px] lg:w-[300px]'>
+		<aside className='h-screen shrink-0 overflow-y-auto border-r border-gray3 px-3 py-5 sm:w-[67px] sm:px-3 md:w-[160px] lg:w-[300px]'>
 			<div className='mb-14 px-3 sm:mb-9 sm:px-0'>
 				<Link href={PAGE_ROUTES.HOME} className='flex justify-center'>
 					<Image

@@ -42,7 +42,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 						buttonSize='md'
 						textSize='md'
 						color='primary'
-						onClick={() => onSubmit}
+						onClick={onSubmit}
 					>
 						{SubmitButtonName}
 					</TextButton>

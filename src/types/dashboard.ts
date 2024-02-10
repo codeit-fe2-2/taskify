@@ -26,3 +26,12 @@ export interface ColumnListGetResponse {
 	result: string;
 	data: Column[];
 }
+
+export interface DashboardPostResponse {
+	title: string;
+	dashboardId: number;
+}
+export interface ColumnModifyPutResponse {
+	title: string;
+	columnId: number;
+}
