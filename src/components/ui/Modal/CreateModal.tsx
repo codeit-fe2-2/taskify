@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import TextButton from '@/src/components/ui/Button/TextButton';
 import { Column } from '@/src/types/dashboard';
 
-import ColorDotButtons from '../ColorDotButton';
+import ColorDotButtons from '../ColorDotButtons';
 
 interface CreateModalProps {
 	modalSize?: 'sm' | 'lg';
@@ -81,7 +81,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 				<input
 					type='text'
 					maxLength={40}
-					className='sm:h-10.5 mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:w-[287px] sm:text-sm sm:leading-4 '
+					className='mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:h-10 sm:w-[287px] sm:text-sm sm:leading-4 '
 					value={inputValue}
 					onChange={handleInputChange}
 				/>

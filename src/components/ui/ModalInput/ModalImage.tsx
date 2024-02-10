@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
+import AddButton from '../AddButton';
+
 interface ModalImageProps {
 	label: string;
 	onImageSelect: (imageUrl: string | null) => void;
@@ -60,8 +62,8 @@ export default function ModalImage({
 						</div>
 					</>
 				) : (
-					<div className='rounded-md bg-gray3 p-6'>
-						<div className='size-[28px] bg-violet2' />
+					<div className='rounded-md bg-gray3 p-6 '>
+						<AddButton bgColor='todoBg' size='todoSize' />
 					</div>
 				)}
 				<input
