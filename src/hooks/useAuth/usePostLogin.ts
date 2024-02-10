@@ -1,23 +1,21 @@
-import { RefObject, useEffect } from 'react';
+import { useEffect } from 'react';
 
-import axiosInstance from '@/src/apis/axiosInstance';
 import { useAuth } from '@/src/contexts/AuthProvider';
-import { useAsync } from '@/src/hooks/useAsync';
-import { PostLoginResponse } from '@/src/types/auth';
+import { PostLoginRequestConfigs, PostLoginResponse } from '@/src/types/auth';
 
-export const usePostLogin = (formRef: RefObject<HTMLFormElement>) => {
+import { useAxios } from './useAxios';
+
+export const usePostLogin = (payload = { email: '', password: '' }) => {
 	const { setUser } = useAuth();
-	const postLog = () => {
-		const formData = new FormData(formRef.current as HTMLFormElement);
-		const email = formData.get('email');
-		const password = formData.get('password');
-		return axiosInstance.post<PostLoginResponse>('/auth/login', {
-			email: email,
-			password: password,
-		});
+	const requstConfigs = {
+		path: '/users',
+		method: 'POST' as const,
+		payload,
 	};
-
-	const { data, error, execute } = useAsync(postLog, true);
+	const { data, error, execute } = useAxios<
+		PostLoginResponse,
+		PostLoginRequestConfigs
+	>(requstConfigs, true);
 
 	useEffect(() => {
 		if (data) {
