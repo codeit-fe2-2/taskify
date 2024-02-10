@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 
-import Header from '@/src/components/layout/Header';
+import Header from '@/src/components/layout/header/Header';
 import SideMenu from '@/src/components/layout/SideMenu';
 import { useGetDashboardList } from '@/src/hooks/dashboard/useGetDashboardList';
 import { useGetMe } from '@/src/hooks/useAuth/useGetMe';
