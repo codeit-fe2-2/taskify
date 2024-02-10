@@ -1,14 +1,16 @@
 import { useRouter } from 'next/router';
-import { ReactNode, useEffect } from 'react';
+import { ReactNode } from 'react';
 
 import Header from '@/src/components/layout/Header';
 import SideMenu from '@/src/components/layout/SideMenu';
 import { useGetDashboardList } from '@/src/hooks/dashboard/useGetDashboardList';
+import { useGetMe } from '@/src/hooks/useAuth/useGetMe';
 
 export default function BaicLayout({ children }: { children: ReactNode }) {
 	const router = useRouter();
 	const { boardid } = router.query;
 	const boardId = boardid ? parseInt(boardid as string) : 0;
+	const { data: user } = useGetMe(false);
 
 	const { dashboardListInfo } = useGetDashboardList(
 		'pagination',
@@ -18,20 +20,15 @@ export default function BaicLayout({ children }: { children: ReactNode }) {
 		false,
 	);
 	const dashboards = dashboardListInfo?.dashboards;
-	const cursorId = dashboardListInfo?.cursorId;
 	const currentDashboard = dashboards?.find(
 		(dashboard) => dashboard.id === boardId,
 	);
 
 	return (
 		<div className='flex'>
-			<SideMenu
-				dashboardList={dashboards}
-				cursorId={cursorId}
-				currentBoardId={boardId}
-			/>
+			<SideMenu dashboardList={dashboards} currentBoardId={boardId} />
 			<div className='grow'>
-				<Header currentDashboard={currentDashboard} />
+				<Header currentDashboard={currentDashboard} user={user} />
 				<main className='h-[calc(100vh-var(--header-height))] bg-gray1 sm:h-[calc(100vh-var(--header-height-sm))]'>
 					{children}
 				</main>

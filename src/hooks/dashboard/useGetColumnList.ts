@@ -21,5 +21,5 @@ export const useGetColumnList = () => {
 			void execute();
 		}
 	}, [boardid]);
-	return { data: data?.data };
+	return { data: data?.data, execute };
 };
