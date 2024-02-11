@@ -3,7 +3,7 @@ export const PAGE_ROUTES = {
 	MY_DASHBOARD: '/mydashboard',
 	MY_PAGE: '/mypage',
 	SIGNUP: '/signup',
-	SIGNIN: '/signin',
+	SIGNIN: '/login',
 	DASHBOARD: '/dashboard/',
 	DASHBOARD_EDIT: (boardId: number) => `/dashboard/${boardId}/edit`,
 };

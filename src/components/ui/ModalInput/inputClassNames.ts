@@ -1,8 +1,7 @@
 export const inputClassNames = {
 	container:
 		'relative rounded-md border border-solid border-gray3 bg-white focus-within:outline-none focus-within:ring-[1px] focus-within:ring-violet2',
-	inputStyle:
-		'flex items-center gap-[10px] px-4 py-[14px] text-base font-normal',
+	inputStyle: 'flex items-center gap-[10px] px-4 text-base font-normal',
 	textareaStyle:
 		'flex flex-col items-start gap-[10px] p-4 text-sm sm:text-xs font-normal',
 	dropdownOptions:
