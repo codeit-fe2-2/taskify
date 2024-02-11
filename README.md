@@ -26,6 +26,8 @@ Click Here!
 <img alt="Tailwind CSS" src ="https://img.shields.io/badge/Tailwind_CSS-06B6D4.svg?&style=for-the-badge&logo=tailwindcss&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6.svg?&style=for-the-badge&logo=TypeScript&logoColor=white"/> <img alt="Next.js" src ="https://img.shields.io/badge/Next.js-000000.svg?&style=for-the-badge&logo=Next.js&logoColor=white"/>
 
 ## Libraries
+<img alt="Axios" src ="https://img.shields.io/badge/Axios-5429e4.svg?&&logo=Axios&logoColor=white&style=for-the-badge"/>
+
 - [axios](https://axios-http.com/kr/)
 - [clsx](https://www.npmjs.com/package/clsx)
 - [next-themes](https://github.com/pacocoursey/next-themes)
