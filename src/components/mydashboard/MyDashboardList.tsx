@@ -50,7 +50,7 @@ export default function MyDashboardList() {
 	}, [fetchMethod]);
 
 	return (
-		<>
+		<div className='mb-11 sm:mb-6 md:mb-10'>
 			<div className='grid auto-rows-fr grid-cols-3 gap-3 sm:grid-cols-1 md:grid-cols-2'>
 				<button className='flex items-center justify-center gap-3 rounded-lg border border-solid border-gray3 bg-white py-6'>
 					<span className='font-semibold'>새로운 대시보드</span>
@@ -114,6 +114,6 @@ export default function MyDashboardList() {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }

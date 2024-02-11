@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useState } from 'react';
 
 import TextButton from '../Button/TextButton';
@@ -10,37 +11,62 @@ interface TodoModalProps {
 	onClose: () => void;
 	handleSubmit: () => void;
 	mode: string;
+	postData: {
+		assigneeUserId: number;
+		dashboardId: number;
+		columnId: number;
+		title: string;
+		description: string;
+		dueDate: string;
+		tags: string[];
+		imageUrl: string;
+	};
 }
 
-const TodoModal: React.FC<TodoModalProps> = ({
-	onClose,
-	handleSubmit,
-	mode,
-}) => {
+const TodoModal: React.FC<TodoModalProps> = ({ onClose, mode, postData }) => {
 	const [title, setTitle] = useState<string>(''); // 제목 상태 추가
 	const [description, setDescription] = useState<string>(''); // 설명 상태 추가
 	const [dueDate, setDueDate] = useState<string>(''); // 마감일 상태 추가
 	const [tags, setTags] = useState<string[]>([]); // 태그 상태 추가
+	const handleSubmit = async () => {
+		try {
+			const response = await axios.post(
+				'https://sp-taskify-api.vercel.app/2-2/card/{cardId}',
+				{
+					assigneeUserId: 765,
+					dashboardId: 3226,
+					columnId: 10771,
+					title: title,
+					description: description,
+					dueDate: dueDate,
+					tags: tags,
+					imageUrl: postData.imageUrl,
+				},
+			);
+
+			console.log(response.data); // handle success
+		} catch (error) {
+			console.error('Error occurred:', error); // handle error
+		}
+	};
 
 	const handleTagValueChange = (newValues: string[]) => {
 		setTags(newValues);
 	};
 	return (
-		<div className='m-10 h-[907px] w-[506px] rounded-lg border-[1px] bg-white p-7 '>
+		<div className='m-10 flex h-[907px] w-[506px] flex-col gap-[32px] rounded-lg border-[1px] bg-white p-7'>
 			<div className='text-xl font-medium'>
 				{mode === '수정' ? '할일수정' : '할일생성'}
 			</div>
 
-			<div className='flex-col'>
+			<div className='flex-col gap-[32px]'>
 				{mode === '생성' && (
-					<div className='flex items-center gap-2'>
-						<ModalDropdown label='담당자' inputValue='inputValue' />
-					</div>
+					<ModalDropdown label='담당자' inputValue='inkputValue' />
 				)}
 
 				{/* mode가 '수정'일 때도 보이도록 */}
 				{mode === '수정' && (
-					<div className='flex items-center gap-2'>
+					<div className='flex items-center gap-2.5'>
 						<ModalDropdown label='상태' inputValue='inputValue' />
 						<ModalDropdown label='담당자' inputValue='inputValue' />
 					</div>

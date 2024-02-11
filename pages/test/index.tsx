@@ -20,7 +20,7 @@ export default function Page() {
 					handleSubmit={() => {
 						console.log('submit');
 					}}
-					mode='생성'
+					mode='수정'
 				/>
 			)}
 		</div>
