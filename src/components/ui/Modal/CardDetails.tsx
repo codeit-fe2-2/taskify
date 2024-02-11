@@ -2,7 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { useGetCardDetail } from '@/src/hooks/Card/useGetCardDetail';
-import { useGetCommentList } from '@/src/hooks/Card/useGetComments';
+import { useGetCommentList } from '@/src/hooks/Card/useGetCommentList';
 import { Card } from '@/src/types/card';
 import formatDateTime from '@/src/util/formatDateTime';
 
@@ -45,7 +45,7 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	};
 
 	return (
-		<div className='relative flex max-w-[730px] shrink-0 flex-col gap-2 rounded-lg bg-white px-7 py-8 text-black4 sm:w-[327px] sm:px-5 sm:py-3 md:w-[680px]'>
+		<div className='relative flex max-w-[730px] shrink-0 flex-col gap-6 rounded-lg bg-white px-7 py-8 text-black4 sm:w-[327px] sm:gap-4 sm:px-5 sm:py-3 md:w-[680px]'>
 			<div className='flex flex-row sm:flex-col-reverse'>
 				<h1 className='grow justify-start text-2xl font-bold sm:text-xl'>
 					{cardData.title}
