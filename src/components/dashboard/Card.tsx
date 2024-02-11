@@ -3,12 +3,13 @@ import Image from 'next/image';
 import { Card } from '@/src/types/card';
 
 import ColorTagChip from '../ui/Chips/ColorTagChip';
+import DefaultProfileImage from '../ui/DefaultProfileImage';
 
 interface CardDataProps {
 	cardData: Card;
 }
 
-export default function CardBlock({ cardData }: CardDataProps) {
+export default function CardComponent({ cardData }: CardDataProps) {
 	const { title, imageUrl = '', tags, dueDate, assignee } = cardData;
 
 	return (
@@ -33,7 +34,7 @@ export default function CardBlock({ cardData }: CardDataProps) {
 						<div className='flex gap-2 md:flex-row md:gap-[10px]'>
 							{tags.map((tag, index) => (
 								<div key={index} className={`${index >= 2 && 'hidden'}`}>
-									<ColorTagChip>{tag}</ColorTagChip>
+									<ColorTagChip>{tags}</ColorTagChip>
 								</div>
 							))}
 						</div>
@@ -52,7 +53,10 @@ export default function CardBlock({ cardData }: CardDataProps) {
 								</div>
 							</div>
 
-							<div className='size-6 rounded-full bg-green px-[8px] text-[12px] '></div>
+							<DefaultProfileImage
+								classNames='size-6 rounded-full bg-green px-[8px] text-[12px]'
+								nickname={assignee.nickname}
+							/>
 						</div>
 					</div>
 				</div>
