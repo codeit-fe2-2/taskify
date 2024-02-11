@@ -1,13 +1,13 @@
-import axiosInstance from '@/src/apis/axiosInstance';
 import { DashboardPostResponse } from '@/src/types/dashboard';
 
-export const usePostDashboard = async (title: string, dashboardId: number) => {
+import axiosInstance from '../axiosInstance';
+
+export const postCreateColumn = async (title: string, dashboardId: string) => {
 	const requestData = {
 		title: title,
 		dashboardId: Number(dashboardId),
 	};
 	try {
-		console.log(typeof dashboardId);
 		const response = await axiosInstance.post<DashboardPostResponse>(
 			'/columns',
 			requestData,
