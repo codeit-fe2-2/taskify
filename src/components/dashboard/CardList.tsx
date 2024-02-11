@@ -1,12 +1,12 @@
 import Image from 'next/image';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { useGetCardList } from '@/src/hooks/Card/useGetCardList'; // 카드 목록 가져오는 훅 추가
+import { getCardList } from '@/src/apis/card/getCardList';
 import { Column } from '@/src/types/dashboard';
 
 import IconButton from '../ui/Button/IconButton';
-import Card from '../ui/Card';
 import CountNumberChip from '../ui/Chips/CountNumberChip';
+import CardComponent from './Card';
 
 interface CardListProps {
 	column: Column;
@@ -19,23 +19,34 @@ interface CardData {
 	cursorId: number | null;
 }
 
-const CardList = ({ column, handleModifyColumn }: CardListProps) => {
-	const [data, setData] = useState<CardData>();
+export default function CardList({
+	column,
+	handleModifyColumn,
+}: CardListProps) {
+	const [data, setData] = useState<CardData>({
+		cards: [],
+		totalCount: 0,
+		cursorId: null,
+	});
 	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const [page, setPage] = useState<number>(1);
-
+	const [hasNext, setHasNext] = useState<boolean>(false);
+	const observerRef = useRef<HTMLDivElement>(null);
 	const fetchData = async () => {
 		setIsLoading(true);
 		try {
-			const result = await useGetCardList(2, column.id, page);
-
-			if (result.cards.length >= 0) {
-				setData((prevData) => ({
-					...result,
-					// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-					cards: [...(prevData?.cards || []), ...result.cards],
-				}));
-			}
+			const result = await getCardList(
+				2,
+				column.id,
+				data.cursorId ?? undefined,
+			);
+			setData((prevData) => ({
+				...prevData,
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+				cards: [...prevData.cards, ...result.cards],
+				cursorId: result.cursorId,
+				totalCount: result.totalCount,
+			}));
+			setHasNext(result.cursorId !== null);
 		} catch (error) {
 			console.error('Error fetching data:', error);
 		} finally {
@@ -43,39 +54,60 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 		}
 	};
 
-	useEffect(() => {
-		void fetchData();
-	}, [column.id, page]);
-
-	const loadMoreCards = () => {
-		if (data && data.cards.length === data.totalCount) {
-			return;
-		}
-		setPage(page + 1);
+	const handleCardDetailsModalOpen = (cardData) => {
+		console.log(cardData);
 	};
 
+	const loadMoreCards = async () => {
+		if (data.cursorId !== null) {
+			await fetchData();
+		}
+	};
+
+	useEffect(() => {
+		void fetchData();
+	}, []);
+
+	useEffect(() => {
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0].isIntersecting && hasNext && !isLoading) {
+					void loadMoreCards();
+				}
+			},
+			{ threshold: 1 },
+		);
+
+		if (observerRef.current) {
+			observer.observe(observerRef.current);
+		}
+
+		return () => {
+			if (observerRef.current) {
+				observer.unobserve(observerRef.current);
+			}
+		};
+	}, [data.cursorId, hasNext, isLoading]);
+
 	return (
-		<div className='max-h-[100%] overflow-y-auto '>
+		<div className='max-h-[100%] overflow-y-auto'>
 			<style>
 				{`
-                /* Webkit */ 
-                ::-webkit-scrollbar {
-                    width: 0px;  /* 세로 스크롤의 너비 */
-                    height: 0px; /* 가로 스크롤의 높이 */
-                }
-                `}
+              /* Webkit */ 
+              ::-webkit-scrollbar {
+                  width: 0px;  /* 세로 스크롤의 너비 */
+                  height: 0px; /* 가로 스크롤의 높이 */
+              }
+              `}
 			</style>
 
-			{isLoading && <div>Loading...</div>}
 			{data && (
 				<>
-					<div className='flex justify-between'>
+					<div className='mb-4 flex items-center justify-between'>
 						<div className='flex items-center gap-2'>
-							<div className={` size-2 rounded-full bg-purple`}></div>
-							<div className='mr-1 text-lg font-bold leading-5'>
-								{column?.title}
-							</div>
-							<CountNumberChip count={data?.totalCount} />
+							<div className={`size-4 rounded-full bg-purple`}></div>
+							<div className='text-lg font-bold leading-5'>{column?.title}</div>
+							<CountNumberChip count={data.totalCount} />
 						</div>
 						<IconButton
 							src='/icons/settings.svg'
@@ -85,37 +117,33 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 							onClick={() => handleModifyColumn(column.id)}
 						/>
 					</div>
-					<div>
+					<div className='space-y-4'>
 						<IconButton
 							rounded='md'
 							iconSize={22}
 							src='/icons/plus.svg'
 							alt='plusImage'
-							className=' mt-[24px] w-[313px] py-[9px]  sm:w-[284px] sm:py-[6px] md:w-[544px]'
+							className='w-full py-2'
 						/>
-						{data?.cards.map((card, index) => (
-							<div key={index} className={`mt-4`}>
-								<Card cardData={card}></Card>
-							</div>
+						{data.cards.map((cardData, index) => (
+							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+							<button
+								type='button'
+								onClick={() => handleCardDetailsModalOpen(cardData)}
+							>
+								<CardComponent key={index} cardData={cardData} />
+							</button>
 						))}
-						{data?.cards.length < data?.totalCount && (
-							<div className='flex justify-center'>
-								{isLoading ? (
-									<Image
-										width={25}
-										height={25}
-										alt='loading'
-										src='/icons/loading.png'
-										className='mt-4 animate-spin'
-									/>
-								) : (
-									<button
-										onClick={loadMoreCards}
-										className='mt-4 rounded bg-blue px-4 py-2 font-bold text-white hover:bg-green'
-									>
-										더 가져오기
-									</button>
-								)}
+						<div ref={observerRef} />
+						{isLoading && (
+							<div className=' flex justify-center pb-3'>
+								<Image
+									width={25}
+									height={25}
+									alt='loading'
+									src='/icons/loading.png'
+									className='animate-spin'
+								/>
 							</div>
 						)}
 					</div>
@@ -123,6 +151,4 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 			)}
 		</div>
 	);
-};
-
-export default CardList;
+}

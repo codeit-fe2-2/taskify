@@ -1,9 +1,14 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
+import { postCreateDashboard } from '@/src/apis/dashboard/postCreateDashboard';
 import { PAGE_ROUTES } from '@/src/constants/routes';
+import { useModal } from '@/src/contexts/ModalProvider';
 import { Dashboard } from '@/src/types/dashboard';
+
+import CreateModal from '../ui/Modal/CreateModal';
 
 interface Props {
 	dashboardList: Dashboard[] | undefined;
@@ -14,6 +19,36 @@ export default function SideMenu({
 	dashboardList = [],
 	currentBoardId,
 }: Props) {
+	const modalId = crypto.randomUUID();
+	const { openModal, closeModal } = useModal();
+	const router = useRouter();
+	const onCreateDashBoardSubmit = async (
+		inputValue: string,
+		selectColor: string,
+	) => {
+		const createDashboardInfo = await postCreateDashboard(
+			inputValue,
+			selectColor,
+		);
+		if (createDashboardInfo.id) {
+			closeModal(modalId);
+			void router.push(`/dashboard/${createDashboardInfo.id}`);
+		}
+	};
+	const handleCreateModal = () => {
+		openModal(
+			<CreateModal
+				modalSize='lg'
+				title='새로운 대시보드 생성'
+				subTitle='대시보드 이름'
+				onCancel={() => {
+					closeModal(modalId);
+				}}
+				onDashBoardSubmit={onCreateDashBoardSubmit}
+			/>,
+			modalId,
+		);
+	};
 	return (
 		<aside className='h-screen w-[var(--side-menu-width)] shrink-0 overflow-y-auto border-r border-gray3 px-3 py-5 sm:w-[var(--side-menu-width-sm)] sm:px-3 md:w-[var(--side-menu-width-md)]'>
 			<div className='mb-14 px-3 sm:mb-9 sm:px-0'>
@@ -40,7 +75,7 @@ export default function SideMenu({
 					<span className='text-xs font-bold text-gray5 sm:hidden'>
 						Dash Boards
 					</span>
-					<button>
+					<button onClick={handleCreateModal}>
 						<Image src={'/icons/add_box.svg'} width={20} height={20} alt='' />
 					</button>
 				</div>

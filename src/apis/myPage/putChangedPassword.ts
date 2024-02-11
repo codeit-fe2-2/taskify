@@ -1,12 +1,11 @@
-import axiosInstance from '@/src/apis/axiosInstance';
 import { userPasswordChange } from '@/src/types/user';
 
-export const userPutChangedPassword = async (
+import axiosInstance from '../axiosInstance';
+
+export const putChangedPassword = async (
 	password: string,
 	newPassword: string,
 ): Promise<userPasswordChange> => {
-	console.log(password);
-	console.log(newPassword);
 	try {
 		const requestData = {
 			password: password,
@@ -18,7 +17,6 @@ export const userPutChangedPassword = async (
 			requestData,
 		);
 
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.error('비밀번호 변경 중 오류가 발생했습니다', error);

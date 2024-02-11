@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { ChangeEvent, useRef, useState } from 'react';
 
-import { usePostProfileImageURL } from '@/src/hooks/myPage/usePostProfileImageURL';
+import { postProfileImageURL } from '@/src/apis/myPage/postProfileImageURL';
 
 interface AddImageProps {
 	imageUrl: string | null;
@@ -20,13 +20,13 @@ function AddImage({ imageUrl, handleImageURL }: AddImageProps) {
 
 	const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files && e.target.files[0];
-		console.log(file);
+
 		if (!file) return;
 		setIsLoading(true);
 		try {
 			//usePostProfileImageURL 이미지 post요청 보내고 변환 URL값을 받아옴
-			const imageUrl = await usePostProfileImageURL(file);
-			console.log(imageUrl);
+			const imageUrl = await postProfileImageURL(file);
+
 			handleImageURL(imageUrl);
 		} catch (error) {
 			console.error('이미지 업로드 중 오류가 발생했습니다.', error);
@@ -51,14 +51,12 @@ function AddImage({ imageUrl, handleImageURL }: AddImageProps) {
 			) : (
 				<div className='flex size-full items-center justify-center transition duration-300 hover:scale-110'>
 					{imageUrl ? (
-						<>
-							<Image
-								src={imageUrl}
-								alt='이미지 미리보기'
-								fill
-								className=' object-cover  '
-							/>
-						</>
+						<Image
+							src={imageUrl}
+							alt='이미지 미리보기'
+							fill
+							className=' object-cover  '
+						/>
 					) : (
 						<Image
 							src='/icons/plus.svg'
@@ -74,10 +72,10 @@ function AddImage({ imageUrl, handleImageURL }: AddImageProps) {
 			<input
 				type='file'
 				accept='image/*'
+				// eslint-disable-next-line @typescript-eslint/no-misused-promises
 				onChange={handleImageChange}
-				className='h-12 rounded-md border  border-gray3 text-base leading-5'
+				className='hidden h-12 rounded-md  border border-gray3 text-base leading-5'
 				ref={inputRef}
-				style={{ display: 'none' }}
 			/>
 		</button>
 	);

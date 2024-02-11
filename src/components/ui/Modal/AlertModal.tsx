@@ -11,14 +11,14 @@ interface AlertModalProps {
 	onCancel: () => void;
 }
 
-const AlertModal: React.FC<AlertModalProps> = ({
+export default function AlertModal({
 	message,
 	onSubmit,
 	cancelButtonName,
 	secondButton = false,
 	onCancel,
 	SubmitButtonName,
-}) => {
+}: AlertModalProps) {
 	const buttonClasses = secondButton
 		? 'flex gap-3 sm:right-5'
 		: 'sm:right-[94px]';
@@ -50,6 +50,4 @@ const AlertModal: React.FC<AlertModalProps> = ({
 			</div>
 		</div>
 	);
-};
-
-export default AlertModal;
+}

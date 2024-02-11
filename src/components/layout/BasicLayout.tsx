@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import Header from '@/src/components/layout/header/Header';
 import SideMenu from '@/src/components/layout/SideMenu';
@@ -11,8 +11,7 @@ export default function BaicLayout({ children }: { children: ReactNode }) {
 	const { boardid } = router.query;
 	const boardId = boardid ? parseInt(boardid as string) : 0;
 	const { data: user } = useGetMe(false);
-
-	const { dashboardListInfo } = useGetDashboardList(
+	const { dashboardListInfo, execute } = useGetDashboardList(
 		'pagination',
 		0,
 		1,
@@ -23,7 +22,9 @@ export default function BaicLayout({ children }: { children: ReactNode }) {
 	const currentDashboard = dashboards?.find(
 		(dashboard) => dashboard.id === boardId,
 	);
-
+	useEffect(() => {
+		void execute();
+	}, [boardId]);
 	return (
 		<div className='flex'>
 			<SideMenu dashboardList={dashboards} currentBoardId={boardId} />
