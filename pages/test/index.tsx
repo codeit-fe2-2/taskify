@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import CardDetails from '@/src/components/ui/Modal/CardDetails';
 import TodoModal from '@/src/components/ui/Modal/TodoModal';
 
 export default function Page() {

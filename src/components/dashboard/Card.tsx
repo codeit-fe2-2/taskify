@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { Card } from '@/src/types/card';
 
 import ColorTagChip from '../ui/Chips/ColorTagChip';
+import DefaultProfileImage from '../ui/DefaultProfileImage';
 
 interface CardDataProps {
 	cardData: Card;
@@ -52,7 +53,10 @@ export default function CardBlock({ cardData }: CardDataProps) {
 								</div>
 							</div>
 
-							<div className='size-6 rounded-full bg-green px-[8px] text-[12px] '></div>
+							<DefaultProfileImage
+								nickname={assignee.nickname}
+								classNames='size-6 rounded-full bg-green px-[8px] text-[12px] '
+							/>
 						</div>
 					</div>
 				</div>

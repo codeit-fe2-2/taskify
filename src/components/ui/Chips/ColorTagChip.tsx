@@ -3,7 +3,7 @@ export default function ColorTagChip({
 	onTagClick,
 }: {
 	children: string;
-	onTagClick: (children: string) => void;
+	onTagClick?: (children: string) => void;
 }): React.JSX.Element {
 	const tagColorSet = [
 		{ textColor: 'text-sortTextGreen', bgColor: 'bg-sortTextBgGreen' },

@@ -5,7 +5,7 @@ import AddButton from '../AddButton';
 
 interface ModalImageProps {
 	label: string;
-	onImageSelect: (imageUrl: string | null) => void;
+	onImageSelect: (imageUrl: File | null) => void;
 }
 
 export default function ModalImage({
@@ -28,7 +28,7 @@ export default function ModalImage({
 			reader.onload = (event) => {
 				const imageSrc = event.target?.result as string;
 				setBackgroundImage(imageSrc);
-				onImageSelect(imageSrc);
+				onImageSelect(selectedFile);
 			};
 
 			reader.readAsDataURL(selectedFile);

@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CardList from '@/src/components/dashboard/CardList';
 import BasicLayout from '@/src/components/layout/BasicLayout';
@@ -23,21 +23,24 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 	const { boardid } = router.query;
 	const dashboardId = boardid ? parseInt(boardid as string) : 0;
 	const titles = columnList && columnList.map((column) => column.title);
-	console.log(columnList);
+
 	const handleToastMessage = (message: string) => {
 		setToastMessage(message);
 	};
+
 	const handleCreateColumn = async (inputValue: string) => {
 		await usePostDashboard(inputValue, dashboardId);
 
 		closeModal(modalId);
 		handleToastMessage('칼럼을 생성했습니다.');
 	};
+
 	const handleDeleteColumnRequest = async (id: number) => {
 		await useDeleteColumn(id);
 		closeModal(modalId);
 		handleToastMessage('컬럼을 삭제했습니다.');
 	};
+
 	const handleDeleteColumn = (id: number) => {
 		openModal(
 			<AlertModal
@@ -55,11 +58,13 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 			modalId,
 		);
 	};
+
 	const handleModifyColumnName = async (inputValue: string, id: number) => {
 		await usePutColumnName(inputValue, id);
 		closeModal(modalId);
 		handleToastMessage('컬럼 이름을 수정했습니다.');
 	};
+
 	const handleModifyColumn = (id: number) => {
 		openModal(
 			<CreateModal
@@ -96,6 +101,7 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 			modalId,
 		);
 	};
+
 	useEffect(() => {
 		if (toastMessage) {
 			void execute();
@@ -105,6 +111,7 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 			return () => clearTimeout(timer);
 		}
 	}, [toastMessage]);
+
 	return (
 		<>
 			<BasicLayout>

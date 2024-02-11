@@ -32,14 +32,14 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 		<div className='h-[763px] w-[730px] px-7 py-8'>
 			<div>버튼 케밥 absolute</div>
 			<div>close 버튼 </div>
-			<span>제목 들어갈자리</span>
+			<span>{cardData.title}</span>
 			<div>
 				담당자 assignee 이름 프로필 이미지 마감일 duedate 자리 sm일때는 flex로
 				변환 해야하므로 위치 설정{' '}
 			</div>
 			<div>태그 들어갈자리</div>
 
-			<div>내용들어갈자리</div>
+			<div>내용 들어갈자리</div>
 			<div>이미지 들어갈 자리</div>
 			<span>댓글</span>
 			<div>텍스트 에어리어 들어갈 자리 그안에 입력 버튼 </div>
