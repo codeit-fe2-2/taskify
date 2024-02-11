@@ -21,7 +21,7 @@ interface CreateModalProps {
 	handleDeleteColumnRequest?: () => void;
 }
 
-const CreateModal: React.FC<CreateModalProps> = ({
+export default function CreateModal({
 	modalSize,
 	title,
 	subTitle,
@@ -33,7 +33,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 	className,
 	submitButtonName = '생성',
 	handleDeleteColumnRequest,
-}) => {
+}: CreateModalProps) {
 	const [inputValue, setInputValue] = useState('');
 	const [inputError, setInputError] = useState(false);
 	const [selectColor, setSelectColor] = useState<string>('green');
@@ -58,7 +58,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
 	const handleSubmit = () => {
 		if (modalSize === 'lg' && onDashBoardSubmit) {
 			void onDashBoardSubmit(inputValue, selectColor);
-			console.log(selectColor, inputValue);
 		} else if (onColumnSubmit) {
 			void onColumnSubmit(inputValue);
 		}
@@ -86,7 +85,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 				<input
 					type='text'
 					maxLength={40}
-					className='mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:h-10 sm:w-[287px] sm:text-sm sm:leading-4 '
+					className='mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:h-[42px] sm:w-[287px] sm:text-sm sm:leading-4 '
 					value={inputValue}
 					onChange={handleInputChange}
 				/>
@@ -127,6 +126,4 @@ const CreateModal: React.FC<CreateModalProps> = ({
 			</div>
 		</div>
 	);
-};
-
-export default CreateModal;
+}

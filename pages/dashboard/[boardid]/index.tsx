@@ -1,27 +1,25 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import { deleteColumn } from '@/src/apis/dashboard/deleteColumn';
+import { getColumnList } from '@/src/apis/dashboard/getColumnList';
+import { postCreateColumn } from '@/src/apis/dashboard/postCreateColumn';
+import { putColumnName } from '@/src/apis/dashboard/putColumnName';
 import CardList from '@/src/components/dashboard/CardList';
 import BasicLayout from '@/src/components/layout/BasicLayout';
 import IconButton from '@/src/components/ui/Button/IconButton';
 import AlertModal from '@/src/components/ui/Modal/AlertModal';
 import CreateModal from '@/src/components/ui/Modal/CreateModal';
 import { useModal } from '@/src/contexts/ModalProvider';
-import { useDeleteColumn } from '@/src/hooks/dashboard/useDeleteColumn';
-import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
-import { usePostDashboard } from '@/src/hooks/dashboard/usePostDashboard';
-import { usePutColumnName } from '@/src/hooks/dashboard/usePutColumnName';
 import { Column } from '@/src/types/dashboard';
-interface DashboardPageProps {}
 
-const DashboardPage: React.FC<DashboardPageProps> = () => {
-	const router = useRouter();
+export default function Page() {
 	const modalId = crypto.randomUUID();
+
 	const { openModal, closeModal } = useModal();
 	const [toastMessage, setToastMessage] = useState<string>('');
-	const { data: columnList, execute } = useGetColumnList();
-	const { boardid } = router.query;
-	const dashboardId = boardid ? parseInt(boardid as string) : 0;
+
+	const { data: columnList, execute, dashboardId } = getColumnList();
 	const titles = columnList && columnList.map((column) => column.title);
 
 	const handleToastMessage = (message: string) => {
@@ -29,14 +27,13 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 	};
 
 	const handleCreateColumn = async (inputValue: string) => {
-		await usePostDashboard(inputValue, dashboardId);
-
+		await postCreateColumn(inputValue, dashboardId);
 		closeModal(modalId);
 		handleToastMessage('칼럼을 생성했습니다.');
 	};
 
 	const handleDeleteColumnRequest = async (id: number) => {
-		await useDeleteColumn(id);
+		await deleteColumn(id);
 		closeModal(modalId);
 		handleToastMessage('컬럼을 삭제했습니다.');
 	};
@@ -50,7 +47,6 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 				SubmitButtonName='삭제'
 				onCancel={() => {
 					closeModal(modalId);
-					// handleModifyColumn(id);
 				}}
 				// eslint-disable-next-line @typescript-eslint/no-misused-promises
 				onSubmit={() => handleDeleteColumnRequest(id)}
@@ -60,7 +56,7 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 	};
 
 	const handleModifyColumnName = async (inputValue: string, id: number) => {
-		await usePutColumnName(inputValue, id);
+		await putColumnName(inputValue, id);
 		closeModal(modalId);
 		handleToastMessage('컬럼 이름을 수정했습니다.');
 	};
@@ -117,10 +113,10 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 			<BasicLayout>
 				<div className=' flex size-full flex-col overflow-hidden overflow-y-auto sm:max-h-[100%] sm:w-[308px] sm:overflow-y-auto md:max-h-[100%]  md:w-[584px] md:overflow-y-auto lg:flex-row  lg:overflow-x-auto'>
 					{columnList &&
-						columnList?.map((column: Column) => (
+						columnList.map((column: Column) => (
 							<div
 								key={column.id}
-								className=' h-full w-[354px] border-r border-gray3 px-5 pt-[22px] sm:max-h-[470px] sm:w-[308px] sm:border-none sm:px-3 sm:pb-3 sm:pt-[17px] md:h-auto  md:max-h-[364px] md:w-[584px] md:border-none'
+								className='h-full w-[354px] shrink-0 border-r border-gray3 px-5 pt-[22px] sm:max-h-[470px] sm:w-[308px] sm:border-none sm:px-3 sm:pb-3 sm:pt-[17px] md:h-auto  md:max-h-[364px] md:w-[584px] md:border-none'
 							>
 								<CardList
 									column={column}
@@ -143,12 +139,12 @@ const DashboardPage: React.FC<DashboardPageProps> = () => {
 				</div>
 			</BasicLayout>
 			{toastMessage && (
-				<div className='fixed bottom-[2%] left-[40%] mb-4 mr-4 w-96 rounded-xl bg-black2  px-4 py-2 text-center text-xl text-green'>
-					<span> {toastMessage}</span>
+				<div className='fixed bottom-[2%] flex h-12 w-[100%] justify-center'>
+					<div className='mb-4 mr-4 h-12 w-96 rounded-xl bg-gray3 px-4 py-2 text-center text-xl font-semibold text-violet2'>
+						<span>{toastMessage}</span>
+					</div>
 				</div>
 			)}
 		</>
 	);
-};
-
-export default DashboardPage;
+}

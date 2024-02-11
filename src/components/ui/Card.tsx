@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Card } from '@/src/types/card';
 
 import ColorTagChip from '../ui/Chips/ColorTagChip';
-import DefaultProfileImage from '../ui/DefaultProfileImage';
+import DefaultProfileImage from './DefaultProfileImage';
 
 interface CardDataProps {
 	cardData: Card;
@@ -34,7 +34,7 @@ export default function Card({ cardData }: CardDataProps) {
 						<div className='flex gap-2 md:flex-row md:gap-[10px]'>
 							{tags.map((tag, index) => (
 								<div key={index} className={`${index >= 2 && 'hidden'}`}>
-									<ColorTagChip>{tags}</ColorTagChip>
+									<ColorTagChip>{tag}</ColorTagChip>
 								</div>
 							))}
 						</div>
@@ -52,11 +52,11 @@ export default function Card({ cardData }: CardDataProps) {
 									{dueDate}
 								</div>
 							</div>
-
 							<DefaultProfileImage
 								nickname={assignee.nickname}
 								classNames='size-6 rounded-full bg-green px-[8px] text-[12px] '
 							/>
+							{/* <div className='size-6 rounded-full bg-green px-[8px] text-[12px] '></div> */}
 						</div>
 					</div>
 				</div>

@@ -11,7 +11,6 @@ import { useGetMembers } from '@/src/hooks/table/useGetMembers';
 
 interface TodoModalProps {
 	onClose: () => void;
-	handleSubmit: () => void;
 	mode: string;
 	postData: PostData;
 	onCreated: () => void;

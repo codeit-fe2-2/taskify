@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useEffect, useState } from 'react';
 
-import { usePutChangedUserInfo } from '@/src/hooks/myPage/usePutChangedUserInfo';
+import { putChangedUserInfo } from '@/src/apis/myPage/putChangedUserInfo';
 import { User } from '@/src/types/user';
 
 import TextButton from '../ui/Button/TextButton';
@@ -13,7 +14,7 @@ export default function ProfileChange({
 	userInfo,
 	updateToastMessage,
 }: profileChangeProps) {
-	const [imageUrl, setImageUrl] = useState<string | null>(null);
+	const [imageUrl, setImageUrl] = useState<string | null>('');
 	const [nickname, setNickname] = useState<string>('');
 	// 이미지 URL변경 함수 실행후 값 저장함수
 	const handleImageURL = (url: string | null) => {
@@ -27,7 +28,7 @@ export default function ProfileChange({
 		e.preventDefault();
 		try {
 			//nickname과 imageUrl 값으로 put요청 보내는 함수 성공시 토스트메시지
-			await usePutChangedUserInfo(nickname, imageUrl);
+			await putChangedUserInfo(nickname, imageUrl || '');
 			updateToastMessage('변경사항이 저장되었습니다.');
 		} catch (error) {
 			// 네트워크 오류 등으로 인한 실패
@@ -89,6 +90,7 @@ export default function ProfileChange({
 							type='submit'
 							className=' px-[29.5px] py-[7.5px]  text-sm sm:px-[25px] sm:py-[7px] sm:text-xs'
 							color='primary'
+							onClick={handleFormSubmit}
 						>
 							저장
 						</TextButton>
