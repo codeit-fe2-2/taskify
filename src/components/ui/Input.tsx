@@ -20,11 +20,11 @@ interface signInputProps extends Omit<generalInputProps, 'type'> {
 
 type InputProps = generalInputProps | signInputProps;
 
-const addInvalidClass = (event: React.FocusEvent<HTMLInputElement>) => {
-	const isValid = event.target.validity.valid;
+const addInvalidClass = (target: HTMLInputElement) => {
+	const isValid = target.validity.valid;
 	!isValid
-		? event.target.setAttribute('data-invalid', '')
-		: event.target.removeAttribute('data-invalid');
+		? target.setAttribute('data-invalid', '')
+		: target.removeAttribute('data-invalid');
 };
 
 export default function Input(props: InputProps) {
@@ -50,9 +50,10 @@ export default function Input(props: InputProps) {
 	};
 	const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
 		if (pattern) {
-			addInvalidClass(event);
+			addInvalidClass(event.target);
 		}
 	};
+
 	const togglePasswordTypeOnClick = () => {
 		setHtmlType((prev: HTMLInputTypeAttribute) =>
 			prev === 'password' ? 'text' : 'password',
@@ -63,7 +64,7 @@ export default function Input(props: InputProps) {
 		<div className='flex w-full flex-col items-start gap-2'>
 			{/* eslint-disable-next-line jsx-a11y/label-has-associated-control, jsx-a11y/label-has-for */}
 			{label && (
-				<label htmlFor={id} className='text-black2 text-base'>
+				<label htmlFor={id} className='text-base text-black2'>
 					{label}
 				</label>
 			)}
@@ -82,7 +83,7 @@ export default function Input(props: InputProps) {
 					className={clsx(
 						'peer flex h-[50px] w-full flex-col items-center px-4 py-3 text-base',
 						type === 'password' ? 'text-black3' : 'text-black2',
-						'border-gray3 placeholder:text-gray4 focus:border-purple data-[invalid]:border-red rounded-lg border-[1px] border-solid focus:outline-none',
+						'rounded-lg border-[1px] border-solid border-gray3 placeholder:text-gray4 focus:border-purple focus:outline-none data-[invalid]:border-red',
 						className,
 					)}
 					{...rest}
@@ -100,7 +101,7 @@ export default function Input(props: InputProps) {
 					/>
 				)}
 				{invalidMessage && (
-					<span className='text-red hidden text-sm peer-data-[invalid]:block'>
+					<span className='mt-2 hidden text-sm text-red peer-data-[invalid]:block'>
 						{invalidMessage}
 					</span>
 				)}

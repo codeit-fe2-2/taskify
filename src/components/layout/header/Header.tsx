@@ -6,13 +6,13 @@ import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
 
 import axiosInstance from '@/src/apis/axiosInstance';
-import TextButton from '@/src/components/ui/Button/TextButton';
+import Icon from '@/src/components//ui/Icon';
+import InvitationButton from '@/src/components/layout/header/InvitationButton';
+import DefaultProfileImage from '@/src/components/ui/DefaultProfileImage';
 import { PAGE_NAMES } from '@/src/constants/routes';
 import { Dashboard } from '@/src/types/dashboard';
 import { MembersResponse } from '@/src/types/table';
 import { User } from '@/src/types/user';
-
-import DefaultProfileImage from '../ui/DefaultProfileImage';
 
 interface Props {
 	currentDashboard?: Dashboard;
@@ -31,6 +31,7 @@ export default function Header({ currentDashboard, user }: Props) {
 	const members = membersInfo?.members;
 	const profileImgCount = useMediaQuery({ maxWidth: 1199 }) ? 2 : 4;
 	const remainCount = (membersInfo?.totalCount || 0) - profileImgCount;
+	const isCanEdit = currentDashboard?.userId === user?.id;
 
 	useEffect(() => {
 		if (isDashboardPage && currentDashboard) {
@@ -76,33 +77,21 @@ export default function Header({ currentDashboard, user }: Props) {
 						<div className='flex items-center gap-4 sm:gap-1.5 md:gap-3'>
 							<Link
 								href={`/dashboard/${currentDashboard?.id}/edit`}
-								className='flex items-center gap-2 rounded-lg border border-gray3 px-4 py-2.5 text-gray5 sm:px-3 sm:py-1.5 sm:text-sm md:text-sm'
+								className={clsx(
+									!isCanEdit ? 'pointer-events-none text-gray3' : 'text-gray5',
+									'flex items-center gap-2 rounded-lg border border-gray3 px-4 py-2.5 sm:px-3 sm:py-1.5 sm:text-sm md:text-sm',
+								)}
 							>
-								<Image
-									src='/icons/settings.svg'
+								<Icon
+									name='settings'
 									width={20}
 									height={20}
-									alt=''
 									className='sm:hidden'
+									color={!isCanEdit ? '#EEEEEE' : ''}
 								/>
 								관리
 							</Link>
-							<TextButton
-								type='button'
-								color='third'
-								onClick={() => {}}
-								textSize='md'
-								className='flex items-center gap-2 px-4 py-2.5 text-gray5 sm:px-3 sm:py-1.5 sm:text-sm md:text-sm'
-							>
-								<Image
-									src='/icons/add_box.svg'
-									width={20}
-									height={20}
-									alt=''
-									className='sm:hidden'
-								/>
-								초대하기
-							</TextButton>
+							<InvitationButton isCanInvite={isCanEdit} />
 						</div>
 						{members && members?.length > 1 && (
 							<div className='flex [&>*:not(:first-child)]:ml-[-10px]'>

@@ -15,10 +15,10 @@ export default function ConfirmModal({
 	cancelClick: () => void;
 	confirmText: string;
 	confirmClick: () => void;
-	classNames: string;
+	classNames?: string;
 }) {
 	return (
-		<div className={`flex flex-col justify-between p-7 ${classNames}`}>
+		<div className={`flex flex-col justify-between p-7 sm:px-5 ${classNames}`}>
 			{children}
 			<div className='flex justify-end gap-3 sm:mt-9 sm:justify-center'>
 				<TextButton
