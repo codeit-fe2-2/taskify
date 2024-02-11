@@ -34,7 +34,7 @@ export default function CardBlock({ cardData }: CardDataProps) {
 						<div className='flex gap-2 md:flex-row md:gap-[10px]'>
 							{tags.map((tag, index) => (
 								<div key={index} className={`${index >= 2 && 'hidden'}`}>
-									<ColorTagChip>{tag}</ColorTagChip>
+									<ColorTagChip onTagClick={}>{tag}</ColorTagChip>
 								</div>
 							))}
 						</div>

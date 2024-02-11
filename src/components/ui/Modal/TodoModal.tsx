@@ -1,5 +1,10 @@
 import axios from 'axios';
+import { title } from 'process';
 import React, { useState } from 'react';
+
+import usePostCardInput from '@/src/hooks/Card/usePostCardInput';
+import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
+import { useGetMembers } from '@/src/hooks/table/useGetMembers';
 
 import TextButton from '../Button/TextButton';
 import ModalDropdown from '../ModalInput/ModalDropdown';
@@ -24,14 +29,19 @@ interface TodoModalProps {
 }
 
 const TodoModal: React.FC<TodoModalProps> = ({ onClose, mode, postData }) => {
-	const [title, setTitle] = useState<string>(''); // 제목 상태 추가
-	const [description, setDescription] = useState<string>(''); // 설명 상태 추가
-	const [dueDate, setDueDate] = useState<string>(''); // 마감일 상태 추가
-	const [tags, setTags] = useState<string[]>([]); // 태그 상태 추가
+	const titleInput = usePostCardInput(postData.title || ''); // 커스텀 훅 사용
+	const descriptionInput = usePostCardInput(postData.description || ''); // 커스텀 훅 사용
+	const dueDateInput = usePostCardInput(postData.dueDate || ''); // 커스텀 훅 사용
+	const imageUrlInput = usePostCardInput(postData.imageUrl || ''); // 커스텀 훅 사용
+	const [tags, setTags] = useState<string[]>(postData.tags || []); // 초기값 설정
+
+	const memberOptions = useGetMembers(1, 99).membersInfo;
+	const columnsOptions = useGetColumnList().data;
+
 	const handleSubmit = async () => {
 		try {
 			const response = await axios.post(
-				'https://sp-taskify-api.vercel.app/2-2/card/{cardId}',
+				'https://sp-taskify-api.vercel.app/2-2/cards',
 				{
 					assigneeUserId: 765,
 					dashboardId: 3226,
@@ -53,40 +63,64 @@ const TodoModal: React.FC<TodoModalProps> = ({ onClose, mode, postData }) => {
 	const handleTagValueChange = (newValues: string[]) => {
 		setTags(newValues);
 	};
+
 	return (
-		<div className='m-10 flex h-[907px] w-[506px] flex-col gap-[32px] rounded-lg border-[1px] bg-white p-7'>
+		<div className='m-10 flex w-[506px] flex-col gap-8 rounded-lg border bg-white p-7'>
 			<div className='text-xl font-medium'>
-				{mode === '수정' ? '할일수정' : '할일생성'}
+				{mode === '수정' ? '할 일 수정' : '할 일 생성'}
 			</div>
 
-			<div className='flex-col gap-[32px]'>
+			<div className='flex flex-col gap-8'>
 				{mode === '생성' && (
-					<ModalDropdown label='담당자' inputValue='inkputValue' />
+					<ModalDropdown
+						label='담당자'
+						inputValue='inkputValue'
+						data={memberOptions}
+					/>
 				)}
 
 				{/* mode가 '수정'일 때도 보이도록 */}
 				{mode === '수정' && (
 					<div className='flex items-center gap-2.5'>
-						<ModalDropdown label='상태' inputValue='inputValue' />
-						<ModalDropdown label='담당자' inputValue='inputValue' />
+						<ModalDropdown
+							label='상태'
+							inputValue='inputValue'
+							data={columnsOptions}
+						/>
+						<ModalDropdown
+							label='담당자'
+							inputValue='inputValue'
+							data={memberOptions}
+						/>
 					</div>
 				)}
 
 				<ModalInput
 					label='제목'
 					required={true}
-					onValueChange={(newValues) => setTitle(newValues[0])}
+					onValueChange={titleInput.onChange}
 				/>
 
-				<ModalTextarea label='설명' required={true} isButton={false} />
+				<ModalTextarea
+					label='설명'
+					required={true}
+					isButton={false}
+					value={descriptionInput.value}
+					onValueChange={descriptionInput.onChange}
+				/>
 
 				<ModalInput
 					label='마감일'
-					onValueChange={(newValues) => setDueDate(newValues[0])}
+					value={dueDateInput.value}
+					onValueChange={dueDateInput.onChange}
 				/>
-				<ModalInput label='태그' onValueChange={handleTagValueChange} />
+				<ModalInput
+					label='태그'
+					value={tags}
+					onValueChange={handleTagValueChange}
+				/>
 
-				<ModalImage label='이미지' />
+				<ModalImage label='이미지' onImageSelect={imageUrlInput.onChange} />
 			</div>
 
 			<div className='mt-7 flex justify-end gap-3 sm:mt-6 sm:justify-center'>

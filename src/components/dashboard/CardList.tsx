@@ -1,11 +1,13 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
+import { useModal } from '@/src/contexts/ModalProvider';
 import { useGetCardList } from '@/src/hooks/Card/useGetCardList'; // 카드 목록 가져오는 훅 추가
 import { Column } from '@/src/types/dashboard';
 
 import IconButton from '../ui/Button/IconButton';
 import CountNumberChip from '../ui/Chips/CountNumberChip';
+import TodoModal from '../ui/Modal/TodoModal';
 import Card from './Card';
 
 interface CardListProps {
@@ -24,6 +26,9 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [page, setPage] = useState<number>(1);
 
+	const { openModal, closeModal } = useModal();
+	const modalId = crypto.randomUUID();
+
 	const fetchData = async () => {
 		setIsLoading(true);
 		try {
@@ -40,6 +45,27 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 		} finally {
 			setIsLoading(false);
 		}
+	};
+
+	const handleCreateCard = () => {
+		openModal(
+			<TodoModal
+				onClose={() => closeModal(modalId)}
+				handleSubmit={() => {}}
+				mode='생성'
+				postData={{
+					assigneeUserId: 765,
+					dashboardId: 3226,
+					columnId: 10771,
+					title: '',
+					description: '',
+					dueDate: '',
+					tags: [],
+					imageUrl: '',
+				}}
+			/>,
+			modalId,
+		);
 	};
 
 	useEffect(() => {
@@ -85,12 +111,14 @@ const CardList = ({ column, handleModifyColumn }: CardListProps) => {
 						/>
 					</div>
 					<div>
+						{/* 카드추가 버튼 */}
 						<IconButton
 							rounded='md'
 							iconSize={22}
 							src='/icons/plus.svg'
 							alt='plusImage'
 							className=' mt-[24px] w-[313px] py-[9px]  sm:w-[284px] sm:py-[6px] md:w-[544px]'
+							onClick={handleCreateCard}
 						/>
 						{data?.cards.map((card, index) => (
 							<div key={index} className={`mt-4`}>

@@ -26,7 +26,6 @@ export default function ModalTextarea({
 			textarea.style.height = 'auto';
 			textarea.style.height = `${textarea.scrollHeight}px`;
 		}
-		console.log(event.target.value);
 	};
 
 	const handleButtonClick = () => {
