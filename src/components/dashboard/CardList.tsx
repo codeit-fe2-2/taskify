@@ -90,6 +90,7 @@ export default function CardList({
 			modalId,
 		);
 	};
+
 	useEffect(() => {
 		void fetchData();
 	}, []);
