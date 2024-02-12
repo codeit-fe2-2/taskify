@@ -11,7 +11,6 @@ interface CardDataProps {
 
 export default function Card({ cardData }: CardDataProps) {
 	const { title, imageUrl = '', tags, dueDate, assignee } = cardData;
-	console.log(cardData);
 	return (
 		<div className='flex w-full flex-col gap-4 '>
 			<div className='flex flex-col justify-between gap-[12px] rounded-[6px] border-[1px] border-solid border-gray3 bg-white p-5 sm:p-3 md:flex-row'>
