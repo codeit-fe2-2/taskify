@@ -130,16 +130,18 @@ export default function Header({ currentDashboard, user }: Props) {
 					</div>
 				)}
 				<div className='mx-8 h-[38px] w-[1px] bg-gray3 sm:mx-3 sm:h-[34px] md:mx-6'></div>
-				<div className='mr-20 flex items-center gap-3 sm:mr-3 md:mr-10'>
-					<div
-						className={
-							'flex size-[38px] items-center justify-center rounded-full border-2 border-white bg-[#a3c4a2] font-semibold text-white sm:size-[34px]'
-						}
-					>
-						<p>{user?.nickname[0].toUpperCase()}</p>
+				<Link href='/mypage'>
+					<div className='mr-20 flex items-center gap-3 sm:mr-3 md:mr-10'>
+						<div
+							className={
+								'flex size-[38px] items-center justify-center rounded-full border-2 border-white bg-[#a3c4a2] font-semibold text-white sm:size-[34px]'
+							}
+						>
+							<p>{user?.nickname[0].toUpperCase()}</p>
+						</div>
+						<span className='font-medium sm:hidden'>{user?.nickname}</span>
 					</div>
-					<span className='font-medium sm:hidden'>{user?.nickname}</span>
-				</div>
+				</Link>
 			</div>
 		</header>
 	);

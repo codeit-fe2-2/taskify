@@ -3,18 +3,17 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useRef, useState } from 'react';
 
 import { getCardList } from '@/src/apis/card/getCardList';
+import IconButton from '@/src/components/ui/Button/IconButton';
+import CountNumberChip from '@/src/components/ui/Chips/CountNumberChip';
 import { useModal } from '@/src/contexts/ModalProvider';
-import { useGetCardList } from '@/src/hooks/Card/useGetCardList'; // 카드 목록 가져오는 훅 추가
 import { Column } from '@/src/types/dashboard';
 
-import IconButton from '../ui/Button/IconButton';
-import CountNumberChip from '../ui/Chips/CountNumberChip';
 import TodoModal from '../ui/Modal/TodoModal';
 import Card from './Card';
-
 interface CardListProps {
 	column: Column;
 	handleModifyColumn: (id: number) => void;
+	handleToastMessage: () => void;
 }
 
 interface CardData {
@@ -26,6 +25,7 @@ interface CardData {
 export default function CardList({
 	column,
 	handleModifyColumn,
+	handleToastMessage,
 }: CardListProps) {
 	const router = useRouter();
 	const { boardid } = router.query;
@@ -34,11 +34,9 @@ export default function CardList({
 		totalCount: 0,
 		cursorId: null,
 	});
-	console.log(data);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 	const [hasNext, setHasNext] = useState<boolean>(false);
 	const observerRef = useRef<HTMLDivElement>(null);
-	// const [page, setPage] = useState<number>(1);
 
 	const { openModal, closeModal } = useModal();
 	const modalId = crypto.randomUUID();
@@ -54,7 +52,7 @@ export default function CardList({
 			setData((prevData) => ({
 				...prevData,
 				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-				cards: [...result.cards],
+				cards: [...prevData.cards, ...result.cards],
 				cursorId: result.cursorId,
 				totalCount: result.totalCount,
 			}));
@@ -80,7 +78,7 @@ export default function CardList({
 		openModal(
 			<TodoModal
 				onClose={() => closeModal(modalId)}
-				onCreated={() => void fetchData()}
+				onCreated={handleToastMessage}
 				mode='생성'
 				postData={{
 					assigneeUserId: 0,
@@ -96,7 +94,6 @@ export default function CardList({
 			modalId,
 		);
 	};
-
 	useEffect(() => {
 		void fetchData();
 	}, []);
@@ -158,14 +155,16 @@ export default function CardList({
 							alt='plusImage'
 							className='w-full py-2'
 							onClick={handleCreateCard}
+							onClick={handleCreateCard}
 						/>
 						{data.cards.map((cardData, index) => (
 							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 							<button
 								type='button'
+								key={index}
 								onClick={() => handleCardDetailsModalOpen(cardData)}
 							>
-								<Card key={index} cardData={cardData} />
+								<Card cardData={cardData} />
 							</button>
 						))}
 						<div ref={observerRef} />

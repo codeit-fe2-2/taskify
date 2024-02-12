@@ -46,7 +46,7 @@ const TodoModal: React.FC<TodoModalProps> = ({
 
 	const memberOptions = useGetMembers(1, 99).membersInfo?.members || [];
 	const columnsOptions = useGetColumnList().data || [];
-
+	console.log(memberOptions);
 	const handleChangeTitle = (value: string[]) => {
 		setFormData((prevFormData) => ({ ...prevFormData, title: value[0] }));
 	};
@@ -107,9 +107,9 @@ const TodoModal: React.FC<TodoModalProps> = ({
 
 			const response = await axiosInstance.post('cards', sendFormData);
 			console.log(response.data); // handle success
-			alert('할 일을 생성했습니다.');
+
 			onClose();
-			onCreated();
+			onCreated('카드를 생성했습니다.');
 		} catch (error) {
 			console.error('Error occurred:', error); // handle error
 		}
