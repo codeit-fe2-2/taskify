@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Column } from '@/src/types/dashboard';
 import { User } from '@/src/types/user';
@@ -68,30 +68,35 @@ const TagOptions = (value: string) => {
 interface ModalDropdownProps<T extends User | Column> {
 	label: string;
 	data: T[];
-	currentData?: T;
+	currentId?: number;
 	onDropdownSelect: (dataId: number) => void;
 }
 
 export default function ModalDropdown<T extends User | Column>({
 	label,
 	data,
-	currentData,
+	currentId,
 	onDropdownSelect,
 }: ModalDropdownProps<T>) {
 	const [open, setOpen] = useState<boolean>(false);
 	const [options, setOptions] = useState(data);
-	const [selectedValue, setSelectedValue] = useState<T | undefined>(
-		currentData,
+
+	const [selectedOption, setSelectedOption] = useState<T | undefined>(
+		data.find((item) => item.id === currentId),
 	);
 
 	const handleOpen = () => {
 		setOpen(!open);
 	};
 
+	useEffect(() => {
+		setOptions(data);
+	}, [data]);
+
 	const handleClose = () => {
 		setOpen(false);
 	};
-
+	// 담당자 이름 검색 기능
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
 		const filteredData = data.filter((datum) =>
 			datum.nickname.includes(event.target.value),
@@ -111,12 +116,12 @@ export default function ModalDropdown<T extends User | Column>({
 				>
 					{label === '담당자' ? (
 						<ManagerOptions
-							value={selectedValue?.nickname}
-							image={selectedValue?.profileImageUrl}
+							value={selectedOption?.nickname}
+							image={selectedOption?.profileImageUrl}
 							onInputChange={handleInputChange}
 						/>
 					) : (
-						<TagOptions value={selectedValue?.title} />
+						<TagOptions value={selectedOption?.title} />
 					)}
 					<Image
 						src='/icons/arrow_drop_down.svg'
@@ -128,11 +133,11 @@ export default function ModalDropdown<T extends User | Column>({
 				</button>
 				{open && (
 					<ul className={`${inputClassNames.dropdownOptions}`}>
-						{options.map((option, index) => (
-							<li key={index}>
+						{options.map((option) => (
+							<li key={option.id}>
 								<button
 									onClick={() => {
-										setSelectedValue(option);
+										setSelectedOption(option);
 										onDropdownSelect(
 											label === '담당자' ? option.userId : option.id,
 										);
@@ -141,7 +146,7 @@ export default function ModalDropdown<T extends User | Column>({
 									className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px] text-base hover:bg-gray2'
 								>
 									<div className='relative size-[22px]'>
-										{option === selectedValue && (
+										{option === selectedOption && (
 											<Image
 												src='/icons/check.svg'
 												fill={true}

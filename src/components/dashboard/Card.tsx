@@ -35,6 +35,7 @@ export default function CardComponent({ cardData }: CardDataProps) {
 							{tags.map((tag, index) => (
 								<div key={index} className={`${index >= 2 && 'hidden'}`}>
 									<ColorTagChip>{tags}</ColorTagChip>
+									<ColorTagChip>{tags}</ColorTagChip>
 								</div>
 							))}
 						</div>
