@@ -113,6 +113,15 @@ export default function Page() {
 		<>
 			<BasicLayout>
 				<div className='flex size-full flex-col overflow-hidden overflow-y-auto sm:max-h-[100%] sm:w-[308px] sm:overflow-y-auto md:max-h-[100%] md:w-[584px] md:overflow-y-auto lg:flex-row lg:overflow-x-auto'>
+					<style>
+						{`
+              /* Webkit */ 
+              ::-webkit-scrollbar {
+                  width: 0px;  /* 세로 스크롤의 너비 */
+                  height: 0px; /* 가로 스크롤의 높이 */
+              }
+              `}
+					</style>
 					{columnList &&
 						columnList.map((column: Column) => (
 							<div
