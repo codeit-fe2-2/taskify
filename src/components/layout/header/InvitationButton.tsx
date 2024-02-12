@@ -30,8 +30,8 @@ export default function InvitationButton({
 		}
 		if (error) {
 			alert(
-				error.response?.data?.message ||
-					'해당 회월을 현재 대시보드에 초대하는데 실패했습니다.',
+				(error.response?.data as { message: string })?.message ||
+					'해당 회원을 현재 대시보드에 초대하는데 실패했습니다.',
 			);
 		}
 	}, [data, error]);

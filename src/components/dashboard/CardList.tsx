@@ -6,6 +6,7 @@ import { getCardList } from '@/src/apis/card/getCardList';
 import IconButton from '@/src/components/ui/Button/IconButton';
 import CountNumberChip from '@/src/components/ui/Chips/CountNumberChip';
 import { useModal } from '@/src/contexts/ModalProvider';
+import { Card as CardType } from '@/src/types/card';
 import { Column } from '@/src/types/dashboard';
 
 import TodoModal from '../ui/Modal/TodoModal';
@@ -17,7 +18,7 @@ interface CardListProps {
 }
 
 interface CardData {
-	cards: any[];
+	cards: CardType[];
 	totalCount: number;
 	cursorId: number | null;
 }
@@ -62,10 +63,6 @@ export default function CardList({
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const handleCardDetailsModalOpen = (cardData) => {
-		console.log(cardData);
 	};
 
 	const loadMoreCards = async () => {

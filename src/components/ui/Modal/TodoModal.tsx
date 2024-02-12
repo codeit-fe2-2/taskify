@@ -24,7 +24,7 @@ interface PostData {
 	description: string;
 	dueDate: string;
 	tags: string[];
-	imageUrl: string;
+	imageUrl: string | File;
 }
 
 const TodoModal: React.FC<TodoModalProps> = ({
@@ -66,7 +66,7 @@ const TodoModal: React.FC<TodoModalProps> = ({
 		setFormData((prevFormData) => ({ ...prevFormData, tags: value }));
 	};
 
-	const handleChangeImageUrl = (value: string | null) => {
+	const handleChangeImageUrl = (value: File) => {
 		setFormData((prevFormData) => ({ ...prevFormData, imageUrl: value }));
 	};
 
@@ -78,11 +78,11 @@ const TodoModal: React.FC<TodoModalProps> = ({
 		setFormData((prevFormData) => ({ ...prevFormData, assigneeUserId: value }));
 	};
 
-	const uploadImageAndGetUrl = async (imageFile: string) => {
+	const uploadImageAndGetUrl = async (imageFile: string | File) => {
 		const imageFormData = new FormData();
 		imageFormData.append('image', imageFile);
 
-		const response = await axiosInstance.post<{ imageUrl: string }>(
+		const response = await axiosInstance.post<{ imageUrl: File }>(
 			`columns/${postData.columnId}/card-image`,
 			imageFormData,
 			{

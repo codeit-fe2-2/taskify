@@ -54,7 +54,7 @@ export default function InvitelistTable() {
 			onNext={handleNext}
 			onInvite={handleInvite}
 		>
-			{inviteList?.length > 0 ? (
+			{inviteList && inviteList?.length > 0 ? (
 				<table className='table-auto'>
 					<thead>
 						<tr>

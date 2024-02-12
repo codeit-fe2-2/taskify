@@ -30,7 +30,7 @@ export default function ModalTextarea({
 	};
 
 	const handleButtonClick = () => {
-		onButtonClick();
+		onButtonClick?.();
 	};
 
 	return (
