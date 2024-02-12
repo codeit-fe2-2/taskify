@@ -1,3 +1,4 @@
+
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
@@ -15,6 +16,7 @@ interface CardDetailsProps {
 
 const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	const [cardData, setCardData] = useState<Card | null>(null);
+
 	const [comment, setComment] = useState('');
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 	const { commentListInfo, execute } = useGetCommentList(99, cardId);
