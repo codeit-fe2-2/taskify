@@ -15,12 +15,13 @@ export default function Home() {
 	const router = useRouter();
 	const [renderDelayedContent, setRenderDelayedContent] = useState(false);
 	const [loading, setLoading] = useState(false);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
 				if (user) {
-					const dashboard = await getDashboardList('pagination', 0, 1, 1); // Fetch dashboard list asynchronously
+					const dashboard = await getDashboardList('pagination', 0, 1, 1);
 					const dashboardId = dashboard?.dashboards[0]?.id;
 					if (dashboardId) {
 						void router.push(`/dashboard/${dashboardId}`);

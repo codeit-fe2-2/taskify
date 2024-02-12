@@ -90,6 +90,7 @@ export default function CardList({
 			modalId,
 		);
 	};
+
 	useEffect(() => {
 		void fetchData();
 	}, []);
@@ -116,17 +117,7 @@ export default function CardList({
 	}, [data.cursorId, hasNext, isLoading]);
 
 	return (
-		<div className='max-h-[100%] overflow-y-auto'>
-			<style>
-				{`
-              /* Webkit */ 
-              ::-webkit-scrollbar {
-                  width: 0px;  /* 세로 스크롤의 너비 */
-                  height: 0px; /* 가로 스크롤의 높이 */
-              }
-              `}
-			</style>
-
+		<div className='max-h-[100%] overflow-y-auto scrollbar-hide'>
 			{data && (
 				<>
 					<div className='mb-4 flex items-center justify-between'>
