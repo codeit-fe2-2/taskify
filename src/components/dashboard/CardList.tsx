@@ -52,7 +52,6 @@ export default function CardList({
 			);
 			setData((prevData) => ({
 				...prevData,
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				cards: [...prevData.cards, ...result.cards],
 				cursorId: result.cursorId,
 				totalCount: result.totalCount,
