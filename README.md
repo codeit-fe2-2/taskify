@@ -1,20 +1,40 @@
-# Taskify
+<div style="text-align: center;">
+  <a href="https://taskify-theta-seven.vercel.app/">
+    <img alt="Taskify" src='/public/icons/logo_taskify.svg' width="200" height="200">
+  </a>
+</div>
+
 - 스스로 채우는 일정 관리 서비스
 - 개발 기간 : 24.01.25(목) ~ 24.02.14(수)
 
 # Team
+
 ## 성은지 👑
 - 팀장
-## 김재환
-## 이서영 🍣
-- 기록 없이 관리는 이뤄지지 않는다
-- Modal/Input 전반
-- Table 전반
-## 이찬주
-## 이채빈
+- Chips, Card 컴포넌트
+- TodoModal 할 일 생성/수정 모달 컴포넌트
 
-# Delopyment
-Click Here!
+## 김재환 🍚
+- 텍스트/아이콘 버튼 공통 컴포넌트 
+- LandingPage UI구현 다크모드 구현
+- myPage profile 닉네임, 비밀번호 변경 구현
+- dashboard page 기본 UI, 컬럼 추가/이름 변경, 컬럼 삭제, card 목록 무한 스크롤 구현
+- SideMenu dashBoard 생성버튼 이벤트 구현
+
+## 이서영 🦐
+> 기록 없이 관리는 이뤄지지 않는다
+- Modal/Input 컴포넌트 전반
+- Table 컴포넌트 전반
+- 임시 ProfileImage 컴포넌트 작성
+- 카드 상세 정보 모달 작성
+- 프로젝트 진행 상황 관리
+
+## 이찬주
+
+## 이채빈🌚
+- Input 공통 컴포넌트
+- 로그인, 회원가입 페이지 구현, AuthContext 작성
+- useAsync hook(by.찬주님) 기반으로 useAxios hook 작성
 
 # Images
 
@@ -26,14 +46,13 @@ Click Here!
 <img alt="Tailwind CSS" src ="https://img.shields.io/badge/Tailwind_CSS-06B6D4.svg?&style=for-the-badge&logo=tailwindcss&logoColor=white"/> <img alt="TypeScript" src ="https://img.shields.io/badge/TypeScript-3178C6.svg?&style=for-the-badge&logo=TypeScript&logoColor=white"/> <img alt="Next.js" src ="https://img.shields.io/badge/Next.js-000000.svg?&style=for-the-badge&logo=Next.js&logoColor=white"/>
 
 ## Libraries
-<img alt="Axios" src ="https://img.shields.io/badge/Axios-5429e4.svg?&&logo=Axios&logoColor=white&style=for-the-badge"/>
+<a href="https://axios-http.com/kr/"><img alt="Axios" src ="https://img.shields.io/badge/Axios-5429e4.svg?&logo=Axios&logoColor=white&style=for-the-badge"/></a>
+<img alt="clsx" src ="https://img.shields.io/badge/clsx-CB3837.svg?&style=for-the-badge"/> : TailwindCSS Class 정의 시 가독성과 재사용성이 용이하게 구조화된 코드 작성
+<img alt="next-themes" src ="https://img.shields.io/badge/next_themes-000.svg?&style=for-the-badge"/> : DarkMode 구성에 필요 간편한 테마 관리
+<img alt="react-datetime" src ="https://img.shields.io/badge/react_datetime-61DAFB.svg?&style=for-the-badge"/> : datetime-loacal 인풋의 스타일 조정 및 포매팅
+<img alt="react-responsive" src ="https://img.shields.io/badge/react_responsive-61DAFB.svg?&style=for-the-badge"/>
+<img alt="tailwind-scrollbar-hide" src ="https://img.shields.io/badge/tailwind_scrollbar_hide-06B6D4.svg?&style=for-the-badge"/> : 불필요한 스크롤바 제거
 
-- [axios](https://axios-http.com/kr/)
-- [clsx](https://www.npmjs.com/package/clsx)
-- [next-themes](https://github.com/pacocoursey/next-themes)
-- [react-datetime](https://www.npmjs.com/package/react-datetime) : datetime-local 대용으로 사용
-- [react-responsive](https://www.npmjs.com/package/react-responsive)
-- [tailwind-scrollbar-hide](https://www.npmjs.com/package/tailwind-scrollbar-hide) : 스크롤바 제거를 위해 사용
 
 # Package Structure
 
