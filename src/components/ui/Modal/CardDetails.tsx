@@ -1,12 +1,15 @@
-
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { useGetCardDetail } from '@/src/hooks/Card/useGetCardDetail';
 import { useGetCommentList } from '@/src/hooks/Card/useGetCommentList';
+import { usePostComment } from '@/src/hooks/Card/usePostComment';
+import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
 import { Card } from '@/src/types/card';
 import formatDateTime from '@/src/util/formatDateTime';
 
+import ColorTagChip from '../Chips/ColorTagChip';
+import DotNameTagChip from '../Chips/DotNameTagChip';
 import DefaultProfileImage from '../DefaultProfileImage';
 import ModalTextarea from '../ModalInput/ModalTextarea';
 
@@ -16,14 +19,18 @@ interface CardDetailsProps {
 
 const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	const [cardData, setCardData] = useState<Card | null>(null);
-
 	const [comment, setComment] = useState('');
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-	const { commentListInfo, execute } = useGetCommentList(99, cardId);
 
-	commentListInfo?.comments.map((comment, index) =>
-		console.log(index, ':', comment),
+	const { commentListInfo, execute: executeGetComment } = useGetCommentList(
+		99,
+		cardId,
 	);
+	const { data } = useGetColumnList();
+	const currentColumnTitle = data?.find(
+		(item) => item.id === cardData?.columnId,
+	)?.title;
+	const { execute: executePostComment } = usePostComment();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -41,9 +48,17 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 		return <div>Loading...</div>; // 데이터를 기다리는 동안 로딩 상태를 표시할 수 있습니다.
 	}
 
-	// 여기에서 cardData를 사용하여 컴포넌트를 렌더링할 수 있습니다.
 	const handleMenu = () => {
 		setIsMenuOpen(!isMenuOpen);
+	};
+
+	const handleClose = () => {};
+
+	const handlePostComment = () => {
+		if (comment) {
+			// executePostComment(comment, cardId, cardData?.columnId);
+			console.log('!', comment, cardId, cardData?.columnId);
+		}
 	};
 
 	return (
@@ -54,10 +69,15 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 				</h1>
 				<div className='relative flex flex-row items-center justify-end gap-4'>
 					<button className='relative size-7 sm:size-5' onClick={handleMenu}>
-						<Image src='icons/more_vert.svg' fill={true} alt='menu' />
+						<Image src='/icons/more_vert.svg' fill={true} alt='menu' />
 					</button>
 					<button className='relative size-8 sm:size-6'>
-						<Image src='icons/close.svg' fill={true} alt='menu' />
+						<Image
+							src='/icons/close.svg'
+							fill={true}
+							alt='menu'
+							onClick={handleClose}
+						/>
 					</button>
 					{isMenuOpen && (
 						<div className='absolute right-10 top-8 z-10 flex h-[82px] w-[93px] flex-col gap-1.5 rounded-md border border-gray3 bg-white p-1.5 text-center text-sm font-normal leading-6 shadow-[0_4px_20px_0_rgba(0_0_0_0.08)] sm:right-10 sm:top-6 sm:text-xs sm:leading-normal'>
@@ -74,10 +94,14 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 			<div className='flex flex-row gap-6 sm:flex-col-reverse'>
 				<div className='relative flex w-[450px] flex-col gap-6 sm:max-w-[287px] md:w-[420px]'>
 					<div className='relative flex flex-col gap-4'>
-						<div className='flex flex-row gap-5'>
-							<div>{cardData.columnId}</div>
+						<div className='flex flex-row items-center gap-5'>
+							<DotNameTagChip>{currentColumnTitle}</DotNameTagChip>
 							<hr className='h-5 border-l border-gray3' />
-							<div>{cardData.tags}</div>
+							<div className='flex flex-row gap-1.5'>
+								{cardData.tags.map((tag, index) => (
+									<ColorTagChip key={index}>{tag}</ColorTagChip>
+								))}
+							</div>
 						</div>
 						<div className='text-sm font-normal text-[#000] sm:text-xs'>
 							{cardData.description}
@@ -93,7 +117,12 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 					</div>
 					{commentListInfo && (
 						<div className='flex flex-col gap-5'>
-							<ModalTextarea label='댓글' isButton onTextChange={setComment} />
+							<ModalTextarea
+								label='댓글'
+								isButton
+								onTextChange={setComment}
+								onButtonClick={handlePostComment}
+							/>
 							{commentListInfo?.comments.map((comment, index) => (
 								<div key={index} className='flex flex-row gap-2.5'>
 									<div className='relative size-[34px] rounded-full sm:size-[26px]'>
