@@ -13,7 +13,7 @@ import { MembersResponse } from '@/src/types/table';
 export const useDeleteMembers = (lazyMode: boolean = true) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<unknown>(null);
-	const [data, setData] = useState(null);
+	const [data, setData] = useState<MembersResponse | null>(null);
 
 	const execute = async (memberId: string) => {
 		setLoading(true);

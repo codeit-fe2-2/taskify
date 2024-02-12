@@ -5,7 +5,7 @@ import AddButton from '../AddButton';
 
 interface ModalImageProps {
 	label: string;
-	onImageSelect: (imageUrl: File | null) => void;
+	onImageSelect: (imageUrl: File) => void;
 }
 
 export default function ModalImage({

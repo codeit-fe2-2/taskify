@@ -11,6 +11,7 @@ export default function Section1() {
 				height={428}
 				alt='landing_hero.png'
 				className='sm:h-[168px] sm:w-[287px] md:h-[314.76px] md:w-[537.25px]'
+				priority
 			/>
 
 			<div className='mt-[48.24px] flex items-center gap-7 font-bold sm:mt-[26px] sm:flex-col sm:gap-[5px] md:gap-6'>

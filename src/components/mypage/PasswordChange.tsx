@@ -40,30 +40,32 @@ function PasswordChange({ updateToastMessage }: PasswordChangeProps) {
 		setDisabled(id === 'confirmPassword' && value !== formState.newPassword);
 	};
 	//비밀번호 조건 미충족시 실행하지않고 오류보여줌
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
-		if (formState.newPassword.length < 8) {
-			setPasswordError('비밀번호는 최소 8자 이상이어야 합니다.');
-			return;
-		}
-		//이전비밀번호와 변경비밀번호 put요청을 보냄 비밀번호 오류는 userInfo에 전달받지 않으므로
-		//put 요청으로 기존비밀번호 오류로 반환되는 거절을 이용해 modal로 비밀번호 오류를 알려줌
-		try {
-			await putChangedPassword(
-				formState.currentPassword,
-				formState.newPassword,
-			);
+		void (async () => {
+			if (formState.newPassword.length < 8) {
+				setPasswordError('비밀번호는 최소 8자 이상이어야 합니다.');
+				return;
+			}
+			//이전비밀번호와 변경비밀번호 put요청을 보냄 비밀번호 오류는 userInfo에 전달받지 않으므로
+			//put 요청으로 기존비밀번호 오류로 반환되는 거절을 이용해 modal로 비밀번호 오류를 알려줌
+			try {
+				await putChangedPassword(
+					formState.currentPassword,
+					formState.newPassword,
+				);
 
-			updateToastMessage('비밀번호가 변경되었습니다.');
-			setFormState({
-				currentPassword: '',
-				newPassword: '',
-				confirmPassword: '',
-			});
-		} catch (error) {
-			handleClickOpenModal();
-		}
+				updateToastMessage('비밀번호가 변경되었습니다.');
+				setFormState({
+					currentPassword: '',
+					newPassword: '',
+					confirmPassword: '',
+				});
+			} catch (error) {
+				handleClickOpenModal();
+			}
+		})();
 	};
 
 	const handleClickOpenModal = () => {

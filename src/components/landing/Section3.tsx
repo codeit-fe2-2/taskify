@@ -24,7 +24,7 @@ export default function Section3({
 		'pb-[18px] pt-[11px]': padding === 'sm',
 	});
 	return (
-		<div className='grid-rows-auto col-span-1 grid w-[378px] '>
+		<div className='col-span-1 grid w-[378px] '>
 			<div
 				className={`flex  justify-center ${paddingClasses} rounded-t-lg bg-gray2 dark:bg-black1`}
 			>
