@@ -9,7 +9,7 @@ interface CardDataProps {
 	cardData: Card;
 }
 
-export default function CardComponent({ cardData }: CardDataProps) {
+export default function Card({ cardData }: CardDataProps) {
 	const { title, imageUrl = '', tags, dueDate, assignee } = cardData;
 
 	return (
@@ -54,8 +54,8 @@ export default function CardComponent({ cardData }: CardDataProps) {
 							</div>
 
 							<DefaultProfileImage
-								classNames='size-6 rounded-full bg-green px-[8px] text-[12px]'
 								nickname={assignee.nickname}
+								classNames='size-6 rounded-full bg-green px-[8px] text-[12px] '
 							/>
 						</div>
 					</div>
