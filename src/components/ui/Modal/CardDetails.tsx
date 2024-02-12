@@ -57,7 +57,7 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	const handlePostComment = () => {
 		if (comment) {
 			// executePostComment(comment, cardId, cardData?.columnId);
-			console.log(comment, cardId, cardData?.columnId);
+			console.log('!', comment, cardId, cardData?.columnId);
 		}
 	};
 
