@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
+import { useGetCommentList } from '@/src/apis/card/useGetCommentList';
 import { useGetCardDetail } from '@/src/hooks/Card/useGetCardDetail';
-import { useGetCommentList } from '@/src/hooks/Card/useGetCommentList';
 import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
 import { Card } from '@/src/types/card';
 import formatDateTime from '@/src/util/formatDateTime';
