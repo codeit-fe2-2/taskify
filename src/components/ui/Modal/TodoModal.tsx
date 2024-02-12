@@ -94,25 +94,27 @@ const TodoModal: React.FC<TodoModalProps> = ({
 		return response.data.imageUrl;
 	};
 
-	const handleSubmit = async () => {
-		try {
-			let sendFormData;
+	const handleSubmit = () => {
+		void (async () => {
+			try {
+				let sendFormData;
 
-			if (formData.imageUrl) {
-				const imageUrl = await uploadImageAndGetUrl(formData.imageUrl);
-				sendFormData = { ...formData, imageUrl: imageUrl };
-			} else {
-				sendFormData = (({ imageUrl, ...rest }) => rest)(formData);
+				if (formData.imageUrl) {
+					const imageUrl = await uploadImageAndGetUrl(formData.imageUrl);
+					sendFormData = { ...formData, imageUrl: imageUrl };
+				} else {
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					sendFormData = (({ imageUrl, ...rest }) => rest)(formData);
+				}
+
+				await axiosInstance.post('cards', sendFormData);
+				alert('할 일을 생성했습니다.');
+				onClose();
+				onCreated();
+			} catch (error) {
+				console.error('Error occurred:', error); // handle error
 			}
-
-			const response = await axiosInstance.post('cards', sendFormData);
-			console.log(response.data); // handle success
-
-			onClose();
-			onCreated('카드를 생성했습니다.');
-		} catch (error) {
-			console.error('Error occurred:', error); // handle error
-		}
+		})();
 	};
 
 	return (
