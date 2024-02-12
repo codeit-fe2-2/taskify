@@ -1,5 +1,5 @@
 import BasicLayout from '@/src/components/layout/BasicLayout';
-import InvitedashTable from '@/src/components/ui/Table/InvitedashTable';
+import InvitedDashboardTable from '@/src/components/ui/Table/InvitedDashboardTable';
 import InvitelistTable from '@/src/components/ui/Table/InvitelistTable';
 import MemberTable from '@/src/components/ui/Table/MemberTable';
 
@@ -9,7 +9,7 @@ export default function DashboardEditPage() {
 			<div className='flex flex-col gap-6 p-1'>
 				<MemberTable />
 				<InvitelistTable />
-				<InvitedashTable />
+				<InvitedDashboardTable />
 			</div>
 		</BasicLayout>
 	);

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 import { deleteColumn } from '@/src/apis/dashboard/deleteColumn';
 import { getColumnList } from '@/src/apis/dashboard/getColumnList';
@@ -96,6 +97,7 @@ export default function Page() {
 			modalId,
 		);
 	};
+
 	useEffect(() => {
 		if (toastMessage) {
 			void execute();
@@ -105,6 +107,7 @@ export default function Page() {
 			return () => clearTimeout(timer);
 		}
 	}, [toastMessage]);
+
 	return (
 		<>
 			<BasicLayout>
