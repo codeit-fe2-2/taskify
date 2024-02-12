@@ -14,7 +14,7 @@ import Card from './Card';
 interface CardListProps {
 	column: Column;
 	handleModifyColumn: (id: number) => void;
-	handleToastMessage: () => void;
+	handleToastMessage: (message: string) => void;
 }
 
 interface CardData {
