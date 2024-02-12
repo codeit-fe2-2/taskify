@@ -2,7 +2,7 @@ export default function ColorTagChip({
 	children,
 	onTagClick,
 }: {
-	children: string[];
+	children: string;
 	onTagClick?: (children: string) => void;
 }): React.JSX.Element {
 	const tagColorSet = [
