@@ -152,15 +152,9 @@ export default function CardList({
 							alt='plusImage'
 							className='w-full py-2'
 							onClick={handleCreateCard}
-							onClick={handleCreateCard}
 						/>
 						{data.cards.map((cardData, index) => (
-							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-							<button
-								type='button'
-								key={index}
-								onClick={() => handleCardDetailsModalOpen(cardData)}
-							>
+							<button type='button' key={index}>
 								<Card cardData={cardData} />
 							</button>
 						))}
