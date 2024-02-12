@@ -50,7 +50,7 @@ export default function SideMenu({
 		);
 	};
 	return (
-		<aside className='h-screen w-[var(--side-menu-width)] shrink-0 overflow-y-auto border-r border-gray3 px-3 py-5 sm:w-[var(--side-menu-width-sm)] sm:px-3 md:w-[var(--side-menu-width-md)]'>
+		<aside className='h-screen w-[var(--side-menu-width)] shrink-0 overflow-y-auto border-r border-gray3 px-3 py-5 scrollbar-hide sm:w-[var(--side-menu-width-sm)] sm:px-3 md:w-[var(--side-menu-width-md)]'>
 			<div className='mb-14 px-3 sm:mb-9 sm:px-0'>
 				<Link href={PAGE_ROUTES.HOME} className='flex justify-center'>
 					<Image
