@@ -6,7 +6,7 @@ interface ButtonProps {
 	buttonSize?: 'xxs' | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 	textSize?: 'xs' | 'sm' | 'md' | 'lg';
 	color?: 'primary' | 'secondary' | 'third';
-	children?: ReactNode;
+	children: ReactNode;
 	onClick?: () => void;
 	disabled?: boolean;
 	fullWidth?: boolean;
@@ -43,21 +43,20 @@ const TextButton = ({
 	});
 
 	const colorClasses = clsx({
-		'bg-violet2 border-[1px] border-violet2 text-white rounded-lg':
+		[disabled
+			? 'bg-gray4 text-white cursor-not-allowed border-[1px] border-gray4 rounded-lg'
+			: 'bg-violet2 border-[1px] border-violet2 text-white rounded-lg']:
 			color === 'primary',
 		'text-violet2 border-gray3 border-[1px] rounded-lg': color === 'secondary',
 		'border-gray3 border-[1px] rounded-lg': color === 'third',
 	});
 
 	const buttonFullClasses = fullWidth ? 'w-full' : '';
-	const disabledClasses = disabled
-		? 'bg-gray4 text-white cursor-not-allowed'
-		: '';
 
 	return (
 		<button
 			type={type}
-			className={`${className} ${disabledClasses} ${textSizeClasses} ${colorClasses} ${buttonSizeClasses} ${buttonFullClasses} font-medium`}
+			className={`${className} ${textSizeClasses} ${colorClasses} ${buttonSizeClasses} ${buttonFullClasses} font-medium`}
 			onClick={onClick}
 			disabled={disabled}
 		>

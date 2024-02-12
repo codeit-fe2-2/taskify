@@ -8,12 +8,12 @@ interface iconButtonProps {
 	buttonSize?: 'xs' | 'sm' | 'md' | 'lg';
 	rounded?: 'right' | 'left' | 'md' | 'lg';
 	onClick?: () => void;
-	src?: string;
+	src: string;
 	disabled?: boolean;
 	children?: ReactNode;
-	iconSize?: number;
+	iconSize: number;
 	className?: string;
-	alt?: string;
+	alt: string;
 	fullWidth?: boolean;
 }
 

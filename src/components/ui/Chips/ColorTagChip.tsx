@@ -1,7 +1,9 @@
 export default function ColorTagChip({
 	children,
+	onTagClick,
 }: {
-	children: React.ReactNode;
+	children: string;
+	onTagClick?: (children: string) => void;
 }): React.JSX.Element {
 	const tagColorSet = [
 		{ textColor: 'text-sortTextGreen', bgColor: 'bg-sortTextBgGreen' },
@@ -11,15 +13,18 @@ export default function ColorTagChip({
 		{ textColor: 'text-violet2', bgColor: 'bg-violet1' },
 	];
 
-	const textLength = typeof children === 'string' ? children.length : 1;
-
-	const colorIndex = textLength % 5;
+	const colorIndex = children.length % tagColorSet.length;
 
 	const { textColor, bgColor } = tagColorSet[colorIndex];
 
+	const handleClick = () => {
+		onTagClick?.(children);
+	};
+
 	return (
 		<button
-			className={`${textColor} ${bgColor} rounded-[4px] px-[6px] py-[4px] text-[10px] lg:text-[12px]`}
+			onClick={handleClick}
+			className={`${textColor} ${bgColor} h-[22px] whitespace-nowrap rounded-[4px] px-1 text-center align-middle text-xs font-normal sm:h-5 sm:text-[10px]`}
 		>
 			{children}
 		</button>

@@ -9,6 +9,9 @@
 	--background-end-rgb: 255, 255, 255;
 	--header-height: 70px;
 	--header-height-sm: 60px;
+	--side-menu-width: 300px;
+	--side-menu-width-md: 160px;
+	--side-menu-width-sm: 67px;
 }
 
 @media (prefers-color-scheme: dark) {

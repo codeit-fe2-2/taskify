@@ -1,10 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import { postCreateDashboard } from '@/src/apis/dashboard/postCreateDashboard';
 import IconButton from '@/src/components/ui/Button/IconButton';
 import { PAGE_ROUTES } from '@/src/constants/routes';
+import { useModal } from '@/src/contexts/ModalProvider';
 import { useGetDashboardList } from '@/src/hooks/dashboard/useGetDashboardList';
+
+import CreateModal from '../ui/Modal/CreateModal';
 
 export default function MyDashboardList() {
 	const [fetchMethod, setFetchMethod] = useState({
@@ -44,15 +49,47 @@ export default function MyDashboardList() {
 			page: prevFetchMethod.page - 1,
 		}));
 	};
-
+	const router = useRouter();
+	const modalId = crypto.randomUUID();
+	const { openModal, closeModal } = useModal();
+	const onCreateDashBoardSubmit = async (
+		inputValue: string,
+		selectColor: string,
+	) => {
+		const createDashboardInfo = await postCreateDashboard(
+			inputValue,
+			selectColor,
+		);
+		if (createDashboardInfo.id) {
+			closeModal(modalId);
+			void router.push(`/dashboard/${createDashboardInfo.id}`);
+		}
+	};
+	const handleCreateModal = () => {
+		openModal(
+			<CreateModal
+				modalSize='lg'
+				title='새로운 대시보드 생성'
+				subTitle='대시보드 이름'
+				onCancel={() => {
+					closeModal(modalId);
+				}}
+				onDashBoardSubmit={onCreateDashBoardSubmit}
+			/>,
+			modalId,
+		);
+	};
 	useEffect(() => {
 		void fetchDashboardList();
 	}, [fetchMethod]);
 
 	return (
-		<>
+		<div className='mb-11 sm:mb-6 md:mb-10'>
 			<div className='grid auto-rows-fr grid-cols-3 gap-3 sm:grid-cols-1 md:grid-cols-2'>
-				<button className='flex items-center justify-center gap-3 rounded-lg border border-solid border-gray3 bg-white py-6'>
+				<button
+					className='flex items-center justify-center gap-3 rounded-lg border border-solid border-gray3 bg-white py-6'
+					onClick={handleCreateModal}
+				>
 					<span className='font-semibold'>새로운 대시보드</span>
 					<Image src={'/icons/plus.svg'} alt='플러스' width={22} height={22} />
 				</button>
@@ -114,6 +151,6 @@ export default function MyDashboardList() {
 					</div>
 				</div>
 			)}
-		</>
+		</div>
 	);
 }
