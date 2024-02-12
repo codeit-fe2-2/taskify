@@ -1,10 +1,10 @@
-import axiosInstance from '@/src/apis/axiosInstance';
+import axiosInstance from '../axiosInstance';
 
 interface useDeleteColumnProps {
 	columnId: number;
 }
 
-export const useDeleteColumn = async (
+export const deleteColumn = async (
 	columnId: number,
 ): Promise<useDeleteColumnProps> => {
 	try {
@@ -12,7 +12,6 @@ export const useDeleteColumn = async (
 			`columns/${columnId}`,
 		);
 
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.error('비밀번호 변경 중 오류가 발생했습니다', error);

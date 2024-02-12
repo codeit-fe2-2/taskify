@@ -2,13 +2,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import { getMe } from '@/src/apis/myPage/getMe';
 import BasicLayout from '@/src/components/layout/BasicLayout';
 import PasswordChange from '@/src/components/mypage/PasswordChange';
 import ProfileChange from '@/src/components/mypage/ProfileChange';
 import TextButton from '@/src/components/ui/Button/TextButton';
-import { useGetMe } from '@/src/hooks/myPage/useGetMe';
 export default function Page() {
-	const { userInfo, execute } = useGetMe();
+	const { userInfo, execute: fetchUserInfo } = getMe();
 	const [toastMessage, setToastMessage] = useState<string>('');
 	const router = useRouter();
 	const handleToastMessage = (message: string) => {
@@ -17,7 +17,7 @@ export default function Page() {
 	//toast메시지가 3초있다가 사라지게 하는 설정
 	useEffect(() => {
 		if (toastMessage) {
-			void execute();
+			void fetchUserInfo();
 			const timer = setTimeout(() => {
 				setToastMessage('');
 			}, 3000);
@@ -57,8 +57,10 @@ export default function Page() {
 				</div>
 			</BasicLayout>
 			{toastMessage && (
-				<div className='fixed bottom-[2%] left-[40%] mb-4 mr-4 w-80 rounded-xl bg-black2 bg-opacity-70 px-4 py-2 text-center text-green'>
-					<span> {toastMessage}</span>
+				<div className='fixed bottom-[2%] flex h-12 w-[100%] justify-center'>
+					<div className='mb-4 mr-4 h-12 w-96 rounded-xl bg-gray3 px-4 py-2 text-center text-xl font-semibold text-violet2'>
+						<span>{toastMessage}</span>
+					</div>
 				</div>
 			)}
 		</>

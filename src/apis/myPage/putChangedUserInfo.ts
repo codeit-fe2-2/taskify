@@ -1,7 +1,7 @@
-import axiosInstance from '@/src/apis/axiosInstance';
 import { UserInfoChange } from '@/src/types/user';
 
-export const usePutChangedUserInfo = async (
+import axiosInstance from '../axiosInstance';
+export const putChangedUserInfo = async (
 	nickname: string,
 	imageUrl: string,
 ) => {

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
+import { putChangedPassword } from '@/src/apis/myPage/putChangedPassword';
 import { useModal } from '@/src/contexts/ModalProvider';
-import { userPutChangedPassword } from '@/src/hooks/myPage/userPutChangedPassword';
 
 import TextButton from '../ui/Button/TextButton';
 import AlertModal from '../ui/Modal/AlertModal';
@@ -50,7 +50,7 @@ function PasswordChange({ updateToastMessage }: PasswordChangeProps) {
 		//이전비밀번호와 변경비밀번호 put요청을 보냄 비밀번호 오류는 userInfo에 전달받지 않으므로
 		//put 요청으로 기존비밀번호 오류로 반환되는 거절을 이용해 modal로 비밀번호 오류를 알려줌
 		try {
-			await userPutChangedPassword(
+			await putChangedPassword(
 				formState.currentPassword,
 				formState.newPassword,
 			);
