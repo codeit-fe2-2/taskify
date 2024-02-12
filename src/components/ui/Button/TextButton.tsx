@@ -7,7 +7,7 @@ interface ButtonProps {
 	textSize?: 'xs' | 'sm' | 'md' | 'lg';
 	color?: 'primary' | 'secondary' | 'third';
 	children: ReactNode;
-	onClick: () => void;
+	onClick?: () => void;
 	disabled?: boolean;
 	fullWidth?: boolean;
 	className?: string;

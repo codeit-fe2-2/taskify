@@ -10,7 +10,7 @@ export default function LandingMain() {
 			<div className='mb-[160px] mt-[184px] flex w-full flex-col items-center justify-center gap-[90px] sm:px-4 md:px-10'>
 				<Section2 />
 
-				<p className='font-Pretendard mb-[-90px] text-[28px] font-bold leading-8 dark:text-white lg:w-[1200px] '>
+				<p className='mb-[-90px] text-[28px] font-bold leading-8 dark:text-white lg:w-[1200px] '>
 					생산성을 높이는 다양한 설정⚡
 				</p>
 				<div className='mt-[36px] grid gap-[33px] sm:grid-rows-3 sm:gap-[40.5px] md:grid-rows-3 md:gap-[63px] md:px-[183px] lg:grid-cols-3'>

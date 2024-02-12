@@ -1,7 +1,6 @@
 import axiosInstance from '@/src/apis/axiosInstance';
+import { useAsync } from '@/src/hooks/useAsync';
 import { CommentListData } from '@/src/types/card';
-
-import { useAsync } from '../useAsync';
 
 export const useGetCommentList = (
 	size: number,

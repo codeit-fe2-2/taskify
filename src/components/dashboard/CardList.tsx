@@ -6,6 +6,7 @@ import { getCardList } from '@/src/apis/card/getCardList';
 import IconButton from '@/src/components/ui/Button/IconButton';
 import CountNumberChip from '@/src/components/ui/Chips/CountNumberChip';
 import { useModal } from '@/src/contexts/ModalProvider';
+import { Card as CardType } from '@/src/types/card';
 import { Column } from '@/src/types/dashboard';
 
 import TodoModal from '../ui/Modal/TodoModal';
@@ -13,11 +14,11 @@ import Card from './Card';
 interface CardListProps {
 	column: Column;
 	handleModifyColumn: (id: number) => void;
-	handleToastMessage: () => void;
+	handleToastMessage: (message: string) => void;
 }
 
 interface CardData {
-	cards: any[];
+	cards: CardType[];
 	totalCount: number;
 	cursorId: number | null;
 }
@@ -51,7 +52,6 @@ export default function CardList({
 			);
 			setData((prevData) => ({
 				...prevData,
-				// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 				cards: [...prevData.cards, ...result.cards],
 				cursorId: result.cursorId,
 				totalCount: result.totalCount,
@@ -62,10 +62,6 @@ export default function CardList({
 		} finally {
 			setIsLoading(false);
 		}
-	};
-
-	const handleCardDetailsModalOpen = (cardData) => {
-		console.log(cardData);
 	};
 
 	const loadMoreCards = async () => {
@@ -155,15 +151,9 @@ export default function CardList({
 							alt='plusImage'
 							className='w-full py-2'
 							onClick={handleCreateCard}
-							onClick={handleCreateCard}
 						/>
 						{data.cards.map((cardData, index) => (
-							// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-							<button
-								type='button'
-								key={index}
-								onClick={() => handleCardDetailsModalOpen(cardData)}
-							>
+							<button type='button' key={index}>
 								<Card cardData={cardData} />
 							</button>
 						))}

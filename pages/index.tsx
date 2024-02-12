@@ -3,14 +3,14 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 import { getDashboardList } from '@/src/apis/dashboard/getDashboardList';
-import { getMe } from '@/src/apis/myPage/getMe';
 import Footer from '@/src/components/landing/Footer';
 import LandingHeader from '@/src/components/landing/LandingHeader';
 import LandingMain from '@/src/components/landing/LandingMain';
 import DarkModeButton from '@/src/components/ui/Button/DarkModeButton';
+import { useAuth } from '@/src/contexts/AuthProvider';
 
 export default function Home() {
-	const { userInfo } = getMe();
+	const { user } = useAuth();
 	const { theme, setTheme } = useTheme();
 	const router = useRouter();
 	const [renderDelayedContent, setRenderDelayedContent] = useState(false);
@@ -19,7 +19,7 @@ export default function Home() {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				if (userInfo) {
+				if (user) {
 					const dashboard = await getDashboardList('pagination', 0, 1, 1); // Fetch dashboard list asynchronously
 					const dashboardId = dashboard?.dashboards[0]?.id;
 					if (dashboardId) {
@@ -29,6 +29,8 @@ export default function Home() {
 				}
 			} catch (error) {
 				console.error('Error while fetching data:', error);
+			} finally {
+				setLoading(false);
 			}
 			setTheme('light');
 			setRenderDelayedContent(true);
@@ -40,7 +42,7 @@ export default function Home() {
 
 		// 컴포넌트가 언마운트될 때 타이머 클리어
 		return () => clearTimeout(timer);
-	}, [userInfo]);
+	}, [user]);
 
 	const handleDarkModeClick = () => {
 		setTheme(theme === 'dark' ? 'light' : 'dark');

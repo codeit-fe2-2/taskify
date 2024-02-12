@@ -13,7 +13,7 @@ interface TodoModalProps {
 	onClose: () => void;
 	mode: string;
 	postData: PostData;
-	onCreated: () => void;
+	onCreated: (message: string) => void;
 }
 
 interface PostData {
@@ -24,7 +24,7 @@ interface PostData {
 	description: string;
 	dueDate: string;
 	tags: string[];
-	imageUrl: string;
+	imageUrl: string | File;
 }
 
 const TodoModal: React.FC<TodoModalProps> = ({
@@ -46,7 +46,6 @@ const TodoModal: React.FC<TodoModalProps> = ({
 
 	const memberOptions = useGetMembers(1, 99).membersInfo?.members || [];
 	const columnsOptions = useGetColumnList().data || [];
-	console.log(memberOptions);
 	const handleChangeTitle = (value: string[]) => {
 		setFormData((prevFormData) => ({ ...prevFormData, title: value[0] }));
 	};
@@ -66,7 +65,7 @@ const TodoModal: React.FC<TodoModalProps> = ({
 		setFormData((prevFormData) => ({ ...prevFormData, tags: value }));
 	};
 
-	const handleChangeImageUrl = (value: string | null) => {
+	const handleChangeImageUrl = (value: File) => {
 		setFormData((prevFormData) => ({ ...prevFormData, imageUrl: value }));
 	};
 
@@ -78,11 +77,11 @@ const TodoModal: React.FC<TodoModalProps> = ({
 		setFormData((prevFormData) => ({ ...prevFormData, assigneeUserId: value }));
 	};
 
-	const uploadImageAndGetUrl = async (imageFile: string) => {
+	const uploadImageAndGetUrl = async (imageFile: string | File) => {
 		const imageFormData = new FormData();
 		imageFormData.append('image', imageFile);
 
-		const response = await axiosInstance.post<{ imageUrl: string }>(
+		const response = await axiosInstance.post<{ imageUrl: File }>(
 			`columns/${postData.columnId}/card-image`,
 			imageFormData,
 			{
@@ -94,25 +93,26 @@ const TodoModal: React.FC<TodoModalProps> = ({
 		return response.data.imageUrl;
 	};
 
-	const handleSubmit = async () => {
-		try {
-			let sendFormData;
+	const handleSubmit = () => {
+		void (async () => {
+			try {
+				let sendFormData;
 
-			if (formData.imageUrl) {
-				const imageUrl = await uploadImageAndGetUrl(formData.imageUrl);
-				sendFormData = { ...formData, imageUrl: imageUrl };
-			} else {
-				sendFormData = (({ imageUrl, ...rest }) => rest)(formData);
+				if (formData.imageUrl) {
+					const imageUrl = await uploadImageAndGetUrl(formData.imageUrl);
+					sendFormData = { ...formData, imageUrl: imageUrl };
+				} else {
+					// eslint-disable-next-line @typescript-eslint/no-unused-vars
+					sendFormData = (({ imageUrl, ...rest }) => rest)(formData);
+				}
+
+				await axiosInstance.post('cards', sendFormData);
+				onClose();
+				onCreated('할 일을 생성했습니다.');
+			} catch (error) {
+				console.error('Error occurred:', error); // handle error
 			}
-
-			const response = await axiosInstance.post('cards', sendFormData);
-			console.log(response.data); // handle success
-
-			onClose();
-			onCreated('카드를 생성했습니다.');
-		} catch (error) {
-			console.error('Error occurred:', error); // handle error
-		}
+		})();
 	};
 
 	return (

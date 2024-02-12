@@ -7,7 +7,7 @@ import { InviteDashPutResponse } from '@/src/types/table';
 export const usePutInviteDash = (lazyMode: boolean = true) => {
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<unknown>(null);
-	const [data, setData] = useState(null);
+	const [data, setData] = useState<InviteDashPutResponse | null>(null);
 
 	const execute = async (
 		invitationId: string,

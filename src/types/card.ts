@@ -19,7 +19,7 @@ export interface Card {
 	updatedAt: string;
 }
 export interface CardListData {
-	card: Card;
+	cards: Card[];
 	cursorId: number | null;
 	totalCount: number;
 }

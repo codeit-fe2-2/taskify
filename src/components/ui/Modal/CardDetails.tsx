@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
+import { useGetCommentList } from '@/src/apis/card/useGetCommentList';
 import { useGetCardDetail } from '@/src/hooks/Card/useGetCardDetail';
-import { useGetCommentList } from '@/src/hooks/Card/useGetCommentList';
-import { usePostComment } from '@/src/hooks/Card/usePostComment';
 import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
 import { Card } from '@/src/types/card';
 import formatDateTime from '@/src/util/formatDateTime';
@@ -22,15 +21,16 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	const [comment, setComment] = useState('');
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
-	const { commentListInfo, execute: executeGetComment } = useGetCommentList(
-		99,
-		cardId,
-	);
+	// const { commentListInfo, execute: executeGetComment } = useGetCommentList(
+	// 	99,
+	// 	cardId,
+	// );
+	const { commentListInfo } = useGetCommentList(99, cardId);
 	const { data } = useGetColumnList();
 	const currentColumnTitle = data?.find(
 		(item) => item.id === cardData?.columnId,
 	)?.title;
-	const { execute: executePostComment } = usePostComment();
+	// const { execute: executePostComment } = usePostComment();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -41,7 +41,7 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 				console.error('카드 정보를 가져오는 중 오류가 발생했습니다.', error);
 			}
 		};
-		fetchData();
+		void fetchData();
 	}, [cardId]);
 
 	if (!cardData) {
@@ -57,7 +57,7 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	const handlePostComment = () => {
 		if (comment) {
 			// executePostComment(comment, cardId, cardData?.columnId);
-			console.log('!', comment, cardId, cardData?.columnId);
+			// console.log('!', comment, cardId, cardData?.columnId);
 		}
 	};
 
