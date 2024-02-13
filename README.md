@@ -61,19 +61,12 @@
 
 ## Libraries
 
-<a href="https://axios-http.com/kr/"><img alt="Axios" src ="https://img.shields.io/badge/Axios-5429e4.svg?&logo=Axios&logoColor=white&style=for-the-badge"/></a>
-<img alt="clsx" src ="https://img.shields.io/badge/clsx-CB3837.svg?&style=for-the-badge"/> : TailwindCSS Class 정의 시 가독성과 재사용성이 용이하게 구조화된 코드 작성
-<img alt="next-themes" src ="https://img.shields.io/badge/next_themes-000.svg?&style=for-the-badge"/> : DarkMode 구성에 필요 간편한 테마 관리
-<img alt="react-datetime" src ="https://img.shields.io/badge/react_datetime-61DAFB.svg?&style=for-the-badge"/> : datetime-loacal 인풋의 스타일 조정 및 포매팅
-<img alt="react-responsive" src ="https://img.shields.io/badge/react_responsive-61DAFB.svg?&style=for-the-badge"/>
+<a href="https://axios-http.com/kr/"><img alt="Axios" src ="https://img.shields.io/badge/Axios-5429e4.svg?&logo=Axios&logoColor=white&style=for-the-badge"/></a><br/>
+<img alt="clsx" src ="https://img.shields.io/badge/clsx-CB3837.svg?&style=for-the-badge"/> : TailwindCSS Class 정의 시 가독성과 재사용성이 용이하게 구조화된 코드 작성<br/>
+<img alt="next-themes" src ="https://img.shields.io/badge/next_themes-000.svg?&style=for-the-badge"/> : DarkMode 구성에 필요 간편한 테마 관리<br/>
+<img alt="react-datetime" src ="https://img.shields.io/badge/react_datetime-61DAFB.svg?&style=for-the-badge"/> : datetime-loacal 인풋의 스타일 조정 및 포매팅<br/>
+<img alt="react-responsive" src ="https://img.shields.io/badge/react_responsive-61DAFB.svg?&style=for-the-badge"/><br/>
 <img alt="tailwind-scrollbar-hide" src ="https://img.shields.io/badge/tailwind_scrollbar_hide-06B6D4.svg?&style=for-the-badge"/> : 불필요한 스크롤바 제거
-
-<a href="https://axios-http.com/kr/"><img alt="Axios" src ="https://img.shields.io/badge/Axios-5429e4.svg?&logo=Axios&logoColor=white&style=for-the-badge"/></a>
-<img alt="clsx" src ="https://img.shields.io/badge/clsx-CB3837.svg?&style=for-the-badge"/>
-<img alt="next-themes" src ="https://img.shields.io/badge/next_themes-000.svg?&style=for-the-badge"/> : DarkMode 구성에 필요 간편한 테마 관리
-<img alt="react-datetime" src ="https://img.shields.io/badge/react_datetime-61DAFB.svg?&style=for-the-badge"/>
-<img alt="react-responsive" src ="https://img.shields.io/badge/react_responsive-61DAFB.svg?&style=for-the-badge"/>
-<img alt="tailwind-scrollbar-hide" src ="https://img.shields.io/badge/tailwind_scrollbar_hide-06B6D4.svg?&style=for-the-badge"/>
 
 # Package Structure
 
