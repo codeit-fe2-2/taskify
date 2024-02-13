@@ -134,13 +134,20 @@ export default function Header({ currentDashboard, user }: Props) {
 					href={PAGE_ROUTES.MY_PAGE}
 					className='mr-20 flex items-center gap-3 sm:mr-3 md:mr-10'
 				>
-					<div
-						className={
-							'flex size-[38px] items-center justify-center rounded-full border-2 border-white bg-[#a3c4a2] font-semibold text-white sm:size-[34px]'
-						}
-					>
-						<p>{user?.nickname[0].toUpperCase()}</p>
-					</div>
+					{user?.profileImageUrl ? (
+						<Image
+							src={user.profileImageUrl}
+							width={38}
+							height={38}
+							alt='프로필 이미지'
+							className='size-[38px] rounded-full sm:size-[34px]'
+						/>
+					) : (
+						<p className='flex size-[38px] items-center justify-center rounded-full border-2 border-white bg-[#a3c4a2] font-semibold text-white sm:size-[34px]'>
+							{user?.nickname[0].toUpperCase()}
+						</p>
+					)}
+
 					<span className='font-medium sm:hidden'>{user?.nickname}</span>
 				</Link>
 			</div>
