@@ -3,14 +3,14 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 
 import { getDashboardList } from '@/src/apis/dashboard/getDashboardList';
+import { getMe } from '@/src/apis/myPage/getMe';
 import Footer from '@/src/components/landing/Footer';
 import LandingHeader from '@/src/components/landing/LandingHeader';
 import LandingMain from '@/src/components/landing/LandingMain';
 import DarkModeButton from '@/src/components/ui/Button/DarkModeButton';
-import { useAuth } from '@/src/contexts/AuthProvider';
 
 export default function Home() {
-	const { user } = useAuth();
+	const { userInfo } = getMe();
 	const { theme, setTheme } = useTheme();
 	const router = useRouter();
 	const [renderDelayedContent, setRenderDelayedContent] = useState(false);
@@ -20,7 +20,7 @@ export default function Home() {
 		const fetchData = async () => {
 			setLoading(true);
 			try {
-				if (user) {
+				if (userInfo) {
 					const dashboard = await getDashboardList('pagination', 0, 1, 1);
 					const dashboardId = dashboard?.dashboards[0]?.id;
 					if (dashboardId) {
@@ -43,7 +43,7 @@ export default function Home() {
 
 		// 컴포넌트가 언마운트될 때 타이머 클리어
 		return () => clearTimeout(timer);
-	}, [user]);
+	}, [userInfo]);
 
 	const handleDarkModeClick = () => {
 		setTheme(theme === 'dark' ? 'light' : 'dark');
