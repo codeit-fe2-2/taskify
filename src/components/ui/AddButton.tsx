@@ -1,24 +1,19 @@
 import Image from 'next/image';
 
 interface AddButtonProps {
-	handleCreateNew: () => void;
+	bgColor?: string;
+	size?: string;
 }
 
-export default function AddButton({
-	handleCreateNew,
-}: AddButtonProps): React.JSX.Element {
+export default function AddButton({ bgColor, size }: AddButtonProps) {
+	const additionalClasses = bgColor ? bgColor : ''; // classNames가 존재하면 그대로 사용, 없으면 빈 문자열로 설정
 	return (
-		<button
-			onClick={handleCreateNew}
-			className='flex rounded-md bg-violet1 p-1'
-		>
-			<Image
-				src='/icons/chip_add.svg'
-				width={14}
-				height={14}
-				alt='더하기 아이콘'
-				className='sm:size-[14.5px] md:size-[14.5px] lg:size-[16px]'
-			/>
-		</button>
+		<Image
+			src='/icons/chip_add.svg'
+			width={14}
+			height={14}
+			alt='더하기 아이콘'
+			className={`rounded-sm ${additionalClasses} ${bgColor === 'todoBg' ? '' : 'bg-violet1'} ${size === 'todoSize' ? 'size-[28px]' : 'sm:size-[14.5px] md:size-[14.5px] lg:size-[16px]'}`}
+		/>
 	);
 }

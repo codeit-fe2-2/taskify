@@ -26,3 +26,32 @@ export interface ColumnListGetResponse {
 	result: string;
 	data: Column[];
 }
+
+export interface DashboardPostResponse {
+	title: string;
+	dashboardId: number;
+}
+export interface ColumnModifyPutResponse {
+	title: string;
+	columnId: number;
+}
+
+export interface InvitationsPostResponse {
+	id: number;
+	inviter: Invite;
+	teamId: string;
+	dashboard: {
+		title: string;
+		id: number;
+	};
+	invitee: Invite;
+	inviteAccepted?: boolean;
+	createdAt: string;
+	updatedAt: string;
+}
+
+export interface Invite {
+	nickname: string;
+	email: string;
+	id: number;
+}

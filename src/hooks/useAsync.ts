@@ -24,7 +24,6 @@ export const useAsync = <T>(
 			setLoading(false);
 		}
 	};
-
 	useEffect(() => {
 		if (!lazyMode) {
 			void execute();

@@ -16,6 +16,7 @@
 		"react": "^18",
 		"react-datetime": "^3.2.0",
 		"react-dom": "^18",
+		"react-responsive": "^9.0.2",
 		"tailwind-scrollbar-hide": "^1.1.7"
 	},
 	"devDependencies": {
@@ -38,5 +39,9 @@
 		"prettier": "^3.2.4",
 		"tailwindcss": "^3.3.0",
 		"typescript": "^5"
-	}
+	},
+	"description": "Taksify",
+	"main": "postcss.config.js",
+	"author": "",
+	"license": "ISC"
 }

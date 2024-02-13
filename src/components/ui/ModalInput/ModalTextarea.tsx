@@ -5,7 +5,7 @@ import { inputClassNames } from './inputClassNames';
 
 interface ModalTextareaProps {
 	label: string;
-	required: boolean;
+	required?: boolean;
 	isButton: boolean;
 	onTextChange: (value: string) => void;
 	onButtonClick?: () => void; // 새로 추가한 함수
@@ -13,7 +13,7 @@ interface ModalTextareaProps {
 
 export default function ModalTextarea({
 	label,
-	required,
+	required = false,
 	isButton,
 	onTextChange,
 	onButtonClick, // 새로 추가한 함수
@@ -30,12 +30,12 @@ export default function ModalTextarea({
 	};
 
 	const handleButtonClick = () => {
-		onButtonClick();
+		onButtonClick?.();
 	};
 
 	return (
 		<div className='inline-flex flex-col items-start gap-2.5'>
-			<label htmlFor='comment' className='text-lg font-medium'>
+			<label htmlFor='comment' className='text-lg font-medium sm:text-sm'>
 				{label} {required && <span className='text-violet2'>*</span>}
 			</label>
 			<div
@@ -49,7 +49,7 @@ export default function ModalTextarea({
 						label === '설명' ? `${label}을 입력해주세요` : `${label} 작성하기`
 					}
 					onChange={handleTextareaChange}
-					className='size-full resize-none rounded-md border-none outline-none'
+					className='size-full resize-none rounded-md border-none text-sm outline-none sm:min-h-[95px]'
 				/>
 				{isButton && (
 					<TextButton

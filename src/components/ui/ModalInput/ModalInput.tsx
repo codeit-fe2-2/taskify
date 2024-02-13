@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import Datetime from 'react-datetime';
 
+import ColorTagChip from '../Chips/ColorTagChip';
 import { inputClassNames } from './inputClassNames';
 
 type ModalInputType = '제목' | '마감일' | '태그';
@@ -59,8 +60,15 @@ export default function ModalInput({
 			if (tagInput.trim() !== '' && !values.includes(tagInput.trim())) {
 				setValues([...values, tagInput.trim()]);
 				onValueChange([...values, tagInput.trim()]);
+				setTagInput('');
 			}
 		}
+	};
+
+	const handleDeleteTag = (tag: string) => {
+		const newValues = values.filter((value) => value !== tag);
+		setValues(newValues);
+		onValueChange(newValues);
 	};
 
 	switch (label) {
@@ -102,17 +110,15 @@ export default function ModalInput({
 			inputElement = (
 				<>
 					{values.map((value, index) => (
-						<p
-							key={index}
-							className='inline-flex h-full shrink-0 snap-start items-center text-sm'
-						>
+						<ColorTagChip key={index} onTagClick={handleDeleteTag}>
 							{value}
-						</p>
+						</ColorTagChip>
 					))}
 					<input
 						type='text'
 						name='tag'
 						id='tag'
+						value={tagInput}
 						placeholder='입력 후 Enter'
 						onChange={handleTagInputChange}
 						onKeyDown={handleAddTag}

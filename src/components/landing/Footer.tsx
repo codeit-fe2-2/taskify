@@ -7,9 +7,9 @@ interface HeaderProps {
 const Footer = ({ theme }: HeaderProps) => {
 	const themeStyle = theme == 'dark' ? {} : { filter: 'invert(90%)' };
 	return (
-		<div className=' flex h-[100px] w-full items-center justify-between text-base sm:mb-[90px] sm:flex-col sm:items-center sm:text-xs md:px-[40px] lg:pl-[141px] lg:pr-[139px] dark:text-white'>
+		<div className=' flex h-[100px] w-full items-center justify-between text-base dark:text-white sm:mb-[90px] sm:flex-col sm:items-center sm:text-xs md:px-[40px] lg:pl-[141px] lg:pr-[139px]'>
 			<div className='sm:mb-3'>©codeit - 2023</div>
-			<div className='font-Pretendard flex gap-8 text-base font-normal leading-5 sm:mb-[68px] sm:gap-5'>
+			<div className=' flex gap-8 text-base font-normal leading-5 sm:mb-[68px] sm:gap-5'>
 				<span>Privacy Policy</span>
 				<span>FAQ</span>
 			</div>

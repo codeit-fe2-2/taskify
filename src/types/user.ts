@@ -11,3 +11,15 @@ export interface Member extends User {
 	userId: number;
 	isOwner: boolean;
 }
+export interface UserProfileImageUpload {
+	profileImageUrl: string;
+}
+
+export interface UserInfoChange {
+	nickname: string;
+	profileImageUrl: string;
+}
+export interface userPasswordChange {
+	password: string;
+	newPassword: string;
+}

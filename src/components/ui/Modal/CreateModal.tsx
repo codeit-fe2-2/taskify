@@ -1,36 +1,39 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 
 import TextButton from '@/src/components/ui/Button/TextButton';
-import { Column } from '@/src/types/dashboard';
-
-import ColorDotButtons from '../ColorDotButton';
+import ColorDotButtons from '@/src/components/ui/Chips/ColorDotButtons';
 
 interface CreateModalProps {
 	modalSize?: 'sm' | 'lg';
 	title: string;
 	subTitle: string;
-
+	children?: ReactNode;
 	onCancel: () => void;
-	columns?: Column[] | undefined;
+	titles?: string[] | undefined;
 	className?: string;
 	onColumnSubmit?: (inputValue: string) => Promise<void>;
 	onDashBoardSubmit?: (
 		inputValue: string,
 		selectColor: string,
 	) => Promise<void>;
+	submitButtonName?: string;
+	handleDeleteColumnRequest?: () => void;
 }
 
-const CreateModal: React.FC<CreateModalProps> = ({
+export default function CreateModal({
 	modalSize,
 	title,
 	subTitle,
+	children,
 	onColumnSubmit,
 	onDashBoardSubmit,
 	onCancel,
-	columns,
+	titles,
 	className,
-}) => {
+	submitButtonName = '생성',
+	handleDeleteColumnRequest,
+}: CreateModalProps) {
 	const [inputValue, setInputValue] = useState('');
 	const [inputError, setInputError] = useState(false);
 	const [selectColor, setSelectColor] = useState<string>('green');
@@ -46,7 +49,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 		setInputValue(value);
 		if (modalSize === 'sm') {
 			const isDuplicate =
-				columns && columns.some((column) => column.title === value.trim());
+				titles && titles.some((title) => title === value.trim());
 
 			setInputError(!!isDuplicate);
 		}
@@ -55,7 +58,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
 	const handleSubmit = () => {
 		if (modalSize === 'lg' && onDashBoardSubmit) {
 			void onDashBoardSubmit(inputValue, selectColor);
-			console.log(selectColor, inputValue);
 		} else if (onColumnSubmit) {
 			void onColumnSubmit(inputValue);
 		}
@@ -68,7 +70,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
 		'중복된 컬럼 이름입니다.': modalSize === 'sm',
 	});
 	return (
-		<div className={` rounded-lg bg-white ${className} ${modalSizeClasses}`}>
+		<div
+			className={`relative rounded-lg bg-white ${className} ${modalSizeClasses}`}
+		>
 			<p className=' text-2xl font-bold leading-7 sm:text-xl'>{title}</p>
 
 			<div className='mt-8 flex flex-col sm:mt-7'>
@@ -81,7 +85,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
 				<input
 					type='text'
 					maxLength={40}
-					className='sm:h-10.5 mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:w-[287px] sm:text-sm sm:leading-4 '
+					className='mt-2.5 h-12 w-[484px] rounded-md border-[1px] border-gray3 pl-4 leading-5 sm:mb-6 sm:h-[42px] sm:w-[287px] sm:text-sm sm:leading-4 '
 					value={inputValue}
 					onChange={handleInputChange}
 				/>
@@ -89,7 +93,14 @@ const CreateModal: React.FC<CreateModalProps> = ({
 					<p className='mt-2 text-sm leading-4 text-red'>{errorMessage}</p>
 				)}
 			</div>
-
+			{children && (
+				<button
+					className='absolute bottom-[11%] text-sm font-normal leading-4 text-gray4 underline sm:bottom-[33%]'
+					onClick={handleDeleteColumnRequest}
+				>
+					{children}
+				</button>
+			)}
 			{modalSize === 'lg' && (
 				<ColorDotButtons handleSelectorColor={handleSelectorColor} />
 			)}
@@ -110,11 +121,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
 					disabled={inputError}
 					onClick={handleSubmit}
 				>
-					생성
+					{submitButtonName}
 				</TextButton>
 			</div>
 		</div>
 	);
-};
-
-export default CreateModal;
+}

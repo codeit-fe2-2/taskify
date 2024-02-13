@@ -1,43 +1,30 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 
+import { Column } from '@/src/types/dashboard';
+import { Member } from '@/src/types/user';
+
+import DotNameTagChip from '../Chips/DotNameTagChip';
+import DefaultProfileImage from '../DefaultProfileImage';
 import { inputClassNames } from './inputClassNames';
 
-interface ModalDropdownProps<T> {
-	label: string;
-	data: T[];
-	currentData?: T;
-	onDropdownSelect: (dataId: number) => void;
-}
-
-interface DropdownOptionsProps {
-	text: string;
+interface ManagerOptionsProps {
+	value: string;
 	image?: string;
 	inputValue?: string;
 	onInputChange?: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const DropdownOptions = ({
-	text,
+const ManagerOptions = ({
+	value,
 	image,
 	inputValue,
 	onInputChange,
-}: DropdownOptionsProps) => {
+}: ManagerOptionsProps) => {
 	return (
-		<div className='flex items-center gap-1.5'>
-			{image && (
-				<div
-					className='size-[26px] rounded-full'
-					style={{
-						backgroundImage: `url(${image})`,
-						backgroundPosition: 'center',
-						backgroundSize: 'cover',
-						backgroundRepeat: 'no-repeat',
-					}}
-				/>
-			)}
-			{!text ? (
+		<div className='flex items-center gap-1.5 text-black2'>
+			{!value ? (
 				<input
 					type='text'
 					placeholder='이름을 입력해주세요'
@@ -46,41 +33,81 @@ const DropdownOptions = ({
 					className='w-full text-base outline-none'
 				/>
 			) : (
-				<p className='text-base font-normal text-black3'>{text}</p>
+				<>
+					{image ? (
+						<div
+							className='size-[26px] rounded-full'
+							style={{
+								backgroundImage: `url(${image})`,
+								backgroundPosition: 'center',
+								backgroundSize: 'cover',
+								backgroundRepeat: 'no-repeat',
+							}}
+						/>
+					) : (
+						<DefaultProfileImage
+							nickname={value}
+							classNames='size-[26px] text-base'
+						/>
+					)}
+					<p className='text-base font-normal'>{value}</p>
+				</>
 			)}
 		</div>
 	);
 };
 
-export default function ModalDropdown<T>({
+const TagOptions = (value: { value: string }) => {
+	return (
+		<div className='flex items-center gap-1.5 text-black2'>
+			<DotNameTagChip>{value.value}</DotNameTagChip>
+		</div>
+	);
+};
+
+interface ModalDropdownProps<T extends Member | Column> {
+	label: string;
+	data: T[];
+	currentId?: number;
+	onDropdownSelect: (dataId: number) => void;
+}
+
+export default function ModalDropdown<T extends Member | Column>({
 	label,
 	data,
-	currentData,
+	currentId,
 	onDropdownSelect,
 }: ModalDropdownProps<T>) {
 	const [open, setOpen] = useState<boolean>(false);
 	const [options, setOptions] = useState(data);
-	const [selectedValue, setSelectedValue] = useState<T | undefined>(
-		currentData,
+
+	const [selectedOption, setSelectedOption] = useState<T | undefined>(
+		data.find((item) => item.id === currentId),
 	);
 
 	const handleOpen = () => {
 		setOpen(!open);
 	};
 
+	useEffect(() => {
+		setOptions(data);
+	}, [data]);
+
 	const handleClose = () => {
 		setOpen(false);
 	};
 
+	// 담당자 이름 검색 기능
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const filteredData = data.filter((datum) =>
-			datum.nickname.includes(event.target.value),
+		const filteredData = data.filter(
+			(datum) =>
+				'nickname' in datum && datum?.nickname?.includes(event.target.value),
 		);
 		setOptions([...filteredData]);
 	};
 
 	return (
-		<div className='relative inline-flex flex-col items-start gap-2.5'>
+		<div className='relative inline-flex flex-col items-start gap-2.5 text-black2'>
 			<p className={`${inputClassNames.label}`}>{label}</p>
 			<div
 				className={`${inputClassNames.type.dropdown} ${inputClassNames.container}`}
@@ -89,17 +116,15 @@ export default function ModalDropdown<T>({
 					onClick={handleOpen}
 					className='relative flex size-full items-center gap-[10px] rounded-md bg-white p-4 text-base font-normal outline-none focus:z-20'
 				>
-					<DropdownOptions
-						text={
-							label === '담당자'
-								? selectedValue?.nickname
-								: selectedValue?.title
-						}
-						image={
-							label === '담당자' ? selectedValue?.profileImageUrl : undefined
-						}
-						onInputChange={handleInputChange}
-					/>
+					{label === '담당자' ? (
+						<ManagerOptions
+							value={(selectedOption as Member)?.nickname}
+							image={(selectedOption as Member)?.profileImageUrl}
+							onInputChange={handleInputChange}
+						/>
+					) : (
+						<TagOptions value={(selectedOption as Column)?.title} />
+					)}
 					<Image
 						src='/icons/arrow_drop_down.svg'
 						width={26}
@@ -110,18 +135,22 @@ export default function ModalDropdown<T>({
 				</button>
 				{open && (
 					<ul className={`${inputClassNames.dropdownOptions}`}>
-						{options.map((option, index) => (
-							<li key={index}>
+						{options.map((option) => (
+							<li key={option.id}>
 								<button
 									onClick={() => {
-										setSelectedValue(option);
-										onDropdownSelect(option.userId ? option.userId : option.id);
+										setSelectedOption(option);
+										onDropdownSelect(
+											label === '담당자'
+												? (option as Member).userId
+												: option.id,
+										);
 										handleClose();
 									}}
 									className='flex w-full flex-row items-center gap-1.5 px-2 py-[13px] text-base hover:bg-gray2'
 								>
 									<div className='relative size-[22px]'>
-										{option === selectedValue && (
+										{option === selectedOption && (
 											<Image
 												src='/icons/check.svg'
 												fill={true}
@@ -131,13 +160,13 @@ export default function ModalDropdown<T>({
 									</div>
 
 									{label === '담당자' ? (
-										<DropdownOptions
-											text={option.nickname}
-											image={option.profileImageUrl}
+										<ManagerOptions
+											value={(option as Member).nickname}
+											image={(option as Member).profileImageUrl}
 										/>
 									) : (
 										// 담당자가 아니라면
-										<DropdownOptions text={option.title} />
+										<TagOptions value={(option as Column).title} />
 									)}
 								</button>
 							</li>
