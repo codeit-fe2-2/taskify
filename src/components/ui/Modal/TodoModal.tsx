@@ -13,10 +13,22 @@ interface TodoModalProps {
 	onClose: () => void;
 	mode: string;
 	postData: PostData;
-	onCreated: (message: string) => void;
+	getData?: GetData;
+	onCreated?: (message: string) => void;
 }
 
 interface PostData {
+	assigneeUserId: number;
+	dashboardId: number;
+	columnId: number;
+	title: string;
+	description: string;
+	dueDate: string;
+	tags: string[];
+	imageUrl: string | File;
+}
+
+interface GetData {
 	assigneeUserId: number;
 	dashboardId: number;
 	columnId: number;
@@ -31,6 +43,7 @@ const TodoModal: React.FC<TodoModalProps> = ({
 	onClose,
 	mode,
 	postData,
+	getData,
 	onCreated,
 }) => {
 	const [formData, setFormData] = useState<PostData>({
@@ -123,45 +136,67 @@ const TodoModal: React.FC<TodoModalProps> = ({
 
 			<div className='flex flex-col gap-8'>
 				{mode === '생성' && (
-					<ModalDropdown
-						label='담당자'
-						data={memberOptions}
-						onDropdownSelect={handleChangeAssignee}
-					/>
-				)}
-
-				{/* mode가 '수정'일 때도 보이도록 */}
-				{mode === '수정' && (
-					<div className='flex flex-row items-center gap-2.5'>
-						<ModalDropdown
-							label='상태'
-							data={columnsOptions}
-							onDropdownSelect={handleChangeColumn}
-						/>
+					<>
 						<ModalDropdown
 							label='담당자'
 							data={memberOptions}
 							onDropdownSelect={handleChangeAssignee}
 						/>
-					</div>
+
+						<ModalInput
+							label='제목'
+							required={true}
+							onValueChange={handleChangeTitle}
+						/>
+
+						<ModalTextarea
+							label='설명'
+							required={true}
+							isButton={false}
+							onTextChange={handleChangeDescription}
+						/>
+
+						<ModalInput label='마감일' onValueChange={handleChangeDueDate} />
+						<ModalInput label='태그' onValueChange={handleChangeTags} />
+						<ModalImage label='이미지' onImageSelect={handleChangeImageUrl} />
+					</>
 				)}
 
-				<ModalInput
-					label='제목'
-					required={true}
-					onValueChange={handleChangeTitle}
-				/>
+				{/* mode가 '수정'일 때도 보이도록 */}
+				{mode === '수정' && (
+					<>
+						<div className='flex flex-row items-center gap-2.5'>
+							<ModalDropdown
+								label='상태'
+								data={columnsOptions}
+								currentId={getData?.columnId}
+								onDropdownSelect={handleChangeColumn}
+							/>
+							<ModalDropdown
+								label='담당자'
+								data={memberOptions}
+								currentId={getData?.assigneeUserId}
+								onDropdownSelect={handleChangeAssignee}
+							/>
+						</div>
+						<ModalInput
+							label='제목'
+							required={true}
+							onValueChange={handleChangeTitle}
+						/>
 
-				<ModalTextarea
-					label='설명'
-					required={true}
-					isButton={false}
-					onTextChange={handleChangeDescription}
-				/>
+						<ModalTextarea
+							label='설명'
+							required={true}
+							isButton={false}
+							onTextChange={handleChangeDescription}
+						/>
 
-				<ModalInput label='마감일' onValueChange={handleChangeDueDate} />
-				<ModalInput label='태그' onValueChange={handleChangeTags} />
-				<ModalImage label='이미지' onImageSelect={handleChangeImageUrl} />
+						<ModalInput label='마감일' onValueChange={handleChangeDueDate} />
+						<ModalInput label='태그' onValueChange={handleChangeTags} />
+						<ModalImage label='이미지' onImageSelect={handleChangeImageUrl} />
+					</>
+				)}
 			</div>
 
 			<div className='mt-7 flex justify-end gap-3 sm:mt-6 sm:justify-center'>

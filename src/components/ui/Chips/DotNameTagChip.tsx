@@ -12,9 +12,11 @@ export default function DotNameTagChip({
 				alt='보라색 점 아이콘'
 				width={2}
 				height={2}
-				className='size-1.5'
+				className='size-1.5 sm:hidden'
 			/>
-			<div className='text-xs text-violet2 sm:text-[10px]'>{children}</div>
+			<div className='whitespace-nowrap text-xs text-violet2 sm:text-[10px]'>
+				{children}
+			</div>
 		</div>
 	);
 }

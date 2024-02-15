@@ -2,6 +2,7 @@ import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 import { useGetCommentList } from '@/src/apis/card/useGetCommentList';
+import { useModal } from '@/src/contexts/ModalProvider';
 import { useGetCardDetail } from '@/src/hooks/Card/useGetCardDetail';
 import { useGetColumnList } from '@/src/hooks/dashboard/useGetColumnList';
 import { Card } from '@/src/types/card';
@@ -11,27 +12,37 @@ import ColorTagChip from '../Chips/ColorTagChip';
 import DotNameTagChip from '../Chips/DotNameTagChip';
 import DefaultProfileImage from '../DefaultProfileImage';
 import ModalTextarea from '../ModalInput/ModalTextarea';
+import TodoModal from './TodoModal';
 
 interface CardDetailsProps {
+	boardid: string | string[] | undefined;
 	cardId: number;
+	onClose: () => void;
 }
 
-const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
+const CardDetailModal: React.FC<CardDetailsProps> = ({
+	boardid,
+	cardId,
+	onClose,
+}) => {
 	const [cardData, setCardData] = useState<Card | null>(null);
 	const [comment, setComment] = useState('');
 	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+	const { openModal, closeModal } = useModal();
+	const modalId = crypto.randomUUID();
 
 	// const { commentListInfo, execute: executeGetComment } = useGetCommentList(
 	// 	99,
 	// 	cardId,
 	// );
 	const { commentListInfo } = useGetCommentList(99, cardId);
-	const { data } = useGetColumnList();
-	const currentColumnTitle = data?.find(
+	const { data: columnData } = useGetColumnList();
+	const currentColumnTitle = columnData?.find(
 		(item) => item.id === cardData?.columnId,
 	)?.title;
-	// const { execute: executePostComment } = usePostComment();
 
+	// const { execute: executePostComment } = usePostComment();
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -52,18 +63,47 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 		setIsMenuOpen(!isMenuOpen);
 	};
 
-	const handleClose = () => {};
+	const handleEditCard = () => {
+		openModal(
+			<TodoModal
+				onClose={() => closeModal(modalId)}
+				mode='수정'
+				postData={{
+					assigneeUserId: 0,
+					dashboardId: Number(boardid),
+					columnId: cardData.columnId,
+					title: '',
+					description: '',
+					dueDate: '',
+					tags: [],
+					imageUrl: '',
+				}}
+				getData={{
+					assigneeUserId: cardData.assignee.id,
+					dashboardId: Number(boardid),
+					columnId: cardData.columnId,
+					title: cardData.title,
+					description: cardData.description,
+					dueDate: cardData.dueDate,
+					tags: cardData.tags,
+					imageUrl: cardData.imageUrl,
+				}}
+			/>,
+			modalId,
+		);
+	};
 
 	const handlePostComment = () => {
 		if (comment) {
 			// executePostComment(comment, cardId, cardData?.columnId);
 			// console.log('!', comment, cardId, cardData?.columnId);
 		}
+		alert(comment);
 	};
 
 	return (
-		<div className='relative flex max-w-[730px] shrink-0 flex-col gap-6 rounded-lg bg-white px-7 py-8 text-black4 sm:w-[327px] sm:gap-4 sm:px-5 sm:py-3 md:w-[680px]'>
-			<div className='flex flex-row sm:flex-col-reverse'>
+		<div className='relative flex max-w-[730px] shrink-0 flex-col gap-6 rounded-lg bg-white px-7 py-8 text-black4 scrollbar-hide sm:w-[327px] sm:gap-4 sm:px-5 sm:py-3 md:w-[680px] md:px-6 md:py-7'>
+			<div className='flex flex-row scrollbar-hide sm:flex-col-reverse'>
 				<h1 className='grow justify-start text-2xl font-bold sm:text-xl'>
 					{cardData.title}
 				</h1>
@@ -76,12 +116,15 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 							src='/icons/close.svg'
 							fill={true}
 							alt='menu'
-							onClick={handleClose}
+							onClick={onClose}
 						/>
 					</button>
 					{isMenuOpen && (
 						<div className='absolute right-10 top-8 z-10 flex h-[82px] w-[93px] flex-col gap-1.5 rounded-md border border-gray3 bg-white p-1.5 text-center text-sm font-normal leading-6 shadow-[0_4px_20px_0_rgba(0_0_0_0.08)] sm:right-10 sm:top-6 sm:text-xs sm:leading-normal'>
-							<button className='h-8 w-full shrink-0 rounded hover:bg-violet1 hover:text-violet2 sm:h-[30px]'>
+							<button
+								onClick={handleEditCard}
+								className='h-8 w-full shrink-0 rounded hover:bg-violet1 hover:text-violet2 sm:h-[30px]'
+							>
 								수정하기
 							</button>
 							<button className='h-8 w-full shrink-0 rounded hover:bg-violet1 hover:text-violet2 sm:h-[30px]'>
@@ -91,13 +134,13 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 					)}
 				</div>
 			</div>
-			<div className='flex flex-row gap-6 sm:flex-col-reverse'>
+			<div className='flex flex-row gap-6 scrollbar-hide sm:flex-col-reverse'>
 				<div className='relative flex w-[450px] flex-col gap-6 sm:max-w-[287px] md:w-[420px]'>
 					<div className='relative flex flex-col gap-4'>
-						<div className='flex flex-row items-center gap-5'>
+						<div className='flex flex-row items-center gap-5 sm:gap-3'>
 							<DotNameTagChip>{currentColumnTitle}</DotNameTagChip>
 							<hr className='h-5 border-l border-gray3' />
-							<div className='flex flex-row gap-1.5'>
+							<div className='flex flex-row gap-1.5 overflow-x-auto scrollbar-hide'>
 								{cardData.tags.map((tag, index) => (
 									<ColorTagChip key={index}>{tag}</ColorTagChip>
 								))}
@@ -106,14 +149,16 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 						<div className='text-sm font-normal text-[#000] sm:text-xs'>
 							{cardData.description}
 						</div>
-						<div className='relative h-[260px] w-full rounded-md sm:h-[168px] sm:max-w-[287px]'>
-							<Image
-								src={cardData.imageUrl}
-								fill={true}
-								alt={cardData.title}
-								style={{ objectFit: 'cover' }}
-							/>
-						</div>
+						{cardData.imageUrl && (
+							<div className='relative h-[260px] w-full rounded-md sm:h-[168px] sm:max-w-[287px]'>
+								<Image
+									src={cardData.imageUrl}
+									fill={true}
+									alt={cardData.title}
+									style={{ objectFit: 'cover' }}
+								/>
+							</div>
+						)}
 					</div>
 					{commentListInfo && (
 						<div className='flex flex-col gap-5'>
@@ -204,4 +249,4 @@ const CardDetails: React.FC<CardDetailsProps> = ({ cardId }) => {
 	);
 };
 
-export default CardDetails;
+export default CardDetailModal;

@@ -40,7 +40,7 @@ function ModalWrapper({ children, id, onRemove }: Props) {
 	}, [id]);
 
 	return (
-		<dialog ref={ref} className='rounded-lg'>
+		<dialog ref={ref} className='rounded-lg scrollbar-hide'>
 			{children}
 		</dialog>
 	);

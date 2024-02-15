@@ -11,6 +11,7 @@ export const inputClassNames = {
 	type: {
 		dropdown: 'h-12 w-[217px]',
 		input: 'h-12 w-[450px]',
-		textarea: 'min-h-[110px] w-[450px] sm:w-[287px] sm:min-h-[70px]',
+		textarea:
+			'min-h-[110px] w-[450px] md:w-[420px] sm:w-[287px] sm:min-h-[70px]',
 	},
 };
