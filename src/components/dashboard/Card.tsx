@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import { Card } from '@/src/types/card';
+import formatDateTime from '@/src/util/formatDateTime';
 
 import ColorTagChip from '../ui/Chips/ColorTagChip';
 import DefaultProfileImage from '../ui/DefaultProfileImage';
@@ -48,14 +49,24 @@ export default function Card({ cardData }: CardDataProps) {
 									className='sm:size-[14px] lg:size-[18px] '
 								/>
 								<div className='text-[12px] font-medium text-gray5 sm:text-[10px]'>
-									{dueDate}
+									{formatDateTime(dueDate)}
 								</div>
 							</div>
-
-							<DefaultProfileImage
-								classNames='size-6 rounded-full bg-green px-[8px] text-[12px]'
-								nickname={assignee.nickname}
-							/>
+							{assignee.profileImageUrl ? (
+								<div className='relative size-6'>
+									<Image
+										src={assignee.profileImageUrl}
+										fill={true}
+										className='rounded-full'
+										alt={assignee.nickname}
+									/>
+								</div>
+							) : (
+								<DefaultProfileImage
+									classNames='size-6 rounded-full bg-green text-[12px]'
+									nickname={assignee.nickname}
+								/>
+							)}
 						</div>
 					</div>
 				</div>

@@ -9,6 +9,7 @@ import { useModal } from '@/src/contexts/ModalProvider';
 import { Card as CardType } from '@/src/types/card';
 import { Column } from '@/src/types/dashboard';
 
+import CardDetailModal from '../ui/Modal/CardDetailModal';
 import TodoModal from '../ui/Modal/TodoModal';
 import Card from './Card';
 interface CardListProps {
@@ -91,6 +92,17 @@ export default function CardList({
 		);
 	};
 
+	const handleCardDetailModal = (cardId: number) => {
+		openModal(
+			<CardDetailModal
+				boardid={boardid}
+				cardId={cardId}
+				onClose={() => closeModal(modalId)}
+			/>,
+			modalId,
+		);
+	};
+
 	useEffect(() => {
 		void fetchData();
 	}, []);
@@ -143,8 +155,12 @@ export default function CardList({
 							className='w-full py-2'
 							onClick={handleCreateCard}
 						/>
-						{data.cards.map((cardData, index) => (
-							<button type='button' key={index}>
+						{data.cards.map((cardData) => (
+							<button
+								type='button'
+								key={cardData.id}
+								onClick={() => handleCardDetailModal(cardData.id)}
+							>
 								<Card cardData={cardData} />
 							</button>
 						))}

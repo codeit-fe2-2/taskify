@@ -80,7 +80,6 @@ export default function ModalDropdown<T extends Member | Column>({
 }: ModalDropdownProps<T>) {
 	const [open, setOpen] = useState<boolean>(false);
 	const [options, setOptions] = useState(data);
-
 	const [selectedOption, setSelectedOption] = useState<T | undefined>(
 		data.find((item) => item.id === currentId),
 	);
@@ -93,15 +92,18 @@ export default function ModalDropdown<T extends Member | Column>({
 		setOptions(data);
 	}, [data]);
 
+	useEffect(() => {
+		setSelectedOption(data.find((item) => item.id === currentId));
+	}, [options]);
+
 	const handleClose = () => {
 		setOpen(false);
 	};
 
 	// 담당자 이름 검색 기능
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const filteredData = data.filter(
-			(datum) =>
-				'nickname' in datum && datum?.nickname?.includes(event.target.value),
+		const filteredData = data.filter((datum) =>
+			datum?.nickname?.includes(event.target.value),
 		);
 		setOptions([...filteredData]);
 	};
@@ -158,7 +160,6 @@ export default function ModalDropdown<T extends Member | Column>({
 											/>
 										)}
 									</div>
-
 									{label === '담당자' ? (
 										<ManagerOptions
 											value={(option as Member).nickname}

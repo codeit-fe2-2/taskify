@@ -56,7 +56,7 @@ export default function ModalTextarea({
 						color='secondary'
 						buttonSize='xxs'
 						onClick={handleButtonClick}
-						className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 text-xs'
+						className='absolute bottom-3 right-3 flex h-8 w-[83px] shrink-0 items-center justify-center gap-2.5 whitespace-nowrap text-xs'
 					>
 						입력
 					</TextButton>
