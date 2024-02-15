@@ -8,7 +8,7 @@ import { useAxios } from './useAxios';
 export const usePostLogin = (payload = { email: '', password: '' }) => {
 	const { setUser } = useAuth();
 	const requstConfigs = {
-		path: '/users',
+		path: '/auth/login',
 		method: 'POST' as const,
 		payload,
 	};

@@ -18,7 +18,7 @@ export default function ColorTagChip({
 	const { textColor, bgColor } = tagColorSet[colorIndex];
 
 	const handleClick = () => {
-		onTagClick(children);
+		onTagClick?.(children);
 	};
 
 	return (

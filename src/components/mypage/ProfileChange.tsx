@@ -90,7 +90,6 @@ export default function ProfileChange({
 							type='submit'
 							className=' px-[29.5px] py-[7.5px]  text-sm sm:px-[25px] sm:py-[7px] sm:text-xs'
 							color='primary'
-							onClick={handleFormSubmit}
 						>
 							저장
 						</TextButton>

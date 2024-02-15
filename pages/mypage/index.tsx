@@ -31,7 +31,7 @@ export default function Page() {
 	return (
 		<>
 			<BasicLayout>
-				<div className='p-5 sm:p-3'>
+				<div className='h-[100%] overflow-y-auto p-5 scrollbar-hide sm:p-3'>
 					<TextButton textSize='md' onClick={handleTextButtonClick}>
 						<div className='mb-6 flex gap-1.5 sm:mb-5'>
 							<Image

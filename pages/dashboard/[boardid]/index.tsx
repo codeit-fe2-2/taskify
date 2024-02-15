@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { deleteColumn } from '@/src/apis/dashboard/deleteColumn';
@@ -20,6 +19,7 @@ export default function Page() {
 	const [toastMessage, setToastMessage] = useState<string>('');
 
 	const { data: columnList, execute, dashboardId } = getColumnList();
+
 	const titles = columnList && columnList.map((column) => column.title);
 
 	const handleToastMessage = (message: string) => {
@@ -28,12 +28,14 @@ export default function Page() {
 
 	const handleCreateColumn = async (inputValue: string) => {
 		await postCreateColumn(inputValue, dashboardId);
+
 		closeModal(modalId);
 		handleToastMessage('칼럼을 생성했습니다.');
 	};
 
 	const handleDeleteColumnRequest = async (id: number) => {
 		await deleteColumn(id);
+
 		closeModal(modalId);
 		handleToastMessage('컬럼을 삭제했습니다.');
 	};
@@ -107,30 +109,30 @@ export default function Page() {
 			return () => clearTimeout(timer);
 		}
 	}, [toastMessage]);
-
 	return (
 		<>
 			<BasicLayout>
-				<div className=' flex size-full flex-col overflow-hidden overflow-y-auto sm:max-h-[100%] sm:w-[308px] sm:overflow-y-auto md:max-h-[100%]  md:w-[584px] md:overflow-y-auto lg:flex-row  lg:overflow-x-auto'>
+				<div className='flex size-full flex-col overflow-hidden overflow-y-auto scrollbar-hide sm:max-h-[100%] sm:w-[308px] sm:overflow-y-auto md:max-h-[100%] md:w-[584px] md:overflow-y-auto lg:flex-row lg:overflow-x-auto'>
 					{columnList &&
 						columnList.map((column: Column) => (
 							<div
 								key={column.id}
-								className='h-full w-[354px] shrink-0 border-r border-gray3 px-5 pt-[22px] sm:max-h-[470px] sm:w-[308px] sm:border-none sm:px-3 sm:pb-3 sm:pt-[17px] md:h-auto  md:max-h-[364px] md:w-[584px] md:border-none'
+								className='h-full w-[354px] shrink-0 border-r border-gray3 px-5 pb-5 pt-[22px] sm:h-auto sm:max-h-[470px] sm:w-[308px] sm:border-b sm:px-3 sm:pb-3 sm:pt-[17px] md:h-auto md:max-h-[364px] md:w-[584px] md:border-b md:border-r'
 							>
 								<CardList
 									column={column}
 									handleModifyColumn={() => handleModifyColumn(column.id)}
+									handleToastMessage={handleToastMessage}
 								/>
 							</div>
 						))}
-					<div className='ml-4 mt-6 '>
+					<div className='ml-4 mt-6'>
 						<IconButton
 							rounded='lg'
 							src='/icons/plus.svg'
 							iconSize={22}
 							alt='plusImage'
-							className='mt-[43px] h-[70px] w-[354px] sm:mb-[20px] sm:h-[60px] sm:w-[284px] md:mb-[20px] md:w-[544px]'
+							className='h-[70px] w-[354px] sm:mb-5 sm:h-[60px] sm:w-[284px] md:w-[544px] lg:mt-[43px]'
 							onClick={handleCreateColumnModal}
 						>
 							새로운 컬럼 추가하기

@@ -6,7 +6,7 @@ export const useGetCardDetail = async (cardId: number) => {
 		const response = await axiosInstance.get<Card>(`cards/${cardId}`);
 		return response.data;
 	} catch (error) {
-		console.log('카드 상세를 가져오던 도중 에러가 발생하였습니다');
+		console.error('카드 상세를 가져오던 도중 에러가 발생하였습니다');
 		throw error;
 	}
 };

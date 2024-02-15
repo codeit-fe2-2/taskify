@@ -5,10 +5,10 @@ export const putChangedUserInfo = async (
 	nickname: string,
 	imageUrl: string,
 ) => {
-	const requestData = {
-		nickname: nickname,
-		profileImageUrl: imageUrl,
-	};
+	const requestData = imageUrl
+		? { nickname, profileImageUrl: imageUrl }
+		: { nickname };
+
 	try {
 		const response = await axiosInstance.put<UserInfoChange>(
 			'users/me',

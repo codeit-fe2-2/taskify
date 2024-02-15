@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { Column } from '@/src/types/dashboard';
-import { User } from '@/src/types/user';
+import { Member } from '@/src/types/user';
 
 import DotNameTagChip from '../Chips/DotNameTagChip';
 import DefaultProfileImage from '../DefaultProfileImage';
@@ -57,7 +57,7 @@ const ManagerOptions = ({
 	);
 };
 
-const TagOptions = (value: string) => {
+const TagOptions = (value: { value: string }) => {
 	return (
 		<div className='flex items-center gap-1.5 text-black2'>
 			<DotNameTagChip>{value.value}</DotNameTagChip>
@@ -65,14 +65,14 @@ const TagOptions = (value: string) => {
 	);
 };
 
-interface ModalDropdownProps<T extends User | Column> {
+interface ModalDropdownProps<T extends Member | Column> {
 	label: string;
 	data: T[];
 	currentId?: number;
 	onDropdownSelect: (dataId: number) => void;
 }
 
-export default function ModalDropdown<T extends User | Column>({
+export default function ModalDropdown<T extends Member | Column>({
 	label,
 	data,
 	currentId,
@@ -96,10 +96,12 @@ export default function ModalDropdown<T extends User | Column>({
 	const handleClose = () => {
 		setOpen(false);
 	};
+
 	// 담당자 이름 검색 기능
 	const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const filteredData = data.filter((datum) =>
-			datum.nickname.includes(event.target.value),
+		const filteredData = data.filter(
+			(datum) =>
+				'nickname' in datum && datum?.nickname?.includes(event.target.value),
 		);
 		setOptions([...filteredData]);
 	};
@@ -116,12 +118,12 @@ export default function ModalDropdown<T extends User | Column>({
 				>
 					{label === '담당자' ? (
 						<ManagerOptions
-							value={selectedOption?.nickname}
-							image={selectedOption?.profileImageUrl}
+							value={(selectedOption as Member)?.nickname}
+							image={(selectedOption as Member)?.profileImageUrl}
 							onInputChange={handleInputChange}
 						/>
 					) : (
-						<TagOptions value={selectedOption?.title} />
+						<TagOptions value={(selectedOption as Column)?.title} />
 					)}
 					<Image
 						src='/icons/arrow_drop_down.svg'
@@ -139,7 +141,9 @@ export default function ModalDropdown<T extends User | Column>({
 									onClick={() => {
 										setSelectedOption(option);
 										onDropdownSelect(
-											label === '담당자' ? option.userId : option.id,
+											label === '담당자'
+												? (option as Member).userId
+												: option.id,
 										);
 										handleClose();
 									}}
@@ -157,12 +161,12 @@ export default function ModalDropdown<T extends User | Column>({
 
 									{label === '담당자' ? (
 										<ManagerOptions
-											value={option.nickname}
-											image={option.profileImageUrl}
+											value={(option as Member).nickname}
+											image={(option as Member).profileImageUrl}
 										/>
 									) : (
 										// 담당자가 아니라면
-										<TagOptions value={option.title} />
+										<TagOptions value={(option as Column).title} />
 									)}
 								</button>
 							</li>

@@ -11,7 +11,7 @@ export const useDeleteInviteList = (lazyMode: boolean = true) => {
 
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<unknown>(null);
-	const [data, setData] = useState(null);
+	const [data, setData] = useState<InviteListGetResponse | null>(null);
 
 	const execute = async (invitationId: string) => {
 		setLoading(true);
